@@ -356,17 +356,18 @@ body[data-state=menu] #world,body[data-state=over] #world,body[data-state=paused
 .cloud-note{font-size:11px!important;line-height:1.7!important;color:#aaa}.cloud-status{padding:12px;border:1px solid #444;font-size:11px;line-height:1.7;overflow-wrap:anywhere;margin:12px 0}.cloud-status[data-error=true]{border-color:#b46e6e;color:#ffbdbd}
 #cloudRows{max-height:50vh;overflow:auto}.cloud-table{width:100%;border-collapse:collapse;font-size:12px}.cloud-table th,.cloud-table td{text-align:left;border-bottom:1px solid #333;padding:12px 9px}.cloud-table th{position:sticky;top:0;background:#151515;color:#999;font-size:9px}.cloud-table tr.me{background:#26322e}.cloud-table td:nth-child(3){font-variant-numeric:tabular-nums}
 #cloudBadge{position:fixed;bottom:6px;left:50%;transform:translateX(-50%);z-index:41;font-size:9px;letter-spacing:.06em;padding:6px 10px;background:#090909e8;border:1px solid #333;max-width:90vw;text-align:center;pointer-events:none}
-#cloudOwnerConfig{margin-top:20px;border-top:1px solid #333;padding-top:15px}#cloudOwnerConfig summary{font-size:11px;cursor:pointer}#cloudOwnerConfig .cloud-form{margin-top:14px}
 #cloudRecovery{border:1px solid #888;padding:14px;margin:15px 0}.cloud-split{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:650px){.cloud-split{grid-template-columns:1fr}.cloud-table th,.cloud-table td{padding:10px 5px;font-size:10px}#cloudBadge{font-size:8px;bottom:2px}}
 </style>
 </head>
 <body data-state="menu">
 <section id="cloudBoard" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="cloudTitle"><div class="panel">
 <div class="eyebrow">MH / CONNECTED CAREER</div><h1 id="cloudTitle">GLOBAL TOP 1000.</h1>
-<p class="cloud-note">Community leaderboard · new online career runs only. Guest, imported and developer points never become ranked points. Browser scores have basic checks, not cheat-proof verification.</p>
+<p id="leaderboardDescription" class="cloud-note">Online career runs only. Developer accounts are excluded. Community scores have basic checks, not cheat-proof verification.</p>
+<div class="cloud-tabs" role="tablist" aria-label="Leaderboard sections"><button id="boardRankedTab" role="tab" aria-selected="true">RANKED RUNS</button><button id="boardCareerTab" role="tab" aria-selected="false">ALL-TIME CAREER</button></div>
+<div id="careerSortControls" class="cloud-actions hidden"><label for="careerSort">RANK BY</label><select id="careerSort"><option value="points">Lifetime points</option><option value="cash">Cash balance</option><option value="cars">Cars owned</option></select></div>
 <div class="cloud-status" id="boardStatus" role="status" aria-live="polite">Not connected.</div><div id="myGlobalRank" class="cloud-status"></div>
 <div class="cloud-actions"><button id="refreshBoard" class="primary">REFRESH</button><button id="boardAccount">ACCOUNT SETTINGS</button><button id="closeBoard">MAIN MENU</button></div>
-<div id="cloudRows"><table class="cloud-table"><thead><tr><th>RANK</th><th>DRIVER</th><th>RANKED POINTS</th><th>BEST RUN</th><th>RUNS</th></tr></thead><tbody id="leaderRows"></tbody></table></div>
+<div id="cloudRows"><table class="cloud-table"><thead id="leaderHead"><tr><th>RANK</th><th>DRIVER</th><th>RANKED POINTS</th><th>BEST RUN</th><th>RUNS</th></tr></thead><tbody id="leaderRows"></tbody></table></div>
 </div></section><div id="cloudBadge">GUEST / LOCAL SAVE</div>
 
 <section id="devMenu" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="devTitle"><div class="panel"><div class="eyebrow">LOCAL / DEVELOPER TOOLS</div><h2 id="devTitle">DEV MENU</h2><p>Ctrl + Shift + V to toggle. Changes save immediately.</p><div class="home-balance"><small>CURRENT BALANCE</small><strong id="devBalance"></strong></div><label for="devAmount">AMOUNT / WHOLE DOLLARS</label><input id="devAmount" type="number" min="0" max="999999999" step="1" value="10000"><div class="dev-actions"><button id="devAdd" class="primary">ADD MONEY</button><button id="devSet">SET BALANCE</button><button id="devUnlock">UNLOCK ALL CARS</button><button id="devRefill">REFILL NITROUS</button></div><label for="devPointAmount">POINTS / WHOLE AMOUNT</label><input id="devPointAmount" type="number" min="0" max="999999999" step="1" value="10000"><div class="dev-actions"><button id="devAddPoints">ADD POINTS</button><button id="devSetPoints">SET POINTS</button></div><p id="devPointsBalance"></p><p id="devStatus" role="status" aria-live="polite"></p><button id="devClose">CLOSE / ESC</button></div></section>
@@ -820,8 +821,8 @@ Option 2: Install and provide the "ws" package:
 // OWNER CONFIGURATION: use only your project URL and PUBLIC publishable key.
 // Never put a secret key or service_role key in this HTML.
 window.MH_SUPABASE = {
-  url: "PASTE_SUPABASE_PROJECT_URL_HERE",
-  key: "PASTE_SUPABASE_PUBLISHABLE_KEY_HERE"
+  url: "https://jwekwvqgeyeqdhnbfqzx.supabase.co",
+  key: "sb_publishable_VkI60Q_ZQVdhtBB5feUcLg_DJg9cb-F"
 };
 </script>
 <script>
@@ -2860,8 +2861,8 @@ window.MH_SUPABASE = {
   <div id="cloudRecovery" class="hidden"><p class="cloud-note">Password recovery: enter your new password above, then save it here.</p><button id="accountUpdatePassword" class="primary">SAVE NEW PASSWORD</button></div>
   <div class="cloud-actions"><button id="accountLeaderboard">GLOBAL LEADERBOARD</button><button id="accountDev" class="hidden">DEVELOPER TOOLS</button></div>
   <p class="cloud-note">One device controls your cloud career at a time. Saves checkpoint every 15 seconds and after purchases. Other devices refresh while idle. Taking control loads the cloud copy and discards unsynced changes on this device. Audio is included in cloud saves.</p>
-  <p class="cloud-note">Existing guest progress is kept separately. Online accounts start a fresh career. Ranked points start at zero and only count completed online career runs. Developer accounts are permanently excluded from this leaderboard, even after access is revoked.</p>
-  <details id="cloudOwnerConfig"><summary>PROJECT CONNECTION / OWNER SETUP</summary><p class="cloud-note">For testing on this browser. For everyone else, fill in window.MH_SUPABASE near the top of the HTML before hosting. Never enter a secret/service-role key.</p><div class="cloud-form"><label>PROJECT URL<input id="cloudUrl" placeholder="Project URL"></label><label>PUBLIC PUBLISHABLE KEY<input id="cloudKey" placeholder="sb_publishable_..."></label></div><div class="cloud-actions"><button id="cloudConnect">SAVE CONNECTION & RELOAD</button></div></details></div>`;
+  <p class="cloud-note">Existing guest progress is kept separately. Online accounts start a fresh career. Ranked points start at zero and only count completed online career runs. Developer accounts are permanently excluded from both leaderboards, even after access is revoked.</p>
+  </div>`;
   const settings=$('audioSettings').querySelector('.settings-panel');
   const audioPane=document.createElement('div');audioPane.id='audioPane';
   const audioIntro=settings.querySelector('p'),soundSetting=$('sound').closest('label'),sliders=$('volumeSliders');
@@ -2882,7 +2883,7 @@ window.MH_SUPABASE = {
     $('accountStatus').textContent=text;$('accountStatus').dataset.error=String(error);
     $('cloudBadge').textContent=cloud.user?((cloud.profile?.username||'ACCOUNT')+' / '+text):text;
   }
-  async function rpc(name,args={}){if(!cloud.client)throw Error('Set your Supabase connection first.');const {data,error}=await cloud.client.rpc(name,args);if(error)throw Error(error.message);return data;}
+  async function rpc(name,args={}){if(!cloud.client)throw Error('Online connection is not configured. Contact the game owner.');const {data,error}=await cloud.client.rpc(name,args);if(error)throw Error(error.message);return data;}
   function cloudFailure(e){
     cloud.owner=false;cloud.ready=false;cloud.dev=false;
     if(state==='playing')setState('paused');if(devOpen){devResume=false;closeDev();}accountUI();cloudMessage(e.message||String(e),true);
@@ -2933,19 +2934,19 @@ window.MH_SUPABASE = {
   }
   async function accountAction(fn){try{await fn();}catch(e){cloudMessage(e.message||String(e),true);}finally{$('accountPassword').value='';accountUI();}}
   $('accountSignUp').onclick=()=>accountAction(async()=>{
-    if(!cloud.client)throw Error('Configure Supabase first.');const username=$('accountUsername').value.trim();
+    if(!cloud.client)throw Error('Online connection is not configured. Contact the game owner.');const username=$('accountUsername').value.trim();
     if(!/^[A-Za-z0-9_]{3,20}$/.test(username))throw Error('Username: 3-20 letters, numbers or underscores.');
     if($('accountPassword').value.length<8)throw Error('Use at least 8 password characters.');
     const {data,error}=await cloud.client.auth.signUp({email:$('accountEmail').value.trim(),password:$('accountPassword').value,options:{data:{username},emailRedirectTo:location.origin+location.pathname}});
     if(error)throw error;if(data.session)await connectUser(data.session.user);else cloudMessage('Check your email to confirm your account, then sign in.');
   });
   $('accountSignIn').onclick=()=>accountAction(async()=>{
-    if(!cloud.client)throw Error('Configure Supabase first.');const {data,error}=await cloud.client.auth.signInWithPassword({email:$('accountEmail').value.trim(),password:$('accountPassword').value});
+    if(!cloud.client)throw Error('Online connection is not configured. Contact the game owner.');const {data,error}=await cloud.client.auth.signInWithPassword({email:$('accountEmail').value.trim(),password:$('accountPassword').value});
     if(error)throw error;await connectUser(data.user);
   });
   $('completeProfile').onclick=()=>accountAction(async()=>{if(!cloud.user)throw Error('Sign in first.');await connectUser(cloud.user);});
   $('accountReset').onclick=()=>accountAction(async()=>{
-    if(!cloud.client)throw Error('Configure Supabase first.');const email=$('accountEmail').value.trim();if(!email)throw Error('Enter your email first.');
+    if(!cloud.client)throw Error('Online connection is not configured. Contact the game owner.');const email=$('accountEmail').value.trim();if(!email)throw Error('Enter your email first.');
     const {error}=await cloud.client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;cloudMessage('If that account exists, a password-reset email has been requested.');
   });
   $('accountUpdatePassword').onclick=()=>accountAction(async()=>{
@@ -2979,7 +2980,7 @@ window.MH_SUPABASE = {
   },true);
   $('accountDev').onclick=()=>toggleDev();
   $('devMenu').querySelector('.eyebrow').textContent='ACCOUNT / DEVELOPER TOOLS / UNRANKED';
-  $('devMenu').querySelector('p').textContent='Authorised accounts only. Ctrl + Shift + V. Developer accounts cannot appear on the global leaderboard.';
+  $('devMenu').querySelector('p').textContent='Authorised accounts only. Ctrl + Shift + V. Developer accounts cannot appear on either global leaderboard.';
   // Career starts obtain a server run ID before the original captured listeners execute.
   let startDispatch=false,startBusy=false;
   for(const id of ['start','restart'])$(id).addEventListener('click',e=>{
@@ -3024,35 +3025,53 @@ window.MH_SUPABASE = {
   $('resume').addEventListener('click',e=>{if(cloud.user&&(!cloud.ready||!cloud.owner)){e.preventDefault();e.stopImmediatePropagation();}},true);
   // Do not let text fields drive the car or trigger game shortcuts.
   window.addEventListener('keydown',e=>{if(e.target.matches('input,textarea')&&!e.ctrlKey&&!e.metaKey){if(e.code!=='Escape')e.stopImmediatePropagation();}},true);
-  const boardButton=document.createElement('button');boardButton.id='homeLeaderboard';boardButton.className='home-action';boardButton.innerHTML='LEADERBOARD <span>Global top 1,000 / online career points</span>';$('homeSettings').before(boardButton);
+  const boardButton=document.createElement('button');boardButton.id='homeLeaderboard';boardButton.className='home-action';boardButton.innerHTML='LEADERBOARD <span>Ranked runs + all-time points, cash & cars</span>';$('homeSettings').before(boardButton);
   $('homeSettings').querySelector('span').textContent='Audio, sign in and cloud saves';
+  let boardSection='ranked',boardRequest=0;
+  const boardNumber=n=>Number(n||0).toLocaleString('en-GB');
+  function boardColumns(){
+    const careerBoard=boardSection==='career';
+    $('boardRankedTab').setAttribute('aria-selected',String(!careerBoard));
+    $('boardCareerTab').setAttribute('aria-selected',String(careerBoard));
+    $('careerSortControls').classList.toggle('hidden',!careerBoard);
+    $('leaderboardDescription').textContent=careerBoard?
+      'Latest cloud-saved career: lifetime points, current cash balance and unique cars owned. Sort by any of these. Spending cash can lower your cash rank. Developer accounts are excluded. Save-reported stats are not cheat-proof.':
+      'Completed online career runs only. Guest and developer points do not count. Developer accounts are excluded. Community scores have basic checks, not cheat-proof verification.';
+    const titles=careerBoard?['RANK','DRIVER','LIFETIME POINTS','CASH BALANCE','CARS OWNED']:['RANK','DRIVER','RANKED POINTS','BEST RUN','RUNS'];
+    const tr=document.createElement('tr');for(const title of titles){const th=document.createElement('th');th.textContent=title;tr.append(th);}
+    $('leaderHead').replaceChildren(tr);
+  }
   async function refreshLeaderboard(){
+    const request=++boardRequest,section=boardSection,metric=$('careerSort').value;
+    boardColumns();$('leaderRows').replaceChildren();$('myGlobalRank').textContent='';
     $('boardStatus').textContent='Loading leaderboard...';
     try{
-      const rows=await rpc('mh_leaderboard');$('leaderRows').replaceChildren();
+      const rows=await rpc(section==='career'?'mh_career_leaderboard':'mh_leaderboard',section==='career'?{p_metric:metric}:{});
+      const me=cloud.user?await rpc(section==='career'?'mh_career_my_rank':'mh_my_rank',section==='career'?{p_metric:metric}:{}):null;
+      if(request!==boardRequest)return;
       for(const row of rows){const tr=document.createElement('tr');if(row.is_me)tr.className='me';
-        for(const value of [row.rank,row.username,Number(row.points).toLocaleString('en-GB'),Number(row.best_run).toLocaleString('en-GB'),row.runs]){const td=document.createElement('td');td.textContent=String(value);tr.append(td);}$('leaderRows').append(tr);
+        const values=section==='career'?[row.rank,row.username,boardNumber(row.lifetime_points),'$'+boardNumber(row.cash),boardNumber(row.cars_owned)]:[row.rank,row.username,boardNumber(row.points),boardNumber(row.best_run),boardNumber(row.runs)];
+        for(const value of values){const td=document.createElement('td');td.textContent=String(value);tr.append(td);}$('leaderRows').append(tr);
       }
-      $('boardStatus').textContent=rows.length?rows.length+' ranked drivers shown / top 1,000 maximum':'No ranked runs yet. Complete an online career run.';
-      const me=cloud.user?await rpc('mh_my_rank'):null;
-      $('myGlobalRank').textContent=me?'YOUR RANK #'+me.rank+' / '+Number(me.points).toLocaleString('en-GB')+' POINTS':cloud.profile?.ranked_disabled?'TEST ACCOUNT / EXCLUDED FROM RANKINGS':cloud.user?'YOUR RANK / Complete your first online career run':'Sign in to earn ranked points.';
-    }catch(e){$('boardStatus').textContent=e.message;}
+      $('boardStatus').textContent=rows.length?rows.length+' drivers shown / top 1,000 maximum / '+(section==='career'?'ranked by '+({points:'lifetime points',cash:'cash balance',cars:'cars owned'})[metric]:'ranked run points'):
+        section==='career'?'No eligible cloud careers yet. Sign in and save your career.':'No ranked runs yet. Complete an online career run.';
+      $('myGlobalRank').textContent=me?(section==='career'?'YOUR CAREER RANK #'+me.rank+' / '+boardNumber(me.lifetime_points)+' LIFETIME PTS / $'+boardNumber(me.cash)+' / '+boardNumber(me.cars_owned)+' CARS':'YOUR RANK #'+me.rank+' / '+boardNumber(me.points)+' POINTS'):
+        cloud.profile?.ranked_disabled?'TEST ACCOUNT / EXCLUDED FROM BOTH LEADERBOARDS':cloud.user?(section==='career'?'YOUR CAREER RANK / Save your online career first':'YOUR RANK / Complete your first online career run'):'Sign in to sync your career and see your own rank.';
+    }catch(e){if(request!==boardRequest)return;$('leaderRows').replaceChildren();$('myGlobalRank').textContent='';$('boardStatus').textContent=(section==='career'?'All-time board unavailable. The owner may need to run the v2 SQL update. ':'')+e.message;}
   }
+  $('boardRankedTab').onclick=()=>{boardSection='ranked';refreshLeaderboard();};
+  $('boardCareerTab').onclick=()=>{boardSection='career';refreshLeaderboard();};
+  $('careerSort').onchange=()=>refreshLeaderboard();
   function openLeaderboard(){goHome();$('cloudBoard').classList.remove('hidden');refreshLeaderboard();}
   boardButton.onclick=openLeaderboard;$('accountLeaderboard').onclick=openLeaderboard;$('refreshBoard').onclick=refreshLeaderboard;
-  $('closeBoard').onclick=()=>{$('cloudBoard').classList.add('hidden');goHome();};$('boardAccount').onclick=()=>{$('cloudBoard').classList.add('hidden');openAccount();};
+  $('closeBoard').onclick=()=>{boardRequest++;$('cloudBoard').classList.add('hidden');goHome();};$('boardAccount').onclick=()=>{boardRequest++;$('cloudBoard').classList.add('hidden');openAccount();};
   $('homeSettings').addEventListener('click',()=>tabAccount(false));
-  // Cloud settings are public configuration, never credentials.
-  let ownerConfig=window.MH_SUPABASE||{};const override=rawRead('mh-supabase-config',null);if(override)ownerConfig=override;
-  $('cloudUrl').value=ownerConfig.url||'';$('cloudKey').value=ownerConfig.key||'';
-  $('cloudConnect').onclick=()=>accountAction(async()=>{
-    if(cloud.user)throw Error('Sign out before changing project.');const url=$('cloudUrl').value.trim(),key=$('cloudKey').value.trim();
-    if(!/^https:\/\/[^\s/]+(?:\/)?$/.test(url)||!key.startsWith('sb_publishable_'))throw Error('Use an HTTPS project URL and an sb_publishable_ key.');
-    localStorage.setItem('mh-supabase-config',JSON.stringify({url,key}));location.reload();
-  });
+  // Public release: connection is supplied by the hosted HTML only.
+  // Ignore old per-browser project overrides to keep every player on this project.
+  const ownerConfig=window.MH_SUPABASE||{};
   async function bootCloud(){
     if(!ownerConfig.url||ownerConfig.url.includes('PASTE_')||!ownerConfig.key||ownerConfig.key.includes('PASTE_')){
-      if(localStorage.getItem('mh-active-account'))restoreGuest();cloud.booting=false;cloudMessage('GUEST / Configure Supabase in Settings / Account');return;
+      if(localStorage.getItem('mh-active-account'))restoreGuest();cloud.booting=false;cloudMessage('GUEST / Online connection not configured in this hosted build');return;
     }
     try{
       if(location.protocol==='file:')throw Error('Host this HTML over HTTPS (or localhost HTTP) for account features. Guest mode still works.');
@@ -3081,7 +3100,6 @@ window.MH_SUPABASE = {
         const {data,error}=await cloud.client.from('mh_saves').select('*').eq('user_id',cloud.user.id).single();if(error)throw error;
         if(data.version!==cloud.version&&data.payload?.economy){cloud.version=data.version;localStorage.setItem('mh-active-account',cloud.user.id);applySnapshot(data.payload);cloudMessage('Cloud updated / viewing only. Take control to play.');}
       }
-      if(!$('cloudBoard').classList.contains('hidden'))refreshLeaderboard();
     }catch(e){cloudFailure(e);}finally{heartbeatBusy=false;}
   },15000);
   window.addEventListener('online',()=>{if(cloud.user)cloudMessage('Connection restored. Use Take control / Load cloud to resume.');});
@@ -3094,6 +3112,9 @@ window.MH_SUPABASE = {
       e.preventDefault();e.stopImmediatePropagation();cloudMessage('Viewing only. Take control in Settings / Account before changing your save.',true);
     }
   },true);
+  // Refresh either public board even when viewing as a guest.
+  setInterval(()=>{if(!$('cloudBoard').classList.contains('hidden'))refreshLeaderboard();},15000);
+  $('sound').addEventListener('change',()=>{markCloudDirty();if(cloud.owner)scheduleCloudSave();});
   accountUI();bootCloud();
 
   fitHome();
