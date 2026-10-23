@@ -2,7 +2,7 @@
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Midnight Highway · Apex Edition</title>
 <style>
 :root {
@@ -363,6 +363,115 @@ body[data-state=menu] #world,body[data-state=over] #world,body[data-state=paused
 body[data-state="playing"]{overscroll-behavior:none}
 body[data-state="playing"] #skidWarning{pointer-events:none}
 @media(pointer:coarse){body[data-state="playing"] #hint{display:none!important}}
+
+/* TRAIL UPDATE / responsive UI. Desktop retains the editorial layout. */
+.home-actions-grid{display:contents}.selection-tabs{display:none}.free-build-grid{display:grid;gap:12px}
+#freeBuild .parts-group{margin-top:10px;padding:12px}#freeBuild .parts-group summary{font-size:10px;font-weight:700;letter-spacing:.08em;cursor:pointer}
+#freeBuild .parts-group label{margin-top:10px}#freeBuild .parts-group select{padding:10px;font-size:11px}
+#freeBuild .free-build-note{font-size:10px;color:#aaa;line-height:1.6;margin:10px 0}
+#freeReset{width:100%;font-size:10px;padding:10px;margin-top:10px}.mobile-spec{display:none}
+#menu .garage-layout>section{min-width:0}.launch-panel{min-width:0}#freeBuild select{max-width:100%}
+#careerSortControls{align-items:center}#cloudRows{overflow:auto}.cloud-table{min-width:390px}
+@media(max-width:760px),(pointer:coarse) and (max-height:540px){
+ :root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px)}
+ .overlay{padding:max(10px,var(--safe-top)) max(10px,var(--safe-right)) max(10px,var(--safe-bottom)) max(10px,var(--safe-left));place-items:start center;overscroll-behavior:contain}
+ .panel{width:100%;max-height:calc(100dvh - 20px - var(--safe-top) - var(--safe-bottom));padding:16px;overflow:auto}
+ button,select,input{min-height:40px}h1{font-size:32px}.eyebrow{font-size:8px;letter-spacing:.13em}p{font-size:11px;line-height:1.5}
+ #home{padding:12px!important}#home .home-layout{display:block!important;max-width:560px!important}
+ #home .home-right{display:none!important}#home .home-left h1{font-size:clamp(34px,8vw,48px)!important;line-height:.95;margin:8px 0 14px!important}
+ #home .home-left>p{display:none}.home-actions-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ #home .home-action{margin:0!important;max-width:none!important;padding:14px 10px!important;font-size:17px!important;min-height:65px;line-height:1.1}
+ #home .home-action span{font-size:8px!important;line-height:1.4!important;letter-spacing:0!important;display:block!important}
+ #home .home-balance{display:grid!important;grid-template-columns:1fr 1fr;gap:3px 12px;margin-top:14px!important;padding-top:10px!important}
+ #home .home-balance>small:first-child{grid-column:1;grid-row:1}#home #homeCash{grid-column:1;grid-row:2;font-size:22px!important}
+ #home .points-label{grid-column:2;grid-row:1;margin:0!important}#home #homeLifetime{grid-column:2;grid-row:2;font-size:20px!important}#home #homeSpendable{grid-column:2;grid-row:3;font-size:7px}
+ #menu,#workshop,#showcase{padding:calc(10px + var(--safe-top)) calc(12px + var(--safe-right)) calc(14px + var(--safe-bottom)) calc(12px + var(--safe-left))!important}
+ .garage-header{padding:6px 0 12px!important;margin-bottom:12px!important;gap:8px;align-items:center;flex-wrap:nowrap}
+ .garage-header h1{font-size:30px!important;margin:5px 0!important}.garage-header p{font-size:10px!important;margin:0;max-width:240px}.garage-header button{padding:9px;font-size:9px;flex-shrink:0}
+ #menu .garage-layout{display:block}.selection-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;position:sticky;top:-10px;z-index:4;background:#090909;padding:8px 0 10px}
+ .selection-tabs button{font-size:10px;padding:10px}.selection-tabs button[aria-selected=true]{background:#eee;color:#111}
+ #menu[data-selection-panel=vehicles] .garage-layout>aside{display:none!important}
+ #menu[data-selection-panel=setup] .garage-layout>section{display:none!important}
+ #menu .garage-tools{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}#menu .garage-tools input{grid-column:1 / 3;width:100%;padding:11px;font-size:12px}
+ #menu .garage-tools select{grid-column:1 / 3;max-width:none;width:100%;font-size:11px;padding:10px}
+ #menu .cars,#modGarage .cars{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin:10px 0!important}
+ #menu .cars,#modGarage .cars{grid-template-columns:repeat(2,minmax(0,1fr)) }
+ #menu .car-card,#modGarage .car-card{min-height:0!important;padding:18px 10px 12px!important}
+ .car-card strong{font-size:14px!important}.car-card small{font-size:9px!important;line-height:1.4!important;margin:6px 0!important;min-height:0}
+ .car-card.selected:before{top:6px;left:10px;font-size:7px}.car-thumb{height:70px!important;margin:4px 0 8px!important}
+ .car-card .stat-label{font-size:8px;margin-top:7px}.car-card .mod-card-action{font-size:9px!important;margin-top:12px!important}
+ .launch-panel{position:static!important;max-height:none!important;overflow:visible!important;padding:14px!important}
+ #heroCar{height:90px;object-fit:contain;margin-top:5px}#selectedName{font-size:22px;margin:8px 0 4px}#selectedSummary{font-size:10px;margin-bottom:10px}
+ #menu .launch-panel>.section-label{font-size:8px}#careerRules{padding:10px;margin-top:10px}#careerRules p{font-size:10px;margin-top:8px}
+ .mode-picker{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.mode-picker label{font-size:8px}.mode-picker select{font-size:10px;padding:9px;min-width:0}
+ #freeBuild{margin-top:10px;padding-top:10px}#freeBuild .section-label{font-size:8px}.free-build-grid{grid-template-columns:1fr 1fr;gap:8px}
+ #freeBuild .parts-group{padding:10px;margin-top:8px}#freeBuild .parts-group summary{font-size:10px}#freeBuild label{font-size:8px}#freeBuild select{font-size:11px;padding:9px}
+ .drive-settings{padding:7px 0;margin:12px 0}.drive-settings summary{font-size:10px!important;padding:8px 0!important}.drive-settings .mod{padding:10px!important}
+ #menu .controls{font-size:9px;line-height:1.6;margin-top:10px}#menu .launch-panel>.sim-note{font-size:8px;line-height:1.5;margin-top:8px}
+ #start{position:sticky;bottom:calc(-14px - var(--safe-bottom));z-index:5;width:100%;margin-top:12px;padding:14px;font-size:11px;border:5px solid #090909!important;outline:1px solid #444}
+ #wallet{top:calc(8px + var(--safe-top));right:calc(12px + var(--safe-right));padding:6px 9px;min-width:0}#wallet small{font-size:7px}#wallet strong{font-size:12px}
+ body[data-state=menu] #wallet{display:none!important}
+ #hud{top:calc(8px + var(--safe-top));left:calc(8px + var(--safe-left));right:calc(8px + var(--safe-right));gap:6px;z-index:12}
+ #hud .hud-group{gap:5px;min-width:0}#hud .hud-box{padding:7px 9px;min-width:70px;background:#090d12d9;border-color:#ffffff26}
+ #hud .hud-box small{font-size:7px;letter-spacing:.08em}#hud .hud-box strong{font-size:18px;line-height:1.15;margin:3px 0}#hud .hud-box em{font-size:7px}
+ #pauseButton{padding:8px 10px;font-size:10px;min-width:44px;min-height:44px;align-self:start}
+ .session-card{top:calc(83px + var(--safe-top))!important;left:calc(8px + var(--safe-left))!important;width:112px!important;padding:7px 8px!important;background:#090d12c9}
+ .session-card small{font-size:6px;line-height:1.4;display:block;letter-spacing:.04em}.session-card strong{font-size:17px;margin:3px 0}#driveFeedback{font-size:7px;letter-spacing:.02em}.grip-track{margin-top:6px;height:2px}
+ body[data-state=playing] #policeStatus,body[data-state=paused] #policeStatus{top:calc(65px + var(--safe-top))!important;right:calc(8px + var(--safe-right))!important;width:134px!important;padding:7px 8px!important;background:#090d12c9}
+ #wantedLabel{font-size:7px;letter-spacing:.04em}#wantedClock{font-size:6px}#wantedStars{font-size:19px;letter-spacing:4px;line-height:1.1;margin:4px 0}#wantedUnits{font-size:7px;letter-spacing:.04em}
+ #wantedDetail,.wanted-bottom{display:none!important}.wanted-meter{height:2px;margin:6px 0 0}.wanted-top{gap:3px;flex-wrap:wrap}
+ .challenge-card{display:none!important}#cluster{width:160px!important;height:auto;right:calc(8px + var(--safe-right))!important;bottom:calc(8px + var(--safe-bottom))!important;z-index:10}
+ body[data-state=playing] #wallet,body[data-state=paused] #wallet{top:auto!important;bottom:calc(8px + var(--safe-bottom));left:calc(8px + var(--safe-left));right:auto!important;max-width:calc(100vw - 185px);background:#090d12d9;z-index:10}
+ body[data-state=playing] #wallet small,body[data-state=paused] #wallet small{display:none}#walletPoints{display:none!important}#runEarnings{font-size:7px;margin-top:3px;line-height:1.3}
+ body[data-state=playing] #cloudBadge,body[data-state=paused] #cloudBadge{display:none!important}#cloudBadge{max-width:95vw;font-size:7px;padding:4px 7px;bottom:var(--safe-bottom)}
+ #hint{display:none!important}#toast{top:calc(155px + var(--safe-top));font-size:9px;padding:7px 9px;max-width:80vw}#copReward{top:calc(190px + var(--safe-top));font-size:8px;padding:7px 10px}#copReward strong{font-size:18px}
+ #skidWarning{bottom:calc(90px + var(--safe-bottom));max-width:85vw;font-size:8px;padding:6px 9px;text-align:center}
+ #workshop .workshop-layout{display:block}#workshop .bay{position:relative;margin-bottom:12px}#workshopCanvas{height:190px;object-fit:contain;background:#12171b}
+ #bayStatus{bottom:6px;left:6px;font-size:8px;padding:6px 8px;max-width:95%}#workshop .workshop-controls{max-height:none!important;overflow:visible!important;padding:12px}
+ #workshop .garage-header{flex-wrap:wrap}#workshop .garage-header>div{flex:1 1 100%}#workshop .garage-header h1{font-size:28px!important}#workshop .garage-header button{flex:1}
+ #shopSelected{font-size:22px;margin:10px 0}.shop-tabs{margin-top:8px}.parts-group{padding:11px;margin-top:9px}.parts-group summary{font-size:10px}.part-row{margin-top:10px}.part-row>span{font-size:8px}.part-row select{padding:10px;font-size:11px}
+ #applyParts{position:sticky;bottom:0;z-index:3;padding:13px}.shop-summary,.preview-note{font-size:9px;line-height:1.6}.dealer-grid{grid-template-columns:1fr 1fr;gap:8px}.dealer-card{padding:10px}.dealer-card canvas{height:85px}.dealer-card h2{font-size:15px}.dealer-card p{font-size:9px}.dealer-card b{font-size:14px}.dealer-detail{padding:10px;gap:8px;flex-direction:column;align-items:stretch}.dealer-detail h2{font-size:19px}.dealer-detail button{min-width:0}
+ #cloudBoard h1,#audioSettings h1{font-size:30px}.cloud-tabs{gap:6px;margin:10px 0}.cloud-tabs button{font-size:10px;padding:9px;flex:1}.cloud-actions{gap:6px;margin:10px 0}.cloud-actions button{font-size:9px;padding:9px;flex:1 1 40%}.cloud-note{font-size:10px!important;line-height:1.5!important}.cloud-status{font-size:10px;padding:9px;margin:9px 0}.cloud-form{gap:9px}.cloud-form input{padding:10px;font-size:14px}.cloud-form label{font-size:8px}#cloudRows{max-height:44dvh}.cloud-table th,.cloud-table td{font-size:9px;padding:10px 6px}
+ .volume-row{padding:12px 0}.volume-row label,.volume-row output{font-size:10px}.footer{margin-top:14px;gap:8px}.footer button{font-size:10px;padding:10px}
+ .result h1{font-size:35px}.result .results{margin:15px 0;gap:8px}.result-item{padding:10px}.result-item strong{font-size:22px}.result-item span{font-size:10px}.result-buttons button{font-size:11px;padding:11px}
+ #showcase .showcase-layout{display:block}#showcase .launch-panel{margin-top:14px}#showcase .showcase-tools select{min-width:0;flex-basis:100%}.showcase-caption h2{font-size:16px}
+}
+@media(pointer:coarse) and (max-height:540px) and (orientation:landscape){
+ #home .home-layout{max-width:750px!important}#home .home-left{display:grid;grid-template-columns:1fr 1.7fr;gap:8px 20px;align-items:center}#homeBrand{grid-column:1;grid-row:1}#home .home-left h1{grid-column:1;grid-row:2;font-size:34px!important;margin:0!important}.home-actions-grid{grid-column:2;grid-row:1 / 4}#home .home-balance{grid-column:1;grid-row:3;margin-top:3px!important}#home .home-action{min-height:47px;padding:9px!important;font-size:15px!important}#home .home-action span{font-size:7px!important}
+ #menu .car-card .car-thumb{height:65px!important}#menu .cars,#modGarage .cars{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ #heroCar{display:none}#menu[data-selection-panel=setup] .launch-panel{display:block}#freeBuild .free-build-grid{grid-template-columns:repeat(3,1fr)}
+ #hud .hud-box{padding:5px 8px;min-width:65px}#hud .hud-box strong{font-size:16px}#hud .hud-box em{font-size:6px}
+ .session-card{top:calc(72px + var(--safe-top))!important;width:105px!important}.session-card strong{font-size:15px}
+ body[data-state=playing] #policeStatus,body[data-state=paused] #policeStatus{top:calc(60px + var(--safe-top))!important;width:124px!important}
+ #cluster{width:145px!important}#toast{top:calc(8px + var(--safe-top));max-width:38vw;font-size:8px}#copReward{top:calc(48px + var(--safe-top));max-width:38vw}
+ #workshop .workshop-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:12px}#workshopCanvas{height:190px}.selection-tabs{top:-10px}
+}
+
+
+/* Status labels must remain bounded, including on narrow phones. */
+.session-card{min-width:0;overflow:hidden}#runMode{display:block;white-space:normal;overflow-wrap:break-word;max-width:100%;line-height:1.45}
+#driveFeedback{white-space:normal;overflow-wrap:break-word;max-width:100%;line-height:1.45;min-height:1.45em}
+#handlingNotes{margin:8px 0 12px;font-size:10px;line-height:1.5}
+@media(max-width:760px),(pointer:coarse) and (max-height:540px){#runMode{font-size:6px!important}#driveFeedback{font-size:7px!important}#handlingNotes{font-size:9px}}
+
+/* GENERAL, DIFFICULTY & FUEL / compact responsive controls. */
+.general-units{padding-bottom:10px}.general-select{display:block;font-size:10px;color:#aaa;letter-spacing:.08em;margin:12px 0}
+.general-select select{display:block;width:100%;margin-top:7px;padding:11px;background:#121619;color:#eee;border:1px solid #48524e;font-size:12px;min-height:42px}
+#difficultyBox{margin-bottom:12px;border-bottom:1px solid #333;padding-bottom:8px}#difficultyBox .cloud-note{font-size:10px;line-height:1.6}
+#fuelPanel{margin-top:9px;padding-top:7px;border-top:1px solid #ffffff25;display:grid;grid-template-columns:1fr auto;gap:4px 6px}
+#fuelLabel{font-size:8px;letter-spacing:.08em;color:#b3c8bd}#fuelPanel #fuelPercent{font-size:13px;margin:0;line-height:1;text-align:right;color:#d8eddd}
+.fuel-track{grid-column:1 / 3;height:3px;background:#ffffff20}.fuel-track i{display:block;height:100%;background:#b8d6bc;width:100%}
+#fuelStationHint{grid-column:1 / 3;font-size:7px;line-height:1.5;letter-spacing:.02em;color:#c0d1c5}
+#fuelPanel[data-low=true] #fuelPercent{color:#ffb58a}#fuelPanel[data-low=true] .fuel-track i{background:#ffb58a}
+@media(max-width:760px),(pointer:coarse) and (max-height:540px){
+ #difficultyBox{padding-bottom:5px;margin-bottom:8px}.general-select{font-size:8px;margin:9px 0}.general-select select{font-size:11px;padding:9px}
+ #fuelPanel{margin-top:6px;padding-top:5px;gap:3px}#fuelLabel{font-size:6px}#fuelPanel #fuelPercent{font-size:11px}#fuelStationHint{font-size:6px}
+}
+
+
+#runDifficultyControls{align-items:center;gap:10px}#runDifficultyControls label{font-size:10px;color:#aaa}
+#runDifficultyFilter{min-height:40px;padding:9px;background:#121619;color:#eee;border:1px solid #48524e;font-size:12px}
+@media(max-width:760px){#runDifficultyControls{display:flex;flex-wrap:wrap}#runDifficultyFilter{flex:1;min-width:140px;font-size:11px}}
 </style>
 </head>
 <body data-state="menu">
@@ -370,6 +479,7 @@ body[data-state="playing"] #skidWarning{pointer-events:none}
 <div class="eyebrow">MH / CONNECTED CAREER</div><h1 id="cloudTitle">GLOBAL TOP 1000.</h1>
 <p id="leaderboardDescription" class="cloud-note">Online career runs only. Developer accounts are excluded. Community scores have basic checks, not cheat-proof verification.</p>
 <div class="cloud-tabs" role="tablist" aria-label="Leaderboard sections"><button id="boardRankedTab" role="tab" aria-selected="true">RANKED RUNS</button><button id="boardCareerTab" role="tab" aria-selected="false">ALL-TIME CAREER</button></div>
+<div id="runDifficultyControls" class="cloud-actions hidden"><label for="runDifficultyFilter">RUN DIFFICULTY</label><select id="runDifficultyFilter"><option value="easy">Easy / 0.75×</option><option value="normal" selected>Normal / 1×</option><option value="hard">Hard / 1.75×</option></select></div>
 <div id="careerSortControls" class="cloud-actions hidden"><label for="careerSort">RANK BY</label><select id="careerSort"><option value="points">Lifetime points</option><option value="cash">Cash balance</option><option value="cars">Cars owned</option></select></div>
 <div class="cloud-status" id="boardStatus" role="status" aria-live="polite">Not connected.</div><div id="myGlobalRank" class="cloud-status"></div>
 <div class="cloud-actions"><button id="refreshBoard" class="primary">REFRESH</button><button id="boardAccount">ACCOUNT SETTINGS</button><button id="closeBoard">MAIN MENU</button></div>
@@ -379,17 +489,17 @@ body[data-state="playing"] #skidWarning{pointer-events:none}
 <section id="devMenu" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="devTitle"><div class="panel"><div class="eyebrow">LOCAL / DEVELOPER TOOLS</div><h2 id="devTitle">DEV MENU</h2><p>Ctrl + Shift + V to toggle. Changes save immediately.</p><div class="home-balance"><small>CURRENT BALANCE</small><strong id="devBalance"></strong></div><label for="devAmount">AMOUNT / WHOLE DOLLARS</label><input id="devAmount" type="number" min="0" max="999999999" step="1" value="10000"><div class="dev-actions"><button id="devAdd" class="primary">ADD MONEY</button><button id="devSet">SET BALANCE</button><button id="devUnlock">UNLOCK ALL CARS</button><button id="devRefill">REFILL NITROUS</button></div><label for="devPointAmount">POINTS / WHOLE AMOUNT</label><input id="devPointAmount" type="number" min="0" max="999999999" step="1" value="10000"><div class="dev-actions"><button id="devAddPoints">ADD POINTS</button><button id="devSetPoints">SET POINTS</button></div><p id="devPointsBalance"></p><p id="devStatus" role="status" aria-live="polite"></p><button id="devClose">CLOSE / ESC</button></div></section>
 <section id="audioSettings" class="overlay hidden" aria-label="Audio settings"><div class="panel settings-panel"><div class="eyebrow">MH / SETTINGS</div><h1>SETTINGS.</h1><p>Volume changes apply immediately and save in this browser.</p><div id="volumeSliders"></div><div class="footer"><button id="resetVolumes">RESET AUDIO</button><button id="settingsBack" class="primary">← MAIN MENU</button></div></div></section>
 <section id="showcase" class="overlay hidden"><div class="showcase-shell"><header class="garage-header"><div><div class="eyebrow">MH / PRIVATE SHOWROOM</div><h1>YOUR COLLECTION.</h1><p id="showcaseBalance"></p></div><button id="showcaseBack">← MAIN MENU</button></header><div class="showcase-layout"><div><div class="showcase-stage"><canvas id="showcaseCanvas" width="1100" height="700"></canvas><div class="showcase-caption"><small id="showcasePhase"></small><h2 id="showcaseName"></h2></div></div><div class="showcase-tools"><select id="showcaseCar" aria-label="Owned car to showcase"></select><button id="setShowcase" class="primary">SET SHOWCASE CAR</button><button id="replayShowcase">REPLAY REVEAL</button><button id="skipShowcase">SKIP REVEAL</button></div><div class="section-label">DISPLAY SPACES / SELECT A SLOT, THEN BUY OR EQUIP AN ITEM</div><div id="trophySlots"></div></div><aside class="launch-panel"><div class="section-label">POINTS-ONLY COLLECTION</div><p>Cash cannot buy these items. Spending points never reduces lifetime points.</p><div id="trophyShop"></div><p id="trophyNotice" role="status" aria-live="polite"></p></aside></div></div></section>
-<section id="home" class="overlay"><div class="home-layout"><div class="home-left"><div id="homeBrand" class="eyebrow">MH</div><h1>MIDNIGHT<br>HIGHWAY.</h1><p>Your garage. Your career. Your playground.</p><button id="homePlay" class="home-action primary">CAREER <span>Owned cars. Fixed rules. Earn cash & points →</span></button><button id="homeFreestyle" class="home-action">FREESTYLE <span>Test all 210 cars. Set your own rules →</span></button><button id="homeWorkshop" class="home-action">WORKSHOP <span>Buy vehicles. Build your specification →</span></button><button id="homeShowcase" class="home-action">SHOWROOM <span>Showcase your car. Build your trophy collection →</span></button><button id="homeSettings" class="home-action">SETTINGS <span>Master, engine, rain & effects volume →</span></button><div class="home-balance"><small>AVAILABLE FUNDS</small><strong id="homeCash"></strong><small class="points-label">LIFETIME POINTS</small><strong id="homeLifetime"></strong><small id="homeSpendable"></small></div><small class="sim-note">Earn $100 per kilometre and $1 per 10 bonus points.<br>Progress saves automatically in this browser. Fictional game currency.</small></div><div class="home-right"><div class="section-label">YOUR CURRENT RIDE</div><div class="home-film"><canvas id="homeCar" width="1000" height="600" aria-label="Looping traffic-free drive of your current car"></canvas><span id="homeFilmLabel">LIVE DRIVE / NO TRAFFIC</span></div><h2 id="homeCarName"></h2><p id="homeSpec"></p><div class="home-stats"><span id="homeOwned"></span><span>OFFLINE / SINGLE PLAYER</span></div></div></div></section>
+<section id="home" class="overlay"><div class="home-layout"><div class="home-left"><div id="homeBrand" class="eyebrow">MH</div><h1>MIDNIGHT<br>HIGHWAY.</h1><p>Your garage. Your career. Your playground.</p><button id="homePlay" class="home-action primary">CAREER <span>Owned cars. Fixed rules. Earn cash & points →</span></button><button id="homeFreestyle" class="home-action">FREESTYLE <span>Test all 214 vehicles. Set your own rules →</span></button><button id="homeWorkshop" class="home-action">WORKSHOP <span>Buy vehicles. Build your specification →</span></button><button id="homeShowcase" class="home-action">SHOWROOM <span>Showcase your car. Build your trophy collection →</span></button><button id="homeSettings" class="home-action">SETTINGS <span>Master, engine, rain & effects volume →</span></button><div class="home-balance"><small>AVAILABLE FUNDS</small><strong id="homeCash"></strong><small class="points-label">LIFETIME POINTS</small><strong id="homeLifetime"></strong><small id="homeSpendable"></small></div><small class="sim-note">Earn $100 per kilometre and $1 per 10 bonus points.<br>Progress saves automatically in this browser. Fictional game currency.</small></div><div class="home-right"><div class="section-label">YOUR CURRENT RIDE</div><div class="home-film"><canvas id="homeCar" width="1000" height="600" aria-label="Looping traffic-free drive of your current car"></canvas><span id="homeFilmLabel">LIVE DRIVE / NO TRAFFIC</span></div><h2 id="homeCarName"></h2><p id="homeSpec"></p><div class="home-stats"><span id="homeOwned"></span><span>OFFLINE / SINGLE PLAYER</span></div></div></div></section>
 <div id="wallet" class="hidden"><small>BALANCE</small><strong id="walletCash"></strong><span id="walletPoints"></span><span id="runEarnings"></span></div>
 <canvas id="world" aria-label="Midnight Highway driving game"></canvas>
 
 <section id="menu" class="overlay"><div class="garage-shell">
-<header class="garage-header"><div><div id="selectionBrand" class="eyebrow">MH / CAREER</div><h1>MIDNIGHT HIGHWAY.</h1><p>MONO EDITION / 210 vehicles. One open road.</p></div><button id="playHome">← MAIN MENU</button></header>
-<div class="garage-layout"><section><div class="section-label">01 / YOUR COLLECTION · 210 VEHICLES · 20 BODY STYLES</div><div class="garage-tools"><input id="carSearch" type="search" placeholder="Search your garage…" aria-label="Search cars"><select id="bodyFilter" aria-label="Filter body style"><option value="all">All body styles</option></select></div><div id="garageCount"></div><div id="carCards" class="cars"></div></section>
+<header class="garage-header"><div><div id="selectionBrand" class="eyebrow">MH / CAREER</div><h1>MIDNIGHT HIGHWAY.</h1><p>MONO EDITION / 214 vehicles. One open road.</p></div><button id="playHome">← MAIN MENU</button></header>
+<div class="garage-layout"><section><div class="section-label">01 / YOUR COLLECTION · 211 VEHICLES · 21 PLAYABLE BODY STYLES</div><div class="garage-tools"><input id="carSearch" type="search" placeholder="Search your garage…" aria-label="Search cars"><select id="bodyFilter" aria-label="Filter body style"><option value="all">All body styles</option></select></div><div id="garageCount"></div><div id="carCards" class="cars"></div></section>
 <aside class="launch-panel"><div class="section-label">02 / READY TO DRIVE</div><canvas id="heroCar" width="560" height="240" aria-label="Selected car preview"></canvas><h2 id="selectedName"></h2><p id="selectedSummary"></p><button id="openWorkshop" class="workshop-button hidden" disabled>Workshop <span>Customise your car →</span></button>
 <div id="careerRules" class="hidden"><div class="section-label">CAREER / FIXED RULES</div><p>Endless highway · normal traffic · police active · dynamic weather · automatic gears. Choose an owned car. Buy upgrades separately in Workshop.</p></div><div id="freeBuild" class="hidden"></div><div class="mode-picker"><label>DRIVE MODE<select id="driveMode"><option value="endless">Endless / score attack</option><option value="sprint">90-second sprint</option><option value="zen">Cruise / no police</option><option value="empty">No traffic / open road</option></select></label><label>CONDITIONS<select id="weather"><option value="auto">Dynamic / clear, rain & snow</option><option value="dry">Always clear</option><option value="rain">Always rain</option><option value="snow">Always snow</option></select></label></div><details class="drive-settings"><summary>World & driving settings</summary><div class="mods"><label class="mod"><select id="startTime"><option value="9">Morning · 09:00</option><option selected="" value="14">Day · 14:00</option><option value="18">Sunset · 18:00</option><option value="0">Night · 00:00</option></select><span><strong>Starting time</strong><small>Time advances while driving</small></span></label><label class="mod"><select id="dayLength"><option value="180">3 minutes</option><option selected="" value="360">6 minutes</option><option value="720">12 minutes</option><option value="0">Freeze time</option></select><span><strong>Full day length</strong><small>Pausing freezes the clock and pursuits</small></span></label><label class="mod"><input checked="" id="police" type="checkbox"/><span><strong>Police traffic</strong><small>Chase on sight · Sports interceptors deploy at high speed</small></span></label><label class="mod"><select id="transmission"><option value="auto">Automatic</option><option value="manual">Manual</option></select><span><strong>7-speed game gearbox</strong><small>E upshift · Q downshift (manual)</small></span></label><label class="mod"><select id="density"><option value="0.65">Light</option><option selected="" value="1">Normal</option><option value="1.5">Busy</option></select><span><strong>Traffic density</strong><small>14 traffic body styles · cars, taxis, buses and trucks</small></span></label><label class="mod"><input checked="" id="sound" type="checkbox"/><span><strong>Engine audio</strong><small>Deep engine, rain, workshop and cinematic effects</small></span></label></div></details>
-<div class="controls">WASD / arrows: drive · Shift: nitro · Space: handbrake<br>Q / E: manual gears · O: police · P: pause</div><button id="start" class="primary launch-button">START DRIVE →</button><small class="sim-note">210 vehicles · 20 shared playable body styles · Offline single-player<br>Stylised models, not licensed replicas. Performance values are gameplay targets. Stock speed caps are individually tuned. Most are unverified game estimates; source-linked exceptions are labelled. Acceleration, upgrades and prices remain fictional gameplay tuning.</small></aside></div></div></section>
-<section id="workshop" class="overlay hidden" aria-label="Workshop"><div class="workshop-shell"><header class="garage-header"><div><div class="eyebrow">MIDNIGHT / CUSTOMS</div><h1>Workshop</h1><p id="workshopName"></p></div><button id="changeModCar" class="hidden">← CHOOSE ANOTHER CAR</button><button id="closeWorkshop">← Main menu</button></header><section id="modGarage" class="hidden"><div class="garage-layout"><section><div class="section-label">YOUR COLLECTION / SELECT A CAR TO MODIFY</div><div class="garage-tools"><input id="modSearch" type="search" placeholder="Search your garage…" aria-label="Search owned cars"><select id="modFilter" aria-label="Filter owned body styles"><option value="all">All body styles</option></select></div><div id="modCount"></div><div id="modCards" class="cars"></div></section><aside class="launch-panel"><div class="section-label">WORKSHOP / YOUR GARAGE</div><h2>CHOOSE YOUR BUILD.</h2><p>Click an owned car to drive it into the workshop and modify it.</p><button id="modBuyCars" class="workshop-button">BUY CARS <span>Open the full showroom →</span></button><p class="sim-note">Purchased parts and paint are saved separately for each car.</p></aside></div></section><section id="dealerView" class="hidden"><div class="section-label">SHOWROOM / 210 VEHICLES / INDIVIDUAL STOCK SPEED CAPS / ESTIMATES LABELLED</div><div class="dealer-tools"><input id="dealerSearch" placeholder="Search vehicles" aria-label="Search dealership"><select id="dealerFilter"><option value="all">All body styles</option></select><button id="dealerBack">← BACK TO WORKSHOP</button></div><div id="dealerGrid" class="dealer-grid"></div><div class="dealer-detail"><div><h2 id="dealerName"></h2><p id="dealerSpecs"></p><div id="dealerNotice" role="status"></div><a id="speedReference" target="_blank" rel="noopener noreferrer" class="hidden">VIEW SPEED SOURCE ↗</a></div><button id="dealerBuy" class="primary"></button></div></section><div class="workshop-layout"><div class="bay"><canvas id="workshopCanvas" width="900" height="650" aria-label="Animated workshop car preview"></canvas><div id="bayStatus">Driving into the bay…</div></div><div class="workshop-controls"><div id="shopControls"><div class="section-label">WORKSHOP / DEALERSHIP</div><div class="shop-tabs"><button id="tabOwned">MY GARAGE</button><button id="tabDealer">BUY CARS</button></div><div id="shopCars"></div><h2 id="shopSelected"></h2><div id="shopParts"></div><p id="purchaseNotice" role="status" aria-live="polite"></p><button id="applyParts" class="primary">BUY & INSTALL</button></div><div class="legacy-controls hidden"><div class="section-label">BUILD YOUR SPEC</div><div class="mods"><label class="mod">
+<div class="controls">WASD / arrows: drive · Shift: nitro · Space: handbrake<br>Q / E: manual gears · O: police · P: pause</div><button id="start" class="primary launch-button">START DRIVE →</button><small class="sim-note">214 vehicles · 21 shared playable body styles · Offline single-player<br>Stylised models, not licensed replicas. Performance values are gameplay targets. Stock speed caps are individually tuned. Most are unverified game estimates; source-linked exceptions are labelled. Acceleration, upgrades and prices remain fictional gameplay tuning.</small></aside></div></div></section>
+<section id="workshop" class="overlay hidden" aria-label="Workshop"><div class="workshop-shell"><header class="garage-header"><div><div class="eyebrow">MIDNIGHT / CUSTOMS</div><h1>Workshop</h1><p id="workshopName"></p></div><button id="changeModCar" class="hidden">← CHOOSE ANOTHER CAR</button><button id="closeWorkshop">← Main menu</button></header><section id="modGarage" class="hidden"><div class="garage-layout"><section><div class="section-label">YOUR COLLECTION / SELECT A CAR TO MODIFY</div><div class="garage-tools"><input id="modSearch" type="search" placeholder="Search your garage…" aria-label="Search owned cars"><select id="modFilter" aria-label="Filter owned body styles"><option value="all">All body styles</option></select></div><div id="modCount"></div><div id="modCards" class="cars"></div></section><aside class="launch-panel"><div class="section-label">WORKSHOP / YOUR GARAGE</div><h2>CHOOSE YOUR BUILD.</h2><p>Click an owned car to drive it into the workshop and modify it.</p><button id="modBuyCars" class="workshop-button">BUY CARS <span>Open the full showroom →</span></button><p class="sim-note">Purchased parts and paint are saved separately for each car.</p></aside></div></section><section id="dealerView" class="hidden"><div class="section-label">SHOWROOM / 211 VEHICLES / INDIVIDUAL STOCK SPEED CAPS / ESTIMATES LABELLED</div><div class="dealer-tools"><input id="dealerSearch" placeholder="Search vehicles" aria-label="Search dealership"><select id="dealerFilter"><option value="all">All body styles</option></select><button id="dealerBack">← BACK TO WORKSHOP</button></div><div id="dealerGrid" class="dealer-grid"></div><div class="dealer-detail"><div><h2 id="dealerName"></h2><p id="dealerSpecs"></p><div id="dealerNotice" role="status"></div><a id="speedReference" target="_blank" rel="noopener noreferrer" class="hidden">VIEW SPEED SOURCE ↗</a></div><button id="dealerBuy" class="primary"></button></div></section><div class="workshop-layout"><div class="bay"><canvas id="workshopCanvas" width="900" height="650" aria-label="Animated workshop car preview"></canvas><div id="bayStatus">Driving into the bay…</div></div><div class="workshop-controls"><div id="shopControls"><div class="section-label">WORKSHOP / DEALERSHIP</div><div class="shop-tabs"><button id="tabOwned">MY GARAGE</button><button id="tabDealer">BUY CARS</button></div><div id="shopCars"></div><h2 id="shopSelected"></h2><div id="shopParts"></div><p id="purchaseNotice" role="status" aria-live="polite"></p><button id="applyParts" class="primary">BUY & INSTALL</button></div><div class="legacy-controls hidden"><div class="section-label">BUILD YOUR SPEC</div><div class="mods"><label class="mod">
 <input id="engine" type="checkbox"/>
 <span><strong>Engine tune</strong><small>+5% top speed · +10% acceleration</small></span>
 </label><label class="mod">
@@ -407,7 +517,7 @@ body[data-state="playing"] #skidWarning{pointer-events:none}
   <button id="pauseButton" aria-label="Pause game">Ⅱ Pause</button>
 </div>
 <canvas id="cluster" width="460" height="380" class="hidden" aria-label="Speedometer and gear"></canvas><aside id="policeStatus" class="hidden" aria-label="Wanted status"><div class="wanted-top"><span id="wantedLabel">PATROLS ACTIVE</span><span id="wantedClock"></span></div><div id="wantedStars" aria-label="Wanted level">☆☆☆</div><div id="wantedUnits"></div><div id="wantedDetail"></div><div class="wanted-meter"><div id="wantedProgress"></div></div><div class="wanted-bottom"><span id="wantedMeterLabel"></span><span>O · POLICE</span></div></aside>
-<section id="apexHud" class="hidden"><div class="session-card"><small id="runMode"></small><strong id="runClock">0:00</strong><div id="driveFeedback">GRIP STABLE</div><div class="grip-track"><i id="gripFill"></i></div></div><div class="challenge-card"><small>RUN CHALLENGES / +1,000 EACH</small><div id="challengeList"></div></div></section>
+<section id="apexHud" class="hidden"><div class="session-card"><small id="runMode"></small><strong id="runClock">0:00</strong><div id="driveFeedback">GRIP STABLE</div><div class="grip-track"><i id="gripFill"></i></div></div><div class="challenge-card"><small>QUESTS / POINTS + CASH</small><div id="challengeList"></div></div></section>
 <div id="skidWarning" class="hidden" aria-live="polite"></div>
 <div id="cinema" class="hidden"><div class="cinema-bar top"></div><div class="cinema-caption"><small> MIDNIGHT HIGHWAY / INCIDENT </small><h2 id="cinemaTitle"></h2><p id="cinemaDetail"></p></div><div class="cinema-bar bottom"></div></div>
 <div id="copReward" class="hidden" role="status" aria-live="polite"></div>
@@ -848,9 +958,14 @@ window.MH_SUPABASE = {
   const speedFeel = () => clamp((player.speed * 3.6 - 65) / 335, 0, 1);
   const FIXED_STEP = 1 / 120;
   const keys = new Set();
+  let displayUnits='metric',preferredDifficulty='normal',runDifficulty='normal';
+  let fuelPercent=100,fuelStations=[],nextFuelStop=3000,refuelling=false,fuelEmptyClock=0,fuelLowWarned=false;
+
   // Invisible floating touch origin. Only the road accepts driving gestures.
   const touchDrive={id:null,originX:0,originY:0,x:0,y:0,steer:0,throttle:0,brake:0,boostId:null,boost:false};
+  let wheelieActive=false,wheelieLift=0;
   function resetTouchDrive(){
+    wheelieActive=false;wheelieLift=0;
     const ids=[touchDrive.id,touchDrive.boostId];
     touchDrive.id=null;touchDrive.boostId=null;touchDrive.steer=0;touchDrive.throttle=0;touchDrive.brake=0;touchDrive.boost=false;
     for(const id of ids)if(id!==null)try{if(canvas.hasPointerCapture(id))canvas.releasePointerCapture(id);}catch(_){}
@@ -963,6 +1078,19 @@ window.MH_SUPABASE = {
     else if(/AE86|Hakosuka|Skyline|Silvia|RX-3|Cosmo|Sierra|M3 GTR|22B|Evolution VI|Integra|Quattro/.test(n))c.model=18;
     else if(/Raptor|TRX|Wrangler/.test(n))c.model=19;
   }
+  // Append-only vehicle ID: old saves keep their original vehicle indices.
+  const DIRT_BIKE_ID=cars.length,BIKE_MODEL=bodyStyles.length;
+  bodyStyles.push({name:'Motorcycles',width:27,height:78,radius:2,motorcycle:true});
+  cars.push({name:'MH Trail 250',subtitle:'250 cc single-cylinder dirt bike / fictional game tuning',top:135,times:[7.2,55,130],handling:1.34,model:BIKE_MODEL,redline:11000,motorcycle:true,speedBasis:'Fictional gameplay tuning / not a real motorcycle specification',speedSource:''});
+  const isBike=(i=selected)=>!!cars[i]?.motorcycle;
+  // Append-only IDs preserve all existing careers and garage builds.
+  cars[DIRT_BIKE_ID].bikeType='dirt';cars[DIRT_BIKE_ID].cylinders=1;
+  cars.push(
+    {name:'Honda CBR650R',subtitle:'649 cc inline-four / faired road sport motorcycle',top:230,times:[3.8,14,80],handling:1.25,model:BIKE_MODEL,redline:12000,motorcycle:true,bikeType:'honda',cylinders:4,speedBasis:'Fictional game speed, acceleration and price tuning',speedSource:'https://www.honda.co.uk/motorcycles/range/super-sport/cbr650r/specifications-and-price.html'},
+    {name:'Yamaha MT-07',subtitle:'690 cc parallel twin / naked road motorcycle',top:210,times:[3.9,20,90],handling:1.38,model:BIKE_MODEL,redline:10000,motorcycle:true,bikeType:'naked',cylinders:2,speedBasis:'Fictional game speed, acceleration and price tuning',speedSource:'https://www.yamaha-motor.eu/gb/en/motorcycles/hyper-naked/pdp/mt-07/'},
+    {name:'Kawasaki Ninja ZX-6R',subtitle:'636 cc inline-four / supersport motorcycle',top:255,times:[3.5,11,60],handling:1.3,model:BIKE_MODEL,redline:15000,motorcycle:true,bikeType:'ninja',cylinders:4,speedBasis:'Fictional game speed, acceleration and price tuning',speedSource:'https://www.kawasaki.eu/en/EICMA/Ninja_ZX-6R.html'}
+  );
+
   const trafficColours = ["#c3d0de", "#cf585e", "#4d87bd", "#d7b36c", "#687688", "#86b2a0"];
 
   let gameHour=14,daySeconds=360,daylight=1,heat=0,escapeTimer=0,pursuit=false,fxTimer=0;
@@ -994,22 +1122,22 @@ window.MH_SUPABASE = {
     daylight=lightLevel();
     dispatchCooldown=Math.max(0,dispatchCooldown-dt);
     if(!policeEnabled){resetPursuit();return;}
-    const nearby=traffic.filter(c=>c.police&&!c.wrecked&&Math.abs(c.y-player.y)<650);
-    if(!pursuit&&nearby.some(c=>Math.abs(c.y-player.y)<550)){
+    const nearby=traffic.filter(c=>c.police&&!c.wrecked&&Math.abs(c.y-player.y)<difficultyRules().nearby);
+    if(!pursuit&&nearby.some(c=>Math.abs(c.y-player.y)<difficultyRules().spot)){
       pursuit=true;heat=1;escapeTimer=0;toastTimer=2.5;$('toast').textContent='SPOTTED! · POLICE ACCELERATING';
     }
     if(pursuit){
-      heat=clamp(heat+dt/35,1,3);
+      heat=clamp(heat+dt/difficultyRules().heatSeconds,1,3);
       const kph=player.speed*3.6;
       fastDrivingTime=kph>=300?fastDrivingTime+dt:Math.max(0,fastDrivingTime-dt*2);
       // Dispatch only while an existing patrol still has visual contact.
-      if(fastDrivingTime>=3&&dispatchCooldown<=0&&traffic.some(c=>c.chasing&&!c.wrecked&&Math.abs(c.y-player.y)<850)){
-        if(deployInterceptor(kph>=390?'hyper':'sport')){dispatchCooldown=18;fastDrivingTime=0;}
+      if(fastDrivingTime>=difficultyRules().dispatchDelay&&dispatchCooldown<=0&&traffic.some(c=>c.chasing&&!c.wrecked&&Math.abs(c.y-player.y)<difficultyRules().vision)){
+        if(deployInterceptor(kph>=390?'hyper':'sport')){dispatchCooldown=difficultyRules().dispatchCooldown;fastDrivingTime=0;}
       }
       for(const car of nearby)car.chasing=true;
-      const seen=traffic.some(c=>c.chasing&&Math.abs(c.y-player.y)<850);
+      const seen=traffic.some(c=>c.chasing&&Math.abs(c.y-player.y)<difficultyRules().vision);
       escapeTimer=seen?0:escapeTimer+dt;
-      if(escapeTimer>=8){resetPursuit();bonus+=500;toastTimer=3;$('toast').textContent='PURSUIT EVADED · +500';}
+      if(escapeTimer>=difficultyRules().escapeSeconds){resetPursuit();bonus+=500*drivingRewardMultiplier();grantCareerCash(2500);toastTimer=3;$('toast').textContent=sessionType==='career'?'PURSUIT EVADED / +'+(500*drivingRewardMultiplier()).toLocaleString('en-GB')+' PTS / +$'+Math.round(2500*difficultyReward()).toLocaleString('en-GB'):'PURSUIT EVADED / FREESTYLE';}
     }
   }
   let policeEnabled=true, manual=false, soundEnabled=true, density=1;
@@ -1083,7 +1211,7 @@ window.MH_SUPABASE = {
   const carBuilds={};
   try{Object.assign(carBuilds,JSON.parse(localStorage.getItem(gameStorageKey('midnight-apex-builds'))||'{}'));}catch(_){}
   let weatherMode='auto',weatherKind='clear',weatherTimer=60,rainAmount=0,snowAmount=0;
-  let mode='endless',wet=false,runTime=0,nearMisses=0,driftSeconds=0,challengeDone=[false,false,false],sprintFinished=false;
+  let mode='endless',wet=false,runTime=0,nearMisses=0,driftSeconds=0,challengeDone=[false,false,false,false],sprintFinished=false;
   let career={runs:0,bestDistance:0,nearMisses:0};
   try{Object.assign(career,JSON.parse(localStorage.getItem(gameStorageKey('midnight-apex-career'))||'{}'));}catch(_){}
   function persistBuilds(){try{localStorage.setItem(gameStorageKey('midnight-apex-builds'),JSON.stringify(carBuilds));}catch(_){}}
@@ -1182,7 +1310,7 @@ window.MH_SUPABASE = {
       </button>`;
     }).join("");
     document.querySelectorAll('[data-preview]').forEach(el=>{const i=Number(el.dataset.preview),g=el.getContext('2d');g.clearRect(0,0,280,130);g.save();g.translate(140,65);g.rotate(-Math.PI/2);g.scale(.83,.83);drawCar(0,0,carBuilds[i]?.paint||'#65c7dc',cars[i].model,0,false,0,g);g.restore();});
-    $('garageCount').textContent=document.querySelectorAll('[data-car]').length+' / 210 VEHICLES · '+career.runs+' RUNS COMPLETED';
+    $('garageCount').textContent=document.querySelectorAll('[data-car]').length+' / 211 VEHICLES · '+career.runs+' RUNS COMPLETED';
     const hg=$('heroCar').getContext('2d');hg.clearRect(0,0,560,240);hg.save();hg.translate(280,120);hg.rotate(-Math.PI/2);hg.scale(1.7,1.7);drawCar(0,0,paint,cars[selected].model,0,true,0,hg);hg.restore();
     stats = currentStats();refreshBuild();
   }
@@ -1232,8 +1360,9 @@ window.MH_SUPABASE = {
 
   function startGame() {
     prepareSession();
+    resetRoadEvents();
     rewardTimer=0;copWrecks=0;$('copReward').classList.add('hidden');
-    scenery=1200;mode=$('driveMode').value;weatherMode=$('weather').value;weatherKind=weatherMode==='auto'||weatherMode==='dry'?'clear':weatherMode;weatherTimer=random(45,85);rainAmount=weatherKind==='rain'?1:0;snowAmount=weatherKind==='snow'?1:0;wet=rainAmount>.1;runTime=0;nearMisses=0;driftSeconds=0;challengeDone=[false,false,false];sprintFinished=false;
+    scenery=1200;mode=$('driveMode').value;weatherMode=$('weather').value;weatherKind=weatherMode==='auto'||weatherMode==='dry'?'clear':weatherMode;weatherTimer=random(45,85);rainAmount=weatherKind==='rain'?1:0;snowAmount=weatherKind==='snow'?1:0;wet=rainAmount>.1;runTime=0;nearMisses=0;driftSeconds=0;challengeDone=[false,false,false,false];sprintFinished=false;
     policeEnabled=(mode==='zen'||mode==='empty')?false:$('police').checked;
     gameHour=Number($('startTime').value);daySeconds=Number($('dayLength').value);daylight=lightLevel();resetPursuit();fxTimer=0;
     slip=0;steerLoad=0;previousSteer=0;sharpTurn=0;turnHold=0;skidMarks=[];smoke=[];cinematic=null;
@@ -1281,7 +1410,7 @@ window.MH_SUPABASE = {
   $("resume").addEventListener("click", togglePause);
 
   const controlCodes = new Set([
-    "ShiftLeft","ShiftRight",
+    "ControlLeft","ControlRight","ShiftLeft","ShiftRight",
     "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
     "Space", "KeyW", "KeyA", "KeyS", "KeyD", "KeyP", "Escape", "KeyQ", "KeyE", "KeyO"
   ]);
@@ -1381,9 +1510,9 @@ window.MH_SUPABASE = {
     }
   }
   function awardCopWreck(car){
-    if(car.rewarded)return;car.rewarded=true;bonus+=750;copWrecks++;
+    if(car.rewarded)return;car.rewarded=true;bonus+=750*drivingRewardMultiplier();copWrecks++;grantCareerCash(250);
     rewardTimer=3.2;
-    $('copReward').innerHTML='<span class="reward-label">PATROL WRECKED</span><strong>+750</strong><small>'+copWrecks+' POLICE WRECK'+(copWrecks===1?'':'S')+' THIS RUN</small>';
+    $('copReward').innerHTML='<span class="reward-label">PATROL WRECKED</span><strong>+'+(750*drivingRewardMultiplier()).toLocaleString('en-GB')+' PTS</strong><small>'+(sessionType==='career'?'+$'+Math.round(250*difficultyReward()).toLocaleString('en-GB')+' / ':'FREESTYLE / ')+copWrecks+' POLICE WRECK'+(copWrecks===1?'':'S')+' THIS RUN</small>';
     $('copReward').classList.remove('hidden');shake=Math.max(shake,4);
     if(audio&&soundEnabled){const o=audio.createOscillator(),g=audio.createGain(),t=audio.currentTime;o.type='sine';o.frequency.setValueAtTime(660,t);o.frequency.setValueAtTime(990,t+.1);g.gain.setValueAtTime(.045,t);g.gain.exponentialRampToValueAtTime(.001,t+.4);o.connect(g);g.connect(audioOutput('effects'));o.start(t);o.stop(t+.42);o.onended=()=>{o.disconnect();g.disconnect();};}
   }
@@ -1413,19 +1542,19 @@ window.MH_SUPABASE = {
     combo = Math.min(combo + 1, 12);
     comboTimer = 5;
     const earned = 100 * combo;
-    bonus += earned;
+    bonus += earned*drivingRewardMultiplier();
     toastTimer = 1.7;
     $("toast").textContent = `CLOSE SHAVE! +${earned} · ×${combo}`;
   }
 
   function crash(hit=null) {
     if (state !== "playing") return;
-    const score = Math.floor(distance + bonus);
+    const score = Math.floor((distance+bonus)*difficultyReward());
     if(sessionType==='career')best = Math.max(best, score);
     try { if(sessionType==='career')localStorage.setItem(gameStorageKey("midnight-highway-best"), String(best)); } catch (_) {}
     $("finalScore").textContent = score.toLocaleString("en-GB");
-    $("finalDistance").textContent = Math.floor(distance).toLocaleString("en-GB") + " m";
-    $("finalSpeed").textContent = Math.round(maxSpeed) + " km/h";
+    $("finalDistance").textContent = formatDistance(distance);
+    $("finalSpeed").textContent = formatSpeed(maxSpeed);
     $("bestScore").textContent = best.toLocaleString("en-GB");
     const busted=!!hit?.police&&!hit.wrecked;
     document.querySelector('#gameOver h1').textContent=busted?'BUSTED':'WIPED OUT';
@@ -1455,23 +1584,30 @@ window.MH_SUPABASE = {
     runTime+=dt;
     if(mode==='sprint'&&runTime>=90){finishSprint();return;}
     tickWorld(dt);
+    tickSpikeStrips(dt);
     const throttleInput=Math.max(Number(keys.has("KeyW")||keys.has("ArrowUp")),touchDrive.throttle);
-    const accelerate=throttleInput>0;
+    const accelerate=throttleInput>0&&(!fuelRequired()||fuelPercent>0);
     const brakeInput=Math.max(Number(keys.has("KeyS")||keys.has("ArrowDown")),touchDrive.brake);
     const brake=brakeInput>0;
     spinTimer=Math.max(0,spinTimer-dt);
     const keyboardSteering=Number(keys.has("KeyD")||keys.has("ArrowRight"))-Number(keys.has("KeyA")||keys.has("ArrowLeft"));
-    const steering=keyboardSteering||touchDrive.steer;
+    const requestedSteering=keyboardSteering||touchDrive.steer;
+    const steering=punctureTimer>0?clamp(requestedSteering*.45+Math.sin(puncturePhase*7)*.68,-1,1):requestedSteering;
     const c=cars[selected];
+    const wheelieRequest=keys.has('ControlLeft')||keys.has('ControlRight')||(isBike()&&touchDrive.boost);
+    wheelieActive=punctureTimer<=0&&isBike()&&wheelieRequest&&accelerate&&!brake&&!keys.has('Space')&&player.speed>3&&slip<.3;
+    wheelieLift=lerp(wheelieLift,wheelieActive?1:0,1-Math.exp(-dt*(brake?22:wheelieActive?5:10)));
+    if(wheelieLift<.001)wheelieLift=0;
     shiftTimer=Math.max(0,shiftTimer-dt);shiftFlash=Math.max(0,shiftFlash-dt);
     const kph=player.speed*3.6;
+    const dynamics=handlingAtSpeed(selected,kph);
     if(!manual&&shiftTimer===0){if(kph>gearLimits[gear]*.91&&gear<7)shift(1);else if(gear>1&&kph<gearLimits[gear-1]*.68)shift(-1);}
     const targetRPM=clamp(900+kph/gearLimits[gear]*(c.redline-900),900,c.redline);
     rpm=lerp(rpm,targetRPM,1-Math.exp(-dt*18));
-    boostActive=nitro&&accelerate&&!brake&&nitroFuel>0&&(keys.has('ShiftLeft')||keys.has('ShiftRight')||touchDrive.boost);
-    nitroFuel=clamp(nitroFuel+(boostActive?-22/(stats.nitroEfficiency||1):(keys.has('ShiftLeft')||keys.has('ShiftRight')||touchDrive.boost)?0:9)*dt,0,100);
-    const topMS=stats.top/3.6*(boostActive?1.025:1);
-    if(brake)player.speed-=10.5*(stats.braking||1)*brakeInput*dt;
+    boostActive=(!fuelRequired()||fuelPercent>0)&&nitro&&accelerate&&!brake&&nitroFuel>0&&(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()));
+    nitroFuel=clamp(nitroFuel+(boostActive?-22/(stats.nitroEfficiency||1):(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()))?0:9)*dt,0,100);
+    const topMS=stats.top/3.6*(boostActive?1.025:1)*(wheelieActive?1.10:1);
+    if(brake)player.speed-=10.5*(stats.braking||1)*dynamics.braking*brakeInput*dt;
     else if(accelerate){
       const t=c.times.map(v=>v/(stats.power||1));let acceleration;
       if(kph<100)acceleration=(100/3.6)/(t[0]-.10);
@@ -1480,24 +1616,26 @@ window.MH_SUPABASE = {
       else acceleration=(100/3.6)/(t[2]-t[1])*.75;
       // ECU tuning is included once in stats.power.
       acceleration*=boostActive?1.28:1;
+      if(wheelieActive)acceleration*=1.15;
       acceleration*=clamp((topMS-player.speed)/Math.max(6,topMS*.1),0,1);
-      if(manual){acceleration*=clamp(targetRPM/(c.redline*.5),.35,1);if(kph>=gearLimits[gear])acceleration=0;}
+      if(manual){acceleration*=clamp(targetRPM/(c.redline*.5),.35,1);if(kph>=gearLimits[gear]*(wheelieActive?1.10:1))acceleration=0;}
       if(shiftTimer>0)acceleration=0;
       player.speed+=acceleration*throttleInput*dt;
     }else player.speed-=(.18+.00014*player.speed*player.speed)*dt;
     // No instant speed clamp when nitrous ends: aerodynamic drag slows the car.
     if(player.speed>topMS)player.speed-=Math.min(player.speed-topMS,2*dt);
     player.speed=Math.max(0,player.speed);
-    const steeringSpeed = (105 + player.speed * 1.65) * stats.handling;
+    const steeringSpeed=(105+Math.min(player.speed,65)*.65)*stats.handling*dynamics.steerScale*(wheelieActive?.55:1);
     // Lateral demand accumulates during a hard turn. Reversing the wheel
     // suddenly adds load; sport tyres raise the available grip.
-    const speedLoad=Math.pow(clamp((kph-80)/210,0,1.8),1.35);
+    const speedLoad=Math.pow(clamp((kph-55)/Math.max(110,stats.top*.65),0,2),1.3)*dynamics.load;
     const reversal=steering!==0&&previousSteer!==0&&Math.sign(steering)!==Math.sign(previousSteer);
     const handbrake=keys.has('Space')&&player.speed>12;
-    const demand=Math.abs(steering)*speedLoad*(tyres?.72:1)*(1+rainAmount*.28+snowAmount*(equipped().rubber==='offroad'?.22:.65))+(handbrake?1.1:0);
+    const powerOversteer=accelerate?dynamics.powerOversteer*clamp((stats.power||1)-.6,0,1.5):0;
+    const demand=Math.abs(steering)*speedLoad*(1+powerOversteer)*(tyres?.72:1)*(1+rainAmount*.28+snowAmount*(equipped().rubber==='offroad'?.22:.65))+(handbrake?1.1:0);
     if(handbrake)player.speed=Math.max(0,player.speed-5*dt);
-    if(slip>.25&&player.speed>18){driftSeconds+=dt;bonus+=dt*25;}
-    steerLoad=lerp(steerLoad,demand,1-Math.exp(-dt*3));
+    if(slip>.25&&player.speed>18){driftSeconds+=dt;bonus+=dt*25*drivingRewardMultiplier();}
+    steerLoad=lerp(steerLoad,demand,1-Math.exp(-dt*dynamics.loadResponse));
     if(reversal&&Math.abs(player.vx)>65)sharpTurn=.65;
     sharpTurn=Math.max(0,sharpTurn-dt);
     turnHold=steering?turnHold+dt:0;
@@ -1505,12 +1643,12 @@ window.MH_SUPABASE = {
     // Ordinary fast lane changes leave tyre scrub without losing traction.
     // Actual slides need a committed extreme-speed turn, a sharp reversal,
     // or the handbrake. Snow and rain modestly lower that threshold.
-    const extremeTurn=turnHold>.85&&kph>(tyres?410:365)-rainAmount*25-snowAmount*45;
-    const sharpDemand=sharpTurn>0&&kph>190?steerLoad*.95:extremeTurn?steerLoad*.72:0;
-    const targetSlip=handbrake?clamp(steerLoad*.7,0,1):clamp((sharpDemand-1.05)*.8,0,.7);
-    slip=lerp(slip,targetSlip,1-Math.exp(-dt*(targetSlip>slip?4:1.8)));
+    const extremeTurn=turnHold>dynamics.turnCommit&&kph>dynamics.breakSpeed+(tyres?30:0)-rainAmount*25-snowAmount*45;
+    const sharpDemand=sharpTurn>0&&kph>dynamics.reversalSpeed?steerLoad*dynamics.oversteer:extremeTurn?steerLoad*.85*dynamics.oversteer:0;
+    const targetSlip=handbrake?clamp(steerLoad*.7,0,1):clamp((sharpDemand-dynamics.grip)*.8,0,.7);
+    slip=lerp(slip,targetSlip,1-Math.exp(-dt*(targetSlip>slip?4:dynamics.recovery)));
     const targetVX = steering * steeringSpeed * clamp(player.speed / 9, 0, 1)*(1-slip*.38);
-    const response=(tyres?13:9)*(1-rainAmount*.18-snowAmount*(equipped().rubber==='offroad'?.1:.32))*(1-slip*.85);
+    const response=dynamics.response*(tyres?1.25:1)*(1-rainAmount*.18-snowAmount*(equipped().rubber==='offroad'?.1:.32))*(1-slip*.85);
     player.vx = lerp(player.vx, targetVX, 1 - Math.exp(-dt * response));
     player.x += player.vx * dt;
     if(slip>.12)player.speed=Math.max(0,player.speed-slip*(brake?7:3)*dt);
@@ -1532,7 +1670,7 @@ window.MH_SUPABASE = {
     $('skidWarning').style.opacity=String(clamp(slip*2,0,1));
     if(spinTimer>0){player.x+=Math.sin(spinTimer*17)*90*dt;player.speed=Math.max(0,player.speed-6*dt);}
     const halfBody=bodyStyles[stats.model].width/2+5;
-    const minX = ROAD_LEFT + halfBody, maxX = ROAD_RIGHT - halfBody;
+    const minX=ROAD_LEFT+halfBody,maxX=stationBayOpen()?W-halfBody-6:ROAD_RIGHT-halfBody;
     if (player.x < minX || player.x > maxX) {
       player.x = clamp(player.x, minX, maxX);
       player.vx = 0;
@@ -1540,7 +1678,10 @@ window.MH_SUPABASE = {
       shake = Math.max(shake, 1.5);
     }
     player.tilt = lerp(player.tilt, player.vx / 1500+Math.sign(player.vx)*slip*.42+(spinTimer>0?Math.sin(spinTimer*15)*.3:0), 1 - Math.exp(-dt * 12));
-    distance += player.speed * dt;
+    const metresThisTick=player.speed*dt;
+    distance+=metresThisTick;
+    tickFuelSystem(dt,metresThisTick);
+    bonus+=metresThisTick*(drivingRewardMultiplier()-1);
     scenery = (scenery + player.speed * PIXELS_PER_METRE * dt) % 120000;
     maxSpeed = Math.max(maxSpeed, player.speed * 3.6);
 
@@ -1595,13 +1736,13 @@ window.MH_SUPABASE = {
       if(car.chasing&&!car.wrecked){
         const gap=car.y-player.y;
         if(!car.tactic){car.tactic='follow';car.pitTimer=random(5,9);car.trailX=player.x;}
-        car.trailX=lerp(car.trailX,player.x,1-Math.exp(-dt*1.5));
-        car.pitTimer-=dt;
+        car.trailX=lerp(car.trailX,player.x,1-Math.exp(-dt*difficultyRules().tracking));
+        car.pitTimer-=dt*difficultyRules().pitRate;
         if(car.tactic==='follow'&&car.pitTimer<=0&&gap>85&&gap<320&&player.speed>15){car.tactic='windup';car.pitHit=false;car.attackTime=1.2;car.pitSide=player.x>W/2?-1:1;toastTimer=1.3;$('toast').textContent='PIT ATTEMPT · FAKE A LANE CHANGE';}
         if(car.tactic==='windup'){car.attackTime-=dt;if(car.attackTime<=0){car.tactic='strike';car.attackTime=1.4;car.lockX=player.x;}}
         let desired,targetX;
         const spec=policeSpecs[car.policeTier||'patrol'];
-        const cap=(spec.top+heat*2)/3.6;
+        const cap=(spec.top+heat*2)/3.6*difficultyRules().policeSpeed;
         if(car.tactic==='follow'){
           desired=clamp(player.speed+(gap-175)*.13,0,cap);targetX=car.trailX;
         }else if(car.tactic==='windup'){
@@ -1612,8 +1753,8 @@ window.MH_SUPABASE = {
         }
         // Committed strikes deliberately do not dodge traffic: bait them into it.
         if(leader&&car.tactic==='follow')desired=Math.min(desired,Math.max(0,leader.speed-2));
-        car.speed+=clamp(desired-car.speed,-18*dt,spec.accel*dt);
-        car.x+=clamp(targetX-car.x,-(car.tactic==='strike'?125:85)*dt,(car.tactic==='strike'?125:85)*dt);
+        car.speed+=clamp(desired-car.speed,-18*dt,spec.accel*dt*difficultyRules().policeAccel);
+        car.x+=clamp(targetX-car.x,-(car.tactic==='strike'?125:85)*dt*difficultyRules().policeSteer,(car.tactic==='strike'?125:85)*dt*difficultyRules().policeSteer);
         car.x=clamp(car.x,ROAD_LEFT+28,ROAD_RIGHT-28);
         car.changing=false;car.signal=0;car.lane=clamp(Math.floor((car.x-ROAD_LEFT)/LANE_WIDTH),0,3);car.targetLane=car.lane;
       }
@@ -1643,9 +1784,9 @@ window.MH_SUPABASE = {
     snowAmount=lerp(snowAmount,weatherKind==='snow'?1:0,1-Math.exp(-dt*.12));wet=rainAmount>.08;
   }
   function finishSprint(){
-    sprintFinished=true;const score=Math.floor(distance+bonus);if(sessionType==='career')best=Math.max(best,score);
+    sprintFinished=true;const score=Math.floor((distance+bonus)*difficultyReward());if(sessionType==='career')best=Math.max(best,score);
     try{if(sessionType==='career')localStorage.setItem(gameStorageKey('midnight-highway-best'),String(best));}catch(_){}
-    $('finalScore').textContent=score.toLocaleString('en-GB');$('finalDistance').textContent=Math.floor(distance)+' m';$('finalSpeed').textContent=Math.round(maxSpeed)+' km/h';$('bestScore').textContent=best.toLocaleString('en-GB');
+    $('finalScore').textContent=score.toLocaleString('en-GB');$('finalDistance').textContent=formatDistance(distance);$('finalSpeed').textContent=formatSpeed(maxSpeed);$('bestScore').textContent=best.toLocaleString('en-GB');
     document.querySelector('#gameOver h1').textContent='SPRINT COMPLETE';$('crashText').textContent='90 seconds. '+nearMisses+' near misses. '+driftSeconds.toFixed(1)+' seconds drifting.';
     player.speed=0;boostActive=false;setState('over');
   }
@@ -1676,23 +1817,17 @@ window.MH_SUPABASE = {
     $('wantedStars').textContent='★'.repeat(level)+'☆'.repeat(3-level);
     $('wantedUnits').textContent=units+' ACTIVE UNIT'+(units===1?'':'S');
     $('wantedClock').textContent=hh+':'+mm+' · '+(daylight>.6?'DAY':daylight>.1?'TWILIGHT':'NIGHT');
-    $('wantedDetail').textContent=mode==='empty'?'Open road / police disabled':!policeEnabled?'O to enable patrols':!pursuit?'Stay alert. Patrols can spot you.':escaping?'Lose visual contact for '+Math.max(0,8-escapeTimer).toFixed(1)+'s':units+' pursuing · '+(heat>=2?'HIGH PRIORITY':'VISUAL CONTACT');
-    $('wantedProgress').style.width=(escaping?escapeTimer/8*100:pursuit?heat/3*100:0)+'%';
+    $('wantedDetail').textContent=mode==='empty'?'Open road / police disabled':!policeEnabled?'O to enable patrols':!pursuit?'Stay alert. Patrols can spot you.':escaping?'Lose visual contact for '+Math.max(0,difficultyRules().escapeSeconds-escapeTimer).toFixed(1)+'s':units+' pursuing · '+(heat>=2?'HIGH PRIORITY':'VISUAL CONTACT');
+    $('wantedProgress').style.width=(escaping?escapeTimer/difficultyRules().escapeSeconds*100:pursuit?heat/3*100:0)+'%';
     $('wantedMeterLabel').textContent=escaping?'ESCAPE PROGRESS':pursuit?'PURSUIT HEAT':'NO ACTIVE PURSUIT';
-    const goals=[distance>=2000,nearMisses>=5,driftSeconds>=5];
-    goals.forEach((done,i)=>{if(done&&!challengeDone[i]){challengeDone[i]=true;bonus+=1000;toastTimer=2.5;$('toast').textContent='CHALLENGE COMPLETE · +1,000';}});
-    $('runClock').textContent=mode==='sprint'?Math.max(0,90-runTime).toFixed(1)+'s LEFT':Math.floor(runTime/60)+':'+String(Math.floor(runTime%60)).padStart(2,'0');
-    $('runMode').textContent=(mode==='sprint'?'SPRINT':mode==='zen'?'CRUISE':mode==='empty'?'NO TRAFFIC':'SCORE ATTACK')+(snowAmount>.1?' / SNOW':rainAmount>.1?' / RAIN':' / CLEAR')+' / '+biomeAt(player.y);
-    $('challengeList').innerHTML=[['Drive 2 km',distance/2000],['5 near misses',nearMisses/5],['Drift for 5 seconds',driftSeconds/5]].map((v,i)=>'<div class="goal '+(challengeDone[i]?'done':'')+'"><span>'+(challengeDone[i]?'✓ ': '')+v[0]+'</span><b>'+Math.min(100,Math.floor(v[1]*100))+'%</b><i style="width:'+clamp(v[1]*100,0,100)+'%"></i></div>').join('');
-    $('gripFill').style.width=(100-slip*100)+'%';$('gripFill').style.background=slip>.4?'#888':'#fff';
-    $('driveFeedback').textContent=slip>.25?'TRACTION LOST':boostActive?'NITRO ACTIVE':Math.abs(player.vx)>80&&player.speed>40?'TYRE SCRUB / GRIP STABLE':player.speed>80?'HIGH SPEED':'GRIP STABLE';
-    $("speed").textContent = Math.round(player.speed * 3.6);
-    $("speedImperial").textContent="KM/H · "+Math.round(player.speed*2.236936)+" MPH";
-    $("distance").textContent = Math.floor(distance).toLocaleString("en-GB");
-    $("combo").textContent = "×" + combo;
-    $("score").textContent = Math.floor(distance + bonus).toLocaleString("en-GB") + " POINTS";
-    $("toast").classList.toggle("hidden", state !== "playing" || toastTimer <= 0);
-    $("hint").classList.toggle("hidden", state !== "playing" || hintTimer <= 0);
+    const quests=runQuests();
+    quests.forEach((q,i)=>{
+      if(q.progress>=1&&!challengeDone[i]){
+        challengeDone[i]=true;bonus+=1000*drivingRewardMultiplier();grantCareerCash(q.cash);
+        toastTimer=3;$('toast').textContent='QUEST COMPLETE / '+q.difficulty+' / '+(sessionType==='career'?'+$'+Math.round(q.cash*difficultyReward()).toLocaleString('en-GB'):'FREESTYLE / NO CASH');
+      }
+    });
+    $('challengeList').innerHTML=quests.map((q,i)=>'<div class="goal '+(challengeDone[i]?'done':'')+'"><span>'+(challengeDone[i]?'✓ ':'')+q.label+' / '+q.difficulty+' / $'+Math.round(q.cash*difficultyReward()).toLocaleString('en-GB')+'</span><b>'+Math.min(100,Math.floor(q.progress*100))+'%</b><i style="width:'+clamp(q.progress*100,0,100)+'%"></i></div>').join('');
   }
 
   function rounded(x, y, width, height, radius, fill) {
@@ -1942,6 +2077,7 @@ window.MH_SUPABASE = {
   }
 
   function drawCar(x,y,colour,model,tilt,isPlayer,signal=0,g=ctx,cargo=false){
+    if(model===BIKE_MODEL){drawDirtBike(x,y,colour,tilt,isPlayer,g);return;}
     if(model>=8){drawVarietyCar(x,y,colour,model,tilt,isPlayer,signal,g);return;}
     const b=bodyStyles[model]||bodyStyles[0],w=b.width,h=b.height;
     const box=(x,y,w,h,r,c)=>{g.fillStyle=c;g.beginPath();g.roundRect(x,y,w,h,r);g.fill();};
@@ -2003,6 +2139,7 @@ window.MH_SUPABASE = {
       ctx.translate(player.x,player.y-60);ctx.scale(z,z);ctx.translate(-player.x,-player.y+60);
     }
     drawRoad();
+    if(state!=='menu')drawFuelStations();
     for(const m of skidMarks){ctx.save();ctx.globalAlpha=Math.min(.6,m.life*.3);ctx.translate(m.x,m.y);ctx.rotate(m.tilt);rounded(-2,-m.length/2,4,m.length,1,'#080b10');ctx.restore();}
     if(boostActive&&state==='playing'){
       ctx.save();ctx.strokeStyle='#62dfff77';ctx.lineWidth=2;
@@ -2021,7 +2158,7 @@ window.MH_SUPABASE = {
       }
       if(boostActive&&state==='playing'){
         ctx.save();ctx.translate(player.x,player.y);ctx.rotate(player.tilt);
-        for(const x of [-13,13]){const length=35+10*Math.sin(ambient*65);const flame=ctx.createLinearGradient(0,40,0,40+length);flame.addColorStop(0,'#f3ffff');flame.addColorStop(.25,'#48e6ff');flame.addColorStop(1,'#655aff00');ctx.fillStyle=flame;ctx.shadowColor='#48dfff';ctx.shadowBlur=22;ctx.beginPath();ctx.moveTo(x-6,38);ctx.quadraticCurveTo(x-12,60,x,40+length);ctx.quadraticCurveTo(x+12,60,x+6,38);ctx.fill();}ctx.restore();
+        for(const x of (isBike()?[10]:[-13,13])){const length=35+10*Math.sin(ambient*65);const flame=ctx.createLinearGradient(0,40,0,40+length);flame.addColorStop(0,'#f3ffff');flame.addColorStop(.25,'#48e6ff');flame.addColorStop(1,'#655aff00');ctx.fillStyle=flame;ctx.shadowColor='#48dfff';ctx.shadowBlur=22;ctx.beginPath();ctx.moveTo(x-6,38);ctx.quadraticCurveTo(x-12,60,x,40+length);ctx.quadraticCurveTo(x+12,60,x+6,38);ctx.fill();}ctx.restore();
       }
       drawCar(player.x, player.y, paint, stats.model, player.tilt, true);
       for(const p of smoke){ctx.save();ctx.globalAlpha=p.life/p.max*.32;ctx.fillStyle='#c6d2d9';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.restore();}
@@ -2040,16 +2177,21 @@ window.MH_SUPABASE = {
           }
         }
       }
+      drawSpikeStrips();
       // Ambient light affects the entire world, not just the road material.
       ctx.save();ctx.fillStyle=`rgba(0,7,22,${(1-daylight)*.38})`;ctx.fillRect(0,0,W,H);
       const sunset=clamp(1-Math.abs(gameHour-18)/1.8,0,1);
       ctx.fillStyle=`rgba(255,141,57,${sunset*.12})`;ctx.fillRect(0,0,W,H);ctx.restore();
       // Render headlights after ambient shading so night beams remain visible.
       if(daylight<.8){
-        for(const v of [{x:player.x,y:player.y,tilt:player.tilt},...traffic]){
+        for(const v of [{x:player.x,y:player.y,tilt:player.tilt,motorcycle:isBike()},...traffic]){
           ctx.save();ctx.translate(v.x,v.y);ctx.rotate(v.tilt||0);
           const beam=ctx.createLinearGradient(0,-38,0,-260);beam.addColorStop(0,`rgba(221,245,255,${(1-daylight)*.42})`);beam.addColorStop(1,'rgba(210,239,255,0)');ctx.fillStyle=beam;
-          for(const side of [-1,1]){ctx.beginPath();ctx.moveTo(side*15-5,-38);ctx.lineTo(side*15+5,-38);ctx.lineTo(side*45+40,-260);ctx.lineTo(side*45-40,-260);ctx.closePath();ctx.fill();}ctx.restore();
+          if(v.motorcycle){
+            // One centred beam, not the car's two separated cones.
+            const nose=-38+wheelieLift*15;
+            ctx.beginPath();ctx.moveTo(-4,nose);ctx.lineTo(4,nose);ctx.lineTo(42,-245);ctx.lineTo(-42,-245);ctx.closePath();ctx.fill();
+          }else for(const side of [-1,1]){ctx.beginPath();ctx.moveTo(side*15-5,-38);ctx.lineTo(side*15+5,-38);ctx.lineTo(side*45+40,-260);ctx.lineTo(side*45-40,-260);ctx.closePath();ctx.fill();}ctx.restore();
         }
       }
       for(const car of traffic.filter(c=>c.police&&!c.wrecked)){
@@ -2098,8 +2240,8 @@ window.MH_SUPABASE = {
     g.textAlign='left';g.fillStyle='#888';g.font='11px system-ui';g.fillText('TELEMETRY / LIVE',34,42);
     g.fillStyle='#eee';g.font='bold 16px system-ui';g.fillText(manual?'MANUAL':'AUTOMATIC',34,76);
     g.textAlign='right';g.fillText('GEAR '+gear,426,76);
-    g.fillStyle='#fff';g.font='bold 112px system-ui';g.fillText(String(Math.round(player.speed*3.6)),426,201);
-    g.font='12px system-ui';g.fillStyle='#999';g.fillText('KM/H  /  '+Math.round(player.speed*2.236936)+' MPH',426,232);
+    g.fillStyle='#fff';g.font='bold 112px system-ui';g.fillText(String(Math.round(displaySpeed(player.speed*3.6))),426,201);
+    g.font='12px system-ui';g.fillStyle='#999';g.fillText(speedUnit().toUpperCase()+' / '+(displayUnits==='imperial'?Math.round(player.speed*3.6)+' KM/H':Math.round(player.speed*2.236936)+' MPH'),426,232);
     g.fillStyle='#292929';g.fillRect(34,260,392,4);g.fillStyle='#eee';g.fillRect(34,260,392*clamp(rpm/cars[selected].redline,0,1),4);
     g.textAlign='left';g.font='10px system-ui';g.fillStyle='#888';g.fillText('ENGINE RPM',34,287);
     g.textAlign='right';g.fillStyle='#ddd';g.fillText(Math.round(rpm).toLocaleString('en-GB'),426,287);
@@ -2114,7 +2256,7 @@ window.MH_SUPABASE = {
     if(!audioGain)return;
     const audible=(state==='playing'||(workshopOpen&&workshopClock<1.7)||(state==='cinematic'&&cinematic&&cinematic.time<1.2))&&soundEnabled,t=audio.currentTime;
     const car=cars[selected],name=car.name;
-    const cylinders=({v12:12,v10:10,v8:8,inline6:6,rotary:4})[equipped().motor]||(/Chiron/.test(name)?16:/Aventador/.test(name)?12:/LFA/.test(name)?10:/Hellcat|Mustang|Corvette|Jesko|SF90|P1|RS6|AMG|Vantage|Urus/.test(name)?8:/Civic|Golf|Transit/.test(name)?4:/Yaris/.test(name)?3:6);
+    const cylinders=isBike()?(cars[selected].cylinders||1):({v12:12,v10:10,v8:8,inline6:6,rotary:4})[equipped().motor]||(/Chiron/.test(name)?16:/Aventador/.test(name)?12:/LFA/.test(name)?10:/Hellcat|Mustang|Corvette|Jesko|SF90|P1|RS6|AMG|Vantage|Urus/.test(name)?8:/Civic|Golf|Transit/.test(name)?4:/Yaris/.test(name)?3:6);
     if(audioCar!==selected){
       const real=new Float32Array(24),imag=new Float32Array(24);
       for(let h=1;h<24;h++){imag[h]=(h%2===0?.3:1)/Math.pow(h,2.2);if(cylinders>=8&&h%3===0)imag[h]*=1.35;}
@@ -2244,7 +2386,7 @@ window.MH_SUPABASE = {
   $('shopParts').addEventListener('change',updateQuote);$('shopParts').addEventListener('input',updateQuote);
   $('applyParts').addEventListener('click',()=>{if(pageMode!=='shop'||!economy.owned.includes(selected))return;const q=quoteParts();if(q.cost>economy.cash){$('purchaseNotice').textContent='Not enough funds.';return;}economy.cash-=q.cost;economy.parts[selected]=q.next;audioCar=-1;persistEconomy();loadBuild();soundEffect('tool');buildFlash=.7;renderShop();$('purchaseNotice').textContent='INSTALLED / '+money(q.cost)+' / Saved to this vehicle.';});
   $('shopCars').addEventListener('click',e=>{const card=e.target.closest('[data-shop-car]');if(!card)return;const i=Number(card.dataset.shopCar);if(!economy.owned.includes(i)){if(economy.cash<prices[i]){$('purchaseNotice').textContent='Need '+money(prices[i]-economy.cash)+' more to buy this vehicle.';return;}economy.cash-=prices[i];economy.owned.push(i);persistEconomy();}saveBuild();selected=i;loadBuild();renderShop();$('purchaseNotice').textContent='Selected / '+cars[i].name;});
-  function bankRun(){if(!runActive||sessionType!=='career')return;const total=Math.floor(distance/10+bonus/10),pay=Math.max(0,total-runPaid);if(pay){economy.cash+=pay;economy.earned+=pay;runPaid+=pay;persistEconomy();}updateWallet();}
+  function bankRun(){if(!runActive||sessionType!=='career')return;const total=Math.floor((distance+bonus)/10*difficultyReward()),pay=Math.max(0,total-runPaid);if(pay){economy.cash+=pay;economy.earned+=pay;runPaid+=pay;persistEconomy();}updateWallet();}
   const baseSim=simulate;simulate=function(dt){baseSim(dt);bankRun();};
   const baseStart=startGame;startGame=function(){if(sessionType==='career'&&!economy.owned.includes(selected))selected=0;loadBuild();runPaid=0;runActive=true;pageMode='play';baseStart();};
   const baseReturn=returnToMenu;returnToMenu=function(){bankRun();runActive=false;baseReturn();goHome();};
@@ -2369,6 +2511,7 @@ window.MH_SUPABASE = {
   $('dealerBuy').addEventListener('click',()=>{const i=dealerSelected;if(!economy.owned.includes(i)){if(economy.cash<prices[i])return;economy.cash-=prices[i];economy.owned.push(i);persistEconomy();}saveBuild();selected=i;loadBuild();closeDealer();$('purchaseNotice').textContent='READY TO MODIFY / '+cars[i].name;});
   // Draw a modified silhouette, not merely a label or a detached overlay.
   drawCar=function(x,y,colour,model,tilt,isPlayer,signal=0,g=ctx,cargo=false){
+    if(model===BIKE_MODEL){drawDirtBike(x,y,colour,tilt,isPlayer,g);return;}
     if(!isPlayer){baseDraw(x,y,colour,model,tilt,isPlayer,signal,g,cargo);return;}
     const p=workshopOpen&&visualDraft?visualDraft:equipped(),b=bodyStyles[model];
     const paintColour=p.colour||colour;
@@ -2580,7 +2723,7 @@ window.MH_SUPABASE = {
   const baseEquipped=equipped;
   equipped=function(i=selected){
     const p=baseEquipped(i);
-    if(sessionType==='freestyle'&&pageMode==='play'){
+    if(sessionType==='freestyle'&&pageMode==='play'&&i===selected){
       const values={motor:$('freeMotor').value,boost:$('freeBoost').value,rubber:$('freeTyres').value,nitrous:$('freeNitro').value};
       for(const [key,v] of Object.entries(values))if(v&&v!=='saved')p[key]=v;
     }
@@ -2607,17 +2750,18 @@ window.MH_SUPABASE = {
     for(const id of freeOptionIds)$(id).disabled=kind==='career';
     $('selectionBrand').textContent=kind==='career'?'MH / CAREER':'MH / FREESTYLE';
     document.querySelector('#menu .garage-header h1').textContent=kind==='career'?'CAREER.':'FREESTYLE.';
-    document.querySelector('#menu .garage-header p').textContent=kind==='career'?'Choose your owned car. Earn cash and career points.':'All 210 cars available to test. No career cash, points or records.';
-    document.querySelector('#menu .launch-panel .sim-note').textContent=kind==='career'?'Fixed career conditions. Car upgrades are managed separately in Workshop.':'Freestyle options and temporary builds do not affect career progress.';
+    document.querySelector('#menu .garage-header p').textContent=kind==='career'?'Choose your owned car. Earn cash and career points.':'All 214 vehicles available to test. No career cash, points or records.';
+    document.querySelector('#menu .launch-panel .sim-note').textContent=kind==='career'?'Choose Easy, Normal or Hard before starting. Upgrades are managed separately in Workshop.':'Freestyle options and temporary builds do not affect career progress.';
     $('start').textContent=kind==='career'?'START CAREER DRIVE →':'START TEST DRIVE →';
     loadBuild();setState('menu');updateGarage();previewTime();
   }
   $('homePlay').addEventListener('click',()=>setSelectionMode('career'));
   $('homeFreestyle').addEventListener('click',()=>setSelectionMode('freestyle'));
   function prepareSession(){
+    runDifficulty=sessionType==='career'?($('careerDifficulty')?.value||preferredDifficulty):'normal';
     if(sessionType==='career'){
       if(!economy.owned.includes(selected))selected=economy.owned.includes(careerSelected)?careerSelected:0;
-      careerSelected=selected;applyCareerRules();
+      careerSelected=selected;applyCareerRules();applyDifficultyRules();
     }else{rememberFreestyle();manual=$('transmission').value==='manual';density=Number($('density').value);}
     loadBuild();
   }
@@ -2626,14 +2770,18 @@ window.MH_SUPABASE = {
   let pointsPaid=0;
   bankRun=function(){
     if(sessionType!=='career'||!runActive)return;
-    careerBank();const total=Math.floor(distance+bonus),gain=Math.max(0,total-pointsPaid);
+    careerBank();const total=Math.floor((distance+bonus)*difficultyReward()),gain=Math.max(0,total-pointsPaid);
     if(gain){economy.points=(economy.points||0)+gain;economy.lifetimePoints=(economy.lifetimePoints||0)+gain;pointsPaid+=gain;persistEconomy();}
   };
   for(const id of ['start','restart'])$(id).addEventListener('click',()=>{pointsPaid=0;});
   const sessionWallet=updateWallet;
   updateWallet=function(){sessionWallet();if(sessionType==='freestyle'&&(state==='playing'||state==='paused'||pageMode==='play'))$('runEarnings').textContent='FREESTYLE / NO REWARDS';};
   const sessionHUD=updateHUD;
-  updateHUD=function(){sessionHUD();$('runMode').textContent=(sessionType==='career'?'CAREER / ':'FREESTYLE / ')+$('runMode').textContent;};
+  updateHUD=function(){sessionHUD();
+    const modeName=({endless:'ENDLESS',sprint:'SPRINT',zen:'ZEN',empty:'OPEN ROAD'})[mode]||'DRIVE';
+    $('runMode').textContent=(sessionType==='career'?'CAREER / ':'FREESTYLE / ')+modeName;
+    const seconds=Math.max(0,Math.floor(runTime));$('runClock').textContent=Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0');
+  };
   const sessionHome=renderHome;
   renderHome=function(){sessionHome();$('homeBrand').textContent='MH';$('homeOwned').textContent=economy.owned.length+' / '+cars.length+' OWNED / '+Math.floor(economy.points||0).toLocaleString('en-GB')+' CAREER POINTS';};
 
@@ -2836,7 +2984,7 @@ window.MH_SUPABASE = {
   const freshEconomy=()=>({cash:45000,owned:[0],parts:{},earned:0,points:0,lifetimePoints:0,compactWorkshopV2:true,showcase:{car:0,items:[],slots:[null,null,null,null]}});
   function rawRead(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch(_){return fallback;}}
   let guestSnapshot={economy:rawRead('midnight-career-v1',freshEconomy()),career:rawRead('midnight-apex-career',{runs:0,bestDistance:0,nearMisses:0}),best:Number(localStorage.getItem('midnight-highway-best'))||0,selected:0,volumes:rawRead('midnight-audio-v1',volumeDefaults)};
-  function snapshot(){return copy({schema:1,economy,career,best,selected:sessionType==='freestyle'?careerSelected:selected,volumes,soundEnabled});}
+  function snapshot(){return copy({schema:1,economy,career,best,selected:sessionType==='freestyle'?careerSelected:selected,volumes,soundEnabled,preferences:{units:displayUnits,difficulty:preferredDifficulty}});}
   function cleanNumber(x,max=1e12){return Number.isFinite(Number(x))?Math.max(0,Math.min(max,Math.floor(Number(x)))):0;}
   function normalise(raw){
     const e=raw?.economy||freshEconomy(),out=freshEconomy();
@@ -2845,9 +2993,9 @@ window.MH_SUPABASE = {
     for(const [id,part] of Object.entries(e.parts||{})){
       if(!/^\d+$/.test(id)||!cars[Number(id)]||!part||typeof part!=='object')continue;
       const next=defaultPart();
-      for(const [k,opts] of Object.entries(catalogue))if(opts.some(v=>v[0]===part[k]))next[k]=part[k];
+      for(const [k,opts] of Object.entries(vehicleCatalogue(Number(id))))if(opts.some(v=>v[0]===part[k]))next[k]=part[k];
       if(/^#[0-9a-f]{6}$/i.test(part.colour||''))next.colour=part.colour;
-      next.unlocks=(Array.isArray(part.unlocks)?part.unlocks:[]).filter(t=>typeof t==='string'&&Object.entries(catalogue).some(([k,opts])=>opts.some(v=>t===k+':'+v[0])));
+      next.unlocks=(Array.isArray(part.unlocks)?part.unlocks:[]).filter(t=>typeof t==='string'&&Object.entries(vehicleCatalogue(Number(id))).some(([k,opts])=>opts.some(v=>t===k+':'+v[0])));
       out.parts[id]=next;
     }
     const sh=e.showcase||{},valid=new Set(collectibles.map(c=>c.id));
@@ -2858,7 +3006,7 @@ window.MH_SUPABASE = {
   function applySnapshot(raw){
     cloud.applying=true;
     try{
-      const s=normalise(raw);economy=s.economy;career={runs:cleanNumber(s.career?.runs),bestDistance:cleanNumber(s.career?.bestDistance),nearMisses:cleanNumber(s.career?.nearMisses)};
+      const s=normalise(raw);applyGeneralPreferences(s.preferences);economy=s.economy;career={runs:cleanNumber(s.career?.runs),bestDistance:cleanNumber(s.career?.bestDistance),nearMisses:cleanNumber(s.career?.nearMisses)};
       best=cleanNumber(s.best);selected=economy.owned.includes(s.selected)?s.selected:0;careerSelected=selected;sessionType='career';
       for(const k of Object.keys(volumeDefaults))if(Number.isFinite(s.volumes?.[k]))volumes[k]=clamp(s.volumes[k],0,1);
       if(typeof s.soundEnabled==='boolean')soundEnabled=s.soundEnabled;$('sound').checked=soundEnabled;applyVolumes();
@@ -2869,7 +3017,7 @@ window.MH_SUPABASE = {
       loadBuild();updateGarage();renderHome();renderVolumes();if(pageMode==='showcase')renderCollection();
     }finally{cloud.applying=false;}
   }
-  const accountMarkup=`<div class="cloud-tabs" role="tablist" aria-label="Settings tabs"><button id="audioTab" role="tab" aria-selected="true">AUDIO</button><button id="accountTab" role="tab" aria-selected="false">ACCOUNT / CLOUD</button></div>
+  const accountMarkup=`<div class="cloud-tabs" role="tablist" aria-label="Settings tabs"><button id="audioTab" role="tab" aria-selected="true">GENERAL</button><button id="accountTab" role="tab" aria-selected="false">ACCOUNT / CLOUD</button></div>
   <div id="accountPane" class="hidden"><p class="cloud-note">Use a public nickname, not your real name. Your email stays private. Passwords go to Supabase Auth, not your game save.</p>
   <div id="accountStatus" class="cloud-status" role="status" aria-live="polite">Guest / local save.</div>
   <div class="cloud-form"><label>PUBLIC USERNAME (CREATE ACCOUNT / COMPLETE PROFILE)<input id="accountUsername" maxlength="20" autocomplete="nickname" placeholder="3-20 letters, numbers or underscores"></label>
@@ -3012,7 +3160,7 @@ window.MH_SUPABASE = {
         if(cloud.submitting)await cloud.submitting;
         if(cloud.pending)throw Error('Previous run has not synced. Open Account and reconnect before starting.');
         if(sessionType==='career'){
-          await saveCloud();cloud.run=await rpc('mh_begin_run',{p_writer:cloud.writer});
+          await saveCloud();cloud.run=await rpc('mh_begin_run_v2',{p_writer:cloud.writer,p_difficulty:$('careerDifficulty').value||'normal'});
         }
         startDispatch=true;try{$(id).click();}finally{startDispatch=false;}
       }).finally(()=>{startBusy=false;});
@@ -3020,14 +3168,14 @@ window.MH_SUPABASE = {
   },true);
   function finishOnlineRun(){
     if(!cloud.run||!cloud.user||sessionType!=='career')return;
-    cloud.pending={p_writer:cloud.writer,p_run:cloud.run,p_seconds:Number(runTime.toFixed(3)),p_distance:Math.floor(distance*1000)/1000,p_points:Math.floor(distance+bonus)};
+    cloud.pending={p_writer:cloud.writer,p_run:cloud.run,p_seconds:Number(runTime.toFixed(3)),p_distance:Math.floor(distance*1000)/1000,p_points:Math.floor((distance+bonus)*difficultyReward())};
     cloud.run=null;submitPendingRun();
   }
   function submitPendingRun(){
     if(!cloud.pending||cloud.submitting||!cloud.owner)return;
     const pending=cloud.pending;
     cloud.submitting=(async()=>{try{
-      const result=await rpc('mh_finish_run',pending);cloud.pending=null;
+      const result=await rpc('mh_finish_run_v2',pending);cloud.pending=null;
       cloudMessage(result.accepted?'Run submitted / +'+result.points.toLocaleString('en-GB')+' ranked points':result.reason);
       markCloudDirty();await saveCloud();
     }catch(e){cloudMessage('Run submission failed: '+e.message,true);}finally{cloud.submitting=null;}})();
@@ -3044,41 +3192,43 @@ window.MH_SUPABASE = {
   // Do not let text fields drive the car or trigger game shortcuts.
   window.addEventListener('keydown',e=>{if(e.target.matches('input,textarea')&&!e.ctrlKey&&!e.metaKey){if(e.code!=='Escape')e.stopImmediatePropagation();}},true);
   const boardButton=document.createElement('button');boardButton.id='homeLeaderboard';boardButton.className='home-action';boardButton.innerHTML='LEADERBOARD <span>Ranked runs + all-time points, cash & cars</span>';$('homeSettings').before(boardButton);
-  $('homeSettings').querySelector('span').textContent='Audio, sign in and cloud saves';
-  let boardSection='ranked',boardRequest=0;
+  $('homeSettings').querySelector('span').textContent='General, units, audio and cloud account';
+  let boardSection='career',boardRequest=0;
   const boardNumber=n=>Number(n||0).toLocaleString('en-GB');
   function boardColumns(){
     const careerBoard=boardSection==='career';
     $('boardRankedTab').setAttribute('aria-selected',String(!careerBoard));
     $('boardCareerTab').setAttribute('aria-selected',String(careerBoard));
     $('careerSortControls').classList.toggle('hidden',!careerBoard);
+    $('runDifficultyControls').classList.toggle('hidden',careerBoard);
     $('leaderboardDescription').textContent=careerBoard?
       'Latest cloud-saved career: lifetime points, current cash balance and unique cars owned. Sort by any of these. Spending cash can lower your cash rank. Developer accounts are excluded. Save-reported stats are not cheat-proof.':
-      'Completed online career runs only. Guest and developer points do not count. Developer accounts are excluded. Community scores have basic checks, not cheat-proof verification.';
+      'Completed online career runs filtered by difficulty. Older unlabelled scores are retained under Normal. Guest and developer points do not count. Developer accounts are excluded. Community scores have basic checks, not cheat-proof verification.';
     const titles=careerBoard?['RANK','DRIVER','LIFETIME POINTS','CASH BALANCE','CARS OWNED']:['RANK','DRIVER','RANKED POINTS','BEST RUN','RUNS'];
     const tr=document.createElement('tr');for(const title of titles){const th=document.createElement('th');th.textContent=title;tr.append(th);}$('leaderHead').replaceChildren(tr);
   }
   async function refreshLeaderboard(){
-    const request=++boardRequest,section=boardSection,metric=$('careerSort').value;
+    const request=++boardRequest,section=boardSection,metric=$('careerSort').value,runFilter=$('runDifficultyFilter').value;
     boardColumns();$('leaderRows').replaceChildren();$('myGlobalRank').textContent='';$('boardStatus').textContent='Loading leaderboard...';
     try{
-      const rows=await rpc(section==='career'?'mh_career_leaderboard':'mh_leaderboard',section==='career'?{p_metric:metric}:{});
-      const me=cloud.user?await rpc(section==='career'?'mh_career_my_rank':'mh_my_rank',section==='career'?{p_metric:metric}:{}):null;
+      const rows=await rpc(section==='career'?'mh_career_leaderboard':'mh_runs_leaderboard',section==='career'?{p_metric:metric}:{p_difficulty:runFilter});
+      const me=cloud.user?await rpc(section==='career'?'mh_career_my_rank':'mh_runs_my_rank',section==='career'?{p_metric:metric}:{p_difficulty:runFilter}):null;
       if(request!==boardRequest)return;
       for(const row of rows){const tr=document.createElement('tr');if(row.is_me)tr.className='me';
         const values=section==='career'?[row.rank,row.username,boardNumber(row.lifetime_points),'$'+boardNumber(row.cash),boardNumber(row.cars_owned)]:[row.rank,row.username,boardNumber(row.points),boardNumber(row.best_run),boardNumber(row.runs)];
         for(const value of values){const td=document.createElement('td');td.textContent=String(value);tr.append(td);}$('leaderRows').append(tr);
       }
-      $('boardStatus').textContent=rows.length?rows.length+' drivers shown / top 1,000 maximum / '+(section==='career'?'ranked by '+({points:'lifetime points',cash:'cash balance',cars:'cars owned'})[metric]:'ranked run points'):
+      $('boardStatus').textContent=rows.length?rows.length+' drivers shown / top 1,000 maximum / '+(section==='career'?'ranked by '+({points:'lifetime points',cash:'cash balance',cars:'cars owned'})[metric]:runFilter.toUpperCase()+' ranked run points'):
         section==='career'?'No eligible cloud careers yet. Sign in and save your career.':'No ranked runs yet. Complete an online career run.';
       $('myGlobalRank').textContent=me?(section==='career'?'YOUR CAREER RANK #'+me.rank+' / '+boardNumber(me.lifetime_points)+' LIFETIME PTS / $'+boardNumber(me.cash)+' / '+boardNumber(me.cars_owned)+' CARS':'YOUR RANK #'+me.rank+' / '+boardNumber(me.points)+' POINTS'):
         cloud.profile?.ranked_disabled?'TEST ACCOUNT / EXCLUDED FROM BOTH LEADERBOARDS':cloud.user?(section==='career'?'YOUR CAREER RANK / Save your online career first':'YOUR RANK / Complete your first online career run'):'Sign in to sync your career and see your own rank.';
-    }catch(e){if(request!==boardRequest)return;$('leaderRows').replaceChildren();$('myGlobalRank').textContent='';$('boardStatus').textContent=(section==='career'?'All-time board unavailable. The owner may need to run the v2 SQL update. ':'')+e.message;}
+    }catch(e){if(request!==boardRequest)return;$('leaderRows').replaceChildren();$('myGlobalRank').textContent='';$('boardStatus').textContent=(section==='career'?'All-time board unavailable. ':'Runs board unavailable. Run the v5 difficulty SQL update. ')+e.message;}
   }
   $('boardRankedTab').onclick=()=>{boardSection='ranked';refreshLeaderboard();};
   $('boardCareerTab').onclick=()=>{boardSection='career';refreshLeaderboard();};
   $('careerSort').onchange=()=>refreshLeaderboard();
-  function openLeaderboard(){goHome();$('cloudBoard').classList.remove('hidden');refreshLeaderboard();}
+  $('runDifficultyFilter').onchange=()=>refreshLeaderboard();
+  function openLeaderboard(){$('runDifficultyFilter').value='normal';boardSection='career';$('careerSort').value='points';goHome();$('cloudBoard').classList.remove('hidden');refreshLeaderboard();}
   boardButton.onclick=openLeaderboard;$('accountLeaderboard').onclick=openLeaderboard;$('refreshBoard').onclick=refreshLeaderboard;
   $('closeBoard').onclick=()=>{boardRequest++;$('cloudBoard').classList.add('hidden');goHome();};$('boardAccount').onclick=()=>{boardRequest++;$('cloudBoard').classList.add('hidden');openAccount();};
   $('homeSettings').addEventListener('click',()=>tabAccount(false));
@@ -3181,6 +3331,610 @@ window.MH_SUPABASE = {
     touchHelp.textContent='MOBILE DRIVING / Touch anywhere on the road and drag: up accelerates, down brakes, sideways steers. Keep your finger held at the offset; lift to coast. A second finger activates fitted nitro. No visible driving buttons. Landscape gives you more road width.';
     $('audioPane').append(touchHelp);
   }
+
+
+  // TRAIL UPDATE: vehicle-specific builds and compact mobile UI.
+  const bikeCatalogue={
+    motor:[['stock','250 cc four-stroke single',0],['single300','300 cc big-bore single / +10% power',1800],['single350','350 cc enduro single / +18% power',3200],['single450','450 cc competition single / +28% power',5200]],
+    boost:[['none','No forced induction / dirt-bike engine only',0]],
+    tune:[['stock','Factory trail map',0],['stage1','Trail ECU map / +6% power',650],['stage2','Enduro ECU map / +11% power',1100],['race','Competition ECU map / +17% power',1900]],
+    rubber:[['normal','Dual-sport tyres / balanced road grip',0],['offroad','Knobby enduro tyres / better snow control',650],['sport','Supermoto tyres / +20% road grip',950]],
+    brakes:[['stock','Factory discs',0],['sport','Braided lines & sport pads / +15% braking',600],['race','Oversize front disc / +30% braking',1200]],
+    suspension:[['stock','Factory long-travel forks',0],['enduro','Enduro spring & damping kit / +7% handling',900],['race','Competition fork & shock / +12% handling',1800]],
+    bikeExhaust:[['stock','Factory silencer',0],['slipon','Lightweight slip-on / +3% power',550],['full','Full single-cylinder exhaust / +6% power',1200]],
+    bikeGearing:[['stock','Factory sprockets',0],['short','Short sprocket set / +8% power, -6% top speed',450],['long','Road sprocket set / -4% power, +5% top speed',450]],
+    bikeGuards:[['stock','Factory guards',0],['enduro','Handguards & engine bash plate',500],['race','Lightweight competition guards',800]],
+    bikeSeat:[['stock','Factory seat',0],['gripper','Ribbed gripper seat',300]],
+    bikeGraphics:[['stock','Factory graphics',0],['race','Competition number plates & graphics',450]],
+    nitrous:[['none','No nitrous',0],['kit','Small game nitrous kit / Shift on keyboard',1600]],
+    spoiler:[['stock','Not applicable / motorcycle',0]],bumper:[['stock','Not applicable / motorcycle',0]]
+  };
+  prices[DIRT_BIKE_ID]=8500;prices[DIRT_BIKE_ID+1]=18000;prices[DIRT_BIKE_ID+2]=14500;prices[DIRT_BIKE_ID+3]=24000;
+  function vehicleCatalogue(i=selected){
+    if(!isBike(i))return catalogue;
+    if(i===DIRT_BIKE_ID)return bikeCatalogue;
+    const twin=cars[i].cylinders===2;
+    return {...bikeCatalogue,
+      motor:[['stock',twin?'Factory parallel-twin engine':'Factory inline-four engine',0],['road1','Matched ported head & cams / +10% power',2200],['road2','Competition engine internals / +18% power',4200],['road3','Full race engine build / +28% power',6800]],
+      rubber:[['normal','Road motorcycle tyres',0],['sport','Sport road tyres / +20% grip',950],['offroad','All-weather road tyres / wet-weather setup',650]],
+      suspension:[['stock','Factory road forks & monoshock',0],['enduro','Road spring & damping kit / +7% handling',900],['race','Track fork & shock / +12% handling',1800]],
+      bikeGuards:[['stock','Factory protection',0],['enduro','Frame sliders & engine case guards',500],['race','Lightweight track protection',800]],
+      bikeSeat:[['stock','Factory road seat',0],['gripper','Sport gripper seat',300]],
+      bikeGraphics:[['stock','Factory road graphics',0],['race','Race livery & number plates',450]]
+    };
+  }
+  function vehiclePartLabel(key,i=selected){
+    return isBike(i)?({motor:i===DIRT_BIKE_ID?'SINGLE-CYLINDER ENGINE':'MOTORCYCLE ENGINE',boost:'INDUCTION',tune:'ECU MAP',rubber:'MOTORCYCLE TYRES',brakes:'DISC BRAKES',suspension:'FORKS / REAR SHOCK',bikeExhaust:'EXHAUST',bikeGearing:'CHAIN / SPROCKETS',bikeGuards:'HANDGUARDS / BASH PLATE',bikeSeat:'SEAT',bikeGraphics:'GRAPHICS',nitrous:'GAME NITROUS KIT'})[key]||partLabel(key):partLabel(key);
+  }
+  const freeFieldIds={motor:'freeMotor',boost:'freeBoost',rubber:'freeTyres',nitrous:'freeNitro',tune:'freeTune',brakes:'freeBrakes',suspension:'freeSuspension',spoiler:'freeSpoiler',bumper:'freeBumper',bikeExhaust:'freeBikeExhaust',bikeGearing:'freeBikeGearing',bikeGuards:'freeBikeGuards',bikeSeat:'freeBikeSeat',bikeGraphics:'freeBikeGraphics'};
+  let freeBuildKind='',freeBuildCache={car:{},bike:{}};
+  function rememberFreeBuild(){
+    if(!freeBuildKind)return;const cache=freeBuildCache[freeBuildKind];
+    for(const [key,id] of Object.entries(freeFieldIds))if($(id))cache[key]=$(id).value;
+  }
+  function renderFreeWorkshop(force=false){
+    const kind=isBike()?(selected===DIRT_BIKE_ID?'bike':'road'):'car';if(!freeBuildCache[kind])freeBuildCache[kind]={};if(kind===freeBuildKind&&!force)return;
+    rememberFreeBuild();freeBuildKind=kind;
+    const cat=vehicleCatalogue(),cache=freeBuildCache[kind];
+    const groups=isBike()?[
+      ['01 / ENGINE & DRIVE',['motor','tune','bikeExhaust','bikeGearing']],
+      ['02 / GRIP & CONTROL',['rubber','brakes','suspension']],
+      ['03 / STYLE & EXTRAS',['bikeGuards','bikeSeat','bikeGraphics','nitrous']]
+    ]:[['01 / ENGINE & POWER',['motor','boost','tune','nitrous']],['02 / GRIP & CONTROL',['rubber','brakes','suspension']],['03 / BODY & STYLE',['spoiler','bumper']]];
+    const field=key=>{
+      const id=freeFieldIds[key],value=cache[key]||'saved';
+      return '<label for="'+id+'">'+vehiclePartLabel(key)+'<select id="'+id+'" data-free-part="'+key+'"><option value="saved" '+(value==='saved'?'selected':'')+'>Saved / factory build</option>'+cat[key].map(([v,label])=>'<option value="'+v+'" '+(v===value?'selected':'')+'>'+label+'</option>').join('')+'</select></label>';
+    };
+    $('freeBuild').innerHTML='<div class="section-label">FREESTYLE WORKSHOP / '+(isBike()?'MOTORCYCLE':'CAR')+'</div><p class="free-build-note">Free temporary upgrades. No purchases, no career changes. Open a category to configure your test build.</p>'+groups.map(([title,keys],i)=>'<details class="parts-group" '+(i===0?'open':'')+'><summary>'+title+'</summary><div class="free-build-grid">'+keys.map(field).join('')+'</div></details>').join('')+
+      // Preserve the original freestyle adapter's required select IDs.
+      (isBike()?'<select id="freeBoost" class="hidden" aria-hidden="true"><option value="none">No turbo</option></select>':'')+
+      '<button id="freeReset" type="button">RESET TEST BUILD TO SAVED PARTS</button>';
+    $('freeReset').onclick=()=>{freeBuildCache[freeBuildKind]={};for(const el of $('freeBuild').querySelectorAll('[data-free-part]'))el.value='saved';loadBuild();stats=currentStats();updateGarage();};
+  }
+  // Initialise required controls before the original equipped adapter is called.
+  renderFreeWorkshop();
+  const trailEquipped=equipped;
+  equipped=function(i=selected){
+    let p=trailEquipped(i);
+    if(sessionType==='freestyle'&&pageMode==='play'&&i===selected){
+      const cat=vehicleCatalogue(i);
+      for(const el of $('freeBuild').querySelectorAll('[data-free-part]')){
+        const key=el.dataset.freePart,v=el.value;
+        if(v!=='saved'&&cat[key]?.some(item=>item[0]===v))p[key]=v;
+      }
+    }
+    if(isBike(i)){
+      const safe={...defaultPart(),...p};
+      for(const [key,options] of Object.entries(vehicleCatalogue(i)))if(!options.some(o=>o[0]===safe[key]))safe[key]=options[0][0];
+      safe.unlocks=(Array.isArray(p.unlocks)?p.unlocks:[]).filter(t=>Object.entries(vehicleCatalogue(i)).some(([k,opts])=>opts.some(v=>t===k+':'+v[0])));
+      return safe;
+    }
+    return p;
+  };
+  const trailStats=currentStats;
+  currentStats=function(i=selected){
+    if(!isBike(i))return trailStats(i);
+    const c=cars[i],p=equipped(i);
+    const power=({stock:1,single300:1.1,single350:1.18,single450:1.28,road1:1.1,road2:1.18,road3:1.28}[p.motor]||1)*({stock:1,stage1:1.06,stage2:1.11,race:1.17}[p.tune]||1)*({stock:1,slipon:1.03,full:1.06}[p.bikeExhaust]||1)*({stock:1,short:1.08,long:.96}[p.bikeGearing]||1);
+    return {top:c.top*Math.min(1.16,Math.cbrt(power))*({stock:1,short:.94,long:1.05}[p.bikeGearing]||1)*(p.rubber==='offroad'?.97:1),power,accel:100/c.times[0]*power,
+      handling:c.handling*(p.rubber==='sport'?1.2:p.rubber==='offroad'?.98:1)*({stock:1,enduro:1.07,race:1.12}[p.suspension]||1),braking:({stock:1,sport:1.15,race:1.3}[p.brakes]||1),nitroEfficiency:1,model:c.model};
+  };
+  const trailRefresh=refreshBuild;
+  refreshBuild=function(){
+    trailRefresh();if(isBike()){
+      const p=equipped(),st=currentStats();
+      $('selectedSummary').textContent=Math.round(st.top)+' km/h / '+vehicleCatalogue().motor.find(o=>o[0]===p.motor)[1].split(' / ')[0]+' / '+p.rubber.toUpperCase()+' TYRES';
+      $('buildSummary').textContent='MOTORCYCLE / '+Math.round(st.top)+' km/h / 0-100 game target '+(cars[selected].times[0]/st.power).toFixed(1)+' s / Ctrl: wheelie';
+    }
+  };
+  const trailGarage=updateGarage;
+  updateGarage=function(){renderFreeWorkshop();trailGarage();
+    if(sessionType==='freestyle')$('garageCount').textContent=cars.length+' TEST VEHICLES / '+(cars.length-4)+' CARS + 4 MOTORCYCLES / NO CAREER REWARDS';
+    const mobile=navigator.maxTouchPoints>0||matchMedia('(pointer:coarse)').matches;
+    document.querySelector('#menu .controls').textContent=mobile?
+      'Drag up: accelerate / down: brake / sideways: steer. Lift: coast. '+(isBike()?'Hold a second finger: wheelie. Brake to lower the front wheel.':'Hold a second finger: fitted nitro.'):
+      'WASD / arrows: drive · Shift: nitro · Space: handbrake · Q/E: gears · P: pause'+(isBike()?' · HOLD CTRL: WHEELIE / +15% ACCELERATION / +10% TOP SPEED, SLOWER STEERING':'');
+  };
+  // A single vehicle-specific quote path for both live preview and purchases.
+  quoteParts=function(){
+    const p=equipped(),next={...p,unlocks:[...(p.unlocks||[])]},purchases=[],cat=vehicleCatalogue();let cost=0;
+    for(const el of $('shopParts').querySelectorAll('[data-part]')){
+      const key=el.dataset.part,v=el.value,item=cat[key]?.find(o=>o[0]===v);if(!item)continue;
+      next[key]=v;const token=key+':'+v;if(item[2]>0&&!next.unlocks.includes(token)){cost+=item[2];purchases.push(token);}
+    }
+    const colour=$('shopColour')?.value;
+    if(/^#[0-9a-f]{6}$/i.test(colour||'')&&colour!==p.colour){cost+=300;next.colour=colour;}
+    next.unlocks.push(...purchases);return {cost,next};
+  };
+  renderShop=function(){
+    shopTab='owned';loadBuild();refreshBuild();visualDraft=null;$('shopSelected').textContent=cars[selected].name;
+    const p=equipped(),cat=vehicleCatalogue();
+    const groups=isBike()?[
+      ['ENGINE / MOTORCYCLE PERFORMANCE',['motor','tune','bikeExhaust','bikeGearing']],
+      ['CONTROL / MOTORCYCLE CHASSIS',['rubber','brakes','suspension']],
+      ['STYLE / BIKE EQUIPMENT',['bikeGuards','bikeSeat','bikeGraphics']],['GAME NITROUS',['nitrous']]
+    ]:[['ENGINE / PERFORMANCE',['motor','boost','tune','nitrous']],['BRAKES / SUSPENSION / TYRES',['brakes','suspension','rubber']],['BODY / STYLE',['spoiler','bumper']]];
+    const field=key=>'<label class="part-row"><span>'+vehiclePartLabel(key)+'</span><select data-part="'+key+'">'+cat[key].map(([v,label,cost])=>'<option value="'+v+'" '+(p[key]===v?'selected':'')+'>'+label+' / '+(cost===0||p.unlocks.includes(key+':'+v)?'OWNED':money(cost))+'</option>').join('')+'</select></label>';
+    $('shopParts').innerHTML='<p class="preview-note">'+(isBike()?'Motorcycle-specific parts only. No car engines, wings or bumper kits. Road bikes keep their own engine layout.':'Choose a category. Preview changes before buying.')+'</p>'+groups.map(([title,keys],i)=>'<details class="parts-group" '+(i===0?'open':'')+'><summary>'+title+'</summary>'+keys.map(field).join('')+'</details>').join('')+'<label class="part-row"><span>BODY COLOUR / $300 PER CHANGE</span><input id="shopColour" type="color" value="'+p.colour+'"></label><div class="shop-summary">Purchased parts remain unlocked for this vehicle. Buy & install to save. Performance and prices are fictional gameplay tuning.</div>';
+    updateQuote();updateWallet();
+  };
+  // The custom bike renderer is used in the road, garage, dealer and showroom.
+  // Orthographic top-down model with projected height, not a resized car body.
+  function drawDirtBike(x,y,colour,tilt,isPlayer,g){
+    const p=isPlayer?(workshopOpen&&visualDraft?visualDraft:equipped()):{};
+    const previewId=Number(g.canvas?.dataset?.preview??g.canvas?.dataset?.dealerPreview??g.canvas?.dataset?.modPreview??selected);
+    const bike=cars[isPlayer?selected:previewId]||cars[DIRT_BIKE_ID];
+    const style=bike.bikeType||'dirt',sport=style==='honda'||style==='ninja';
+    const body=p.colour||colour,roadView=g===ctx&&(state==='playing'||state==='paused'||state==='cinematic');
+    const lift=roadView&&isPlayer?wheelieLift:0;
+    const pitch=(lift*lift*(3-2*lift))*.68,cos=Math.cos(pitch),sin=Math.sin(pitch);
+    g.save();g.translate(x,y);g.rotate(tilt);
+    const oval=(xx,yy,rx,ry,c)=>{g.fillStyle=c;g.beginPath();g.ellipse(xx,yy,rx,ry,0,0,Math.PI*2);g.fill();};
+    const poly=(pts,c)=>{g.fillStyle=c;g.beginPath();pts.forEach(([xx,yy],i)=>i?g.lineTo(xx,yy):g.moveTo(xx,yy));g.closePath();g.fill();};
+    const line=(xx,yy,xx2,yy2,c,w=2)=>{g.strokeStyle=c;g.lineWidth=w;g.lineCap='round';g.beginPath();g.moveTo(xx,yy);g.lineTo(xx2,yy2);g.stroke();};
+    // Rear tyre is the pivot. Front wheel rises towards the camera, with a
+    // separated ground shadow, foreshortening and visible fork extension.
+    oval(2,15+lift*5,12,29-lift*6,'#0004');
+    // No detached front-wheel shadow or guide line during wheelies.
+    const project=(yy,z=0)=>30+(yy-30)*cos+z*sin*.55+(30-yy)*sin*.18;
+    const wheel=(yy,front)=>{
+      const py=project(yy,front?lift*10:0),ry=front?9+lift*2:10;
+      oval(0,py,5.4,ry,'#090b0d');g.strokeStyle='#68737a';g.lineWidth=1;g.stroke();
+      for(let j=-3;j<=3;j++)line(-4.5,py+j*2.2,4.5,py+j*2.2,'#343b3e',1);
+      line(0,py-ry+2,0,py+ry-2,'#98a6ad',1.2);
+    };
+    wheel(30,false);
+    // Swingarm, chain, compact single-cylinder engine and exposed frame.
+    line(-4,project(29),-8,project(6),'#a9b2b5',3);line(4,project(29),8,project(6),'#a9b2b5',3);
+    line(-6,project(25),-7,project(3),'#555e61',1.3);
+    poly([[-9,project(-12,5)],[9,project(-12,5)],[11,project(11,5)],[0,project(21,5)],[-11,project(11,5)]],'#c1c7c4');
+    oval(0,project(8,6),8,9,'#404a4e');for(let j=0;j<4;j++)line(-6,project(2+j*3,7),6,project(2+j*3,7),'#899397',1);
+    line(-8,project(-10,7),0,project(20,7),'#efad53',2);line(8,project(-10,7),0,project(20,7),'#efad53',2);
+    if(p.bikeGuards==='enduro'||p.bikeGuards==='race')poly([[-10,project(6,4)],[10,project(6,4)],[7,project(19,4)],[-7,project(19,4)]],p.bikeGuards==='race'?'#262c30':'#9ca7aa');
+    // Rear fender, narrow gripper seat and tank/shrouds.
+    poly([[-5,project(35,7)],[5,project(35,7)],[8,project(17,9)],[-8,project(17,9)]],body);
+    poly([[-6,project(23,10)],[6,project(23,10)],[8,project(-4,12)],[-8,project(-4,12)]],'#171b20');
+    if(p.bikeSeat==='gripper')for(let j=0;j<7;j++)line(-5,project(1+j*3,13),5,project(1+j*3,13),'#6c7476',1);
+    poly([[-8,project(0,10)],[-12,project(-14,12)],[-6,project(-23,13)],[6,project(-23,13)],[12,project(-14,12)],[8,project(0,10)]],body);
+    oval(0,project(-13,14),2.5,3,'#252d31');
+    // Single side-mounted silencer, not car exhausts.
+    line(9,project(2,9),11,project(26,9),p.bikeExhaust==='full'?'#d6b48a':'#a4adb1',p.bikeExhaust==='stock'?3:4);
+    oval(11,project(27,9),2,2,'#14181b');
+    // Long forks, front wheel, raised mudguard and number plate.
+    const frontY=project(-32,lift*10);
+    line(-4,project(-17,10),-4,frontY,'#d3c7a1',2.5);line(4,project(-17,10),4,frontY,'#d3c7a1',2.5);
+    wheel(-32,true);
+    poly([[-4,project(-41,12)],[4,project(-41,12)],[6,project(-25,15)],[-6,project(-25,15)]],body);
+    poly([[-7,project(-25,17)],[7,project(-25,17)],[6,project(-14,18)],[-6,project(-14,18)]],'#e7e7db');
+    line(-15,project(-17,19),15,project(-17,19),'#a8b1b4',2.5);
+    line(-18,project(-17,19),-13,project(-17,19),'#171d21',3);line(13,project(-17,19),18,project(-17,19),'#171d21',3);
+    if(p.bikeGuards==='enduro'||p.bikeGuards==='race')for(const side of [-1,1])line(side*12,project(-21,20),side*18,project(-17,20),body,3);
+    if(p.bikeGraphics==='race'){
+      for(const side of [-1,1])poly([[side*6,project(-18,14)],[side*11,project(-11,14)],[side*7,project(-3,14)]],'#eee');
+      g.fillStyle='#17191b';g.textAlign='center';g.font='bold 6px sans-serif';g.fillText('25',0,project(-19,19)+2);
+    }
+
+    if(style!=='dirt'){
+      const accent=style==='ninja'?'#80d22b':style==='honda'?'#e54742':'#42c9df';
+      if(sport){
+        poly([[-8,project(17,10)],[-15,project(2,12)],[-16,project(-22,16)],[-9,project(-34,18)],[9,project(-34,18)],[16,project(-22,16)],[15,project(2,12)],[8,project(17,10)]],body);
+        for(const side of [-1,1]){
+          poly([[side*9,project(-27,18)],[side*15,project(-17,17)],[side*12,project(6,13)],[side*7,project(9,13)]],accent);
+          line(side*10,project(-11,18),side*13,project(-4,17),'#101820',2);
+          line(side*12,project(-25,19),side*21,project(-29,19),'#424c53',1.5);
+          oval(side*21,project(-29,19),3,2,'#273b45');
+        }
+        poly([[-7,project(-30,20)],[7,project(-30,20)],[8,project(-17,22)],[-8,project(-17,22)]],'#263f4b');
+        line(-5,project(-29,21),5,project(-29,21),'#7998a4',1);
+      }else{
+        oval(0,project(-9,13),10,13,body);
+        line(-15,project(-18,19),15,project(-18,19),'#aebbc0',2);
+        for(const side of [-1,1]){line(side*14,project(-18,19),side*21,project(-26,19),'#515c61',1.5);oval(side*21,project(-26,19),3,2,'#293c44');}
+        poly([[-7,project(-25,18)],[7,project(-25,18)],[5,project(-17,20)],[-5,project(-17,20)]],'#172b35');
+      }
+      // Road tyres are smooth, unlike the dirt bike's knobby tread.
+      oval(0,project(30),5.8,9,'#101518');line(0,project(23),0,project(37),'#536067',1);
+    }
+    // One centred headlight lens for every motorcycle in this game build.
+    line(-3,project(style==='dirt'?-25:-33,19),3,project(style==='dirt'?-25:-33,19),'#edfbff',2.8);
+
+    // Helmeted rider, bent arms, boots and knee panels. Rider leans back
+    // progressively as the front wheel rises, making the wheelie legible.
+    if(isPlayer){
+      const lean=lift*6,torso=project(1+lean,21);
+      line(-7,torso+4,-11,project(16,12),'#202830',5);line(7,torso+4,11,project(16,12),'#202830',5);
+      line(-11,project(16,12),-13,project(22,10),'#a1a7a7',3);line(11,project(16,12),13,project(22,10),'#a1a7a7',3);
+      poly([[-8,torso+7],[8,torso+7],[10,torso-9],[-10,torso-9]],'#33434b');
+      line(-9,torso-7,-13,project(-8,21),'#495a62',4);line(-13,project(-8,21),-14,project(-17,20),'#c3c8c6',2.5);
+      line(9,torso-7,13,project(-8,21),'#495a62',4);line(13,project(-8,21),14,project(-17,20),'#c3c8c6',2.5);
+      oval(0,torso-13,7,8,'#e6e9e2');poly([[-6,torso-18],[6,torso-18],[8,torso-15],[-8,torso-15]],body);line(-5,torso-16,5,torso-16,'#1d3039',2.5);
+    }
+    const braking=isPlayer&&(keys.has('KeyS')||keys.has('ArrowDown')||touchDrive.brake>0);
+    line(-3,project(34,8),3,project(34,8),braking?'#ff6071':'#b72b3a',2.5);
+
+    g.restore();
+  }
+  // Mobile telemetry uses the existing canvas at a shorter aspect ratio.
+  const fullCluster=drawCluster;
+  const compactUI=()=>matchMedia('(max-width:760px), (pointer:coarse) and (max-height:540px)').matches;
+  drawCluster=function(){
+    const c=$('cluster');if(!compactUI()){if(c.height!==380)c.height=380;fullCluster();return;}
+    if(c.height!==200)c.height=200;const g=gauge;g.clearRect(0,0,460,200);
+    g.fillStyle='#090d12dc';g.fillRect(0,0,460,200);g.strokeStyle='#ffffff35';g.lineWidth=2;g.strokeRect(1,1,458,198);
+    g.fillStyle='#fff';g.textAlign='left';g.font='bold 83px Arial';g.fillText(String(Math.round(displaySpeed(player.speed*3.6))),22,100);
+    g.fillStyle='#aaa';g.font='21px Arial';g.fillText(speedUnit().toUpperCase(),25,132);
+    g.textAlign='right';g.fillStyle='#eee';g.font='bold 33px Arial';g.fillText('G'+gear,434,54);
+    g.font='18px Arial';g.fillStyle=wheelieActive?'#f1dfa3':'#aaa';g.fillText(wheelieActive?'WHEELIE':manual?'MANUAL':'AUTO',434,91);
+    g.fillStyle='#333';g.fillRect(24,151,412,5);g.fillStyle='#eee';g.fillRect(24,151,412*clamp(rpm/cars[selected].redline,0,1),5);
+    g.font='17px Arial';g.textAlign='left';g.fillStyle='#aaa';g.fillText(Math.round(rpm)+' RPM',24,185);
+    g.textAlign='right';g.fillStyle='#ccc';g.fillText(nitro?'N2O '+Math.round(nitroFuel)+'%':(displayUnits==='imperial'?Math.round(player.speed*3.6)+' KM/H':Math.round(player.speed*2.236936)+' MPH'),434,185);
+  };
+  const trailHUD=updateHUD;
+  updateHUD=function(){trailHUD();if(wheelieActive)$('driveFeedback').textContent='WHEELIE / +15% ACCEL';};
+  const actionGrid=document.createElement('div');actionGrid.className='home-actions-grid';
+  $('homePlay').before(actionGrid);for(const b of [...document.querySelectorAll('#home .home-action')])actionGrid.append(b);
+  const selectionTabs=document.createElement('div');selectionTabs.className='selection-tabs';selectionTabs.setAttribute('role','tablist');selectionTabs.setAttribute('aria-label','Vehicle selection and drive setup');
+  selectionTabs.innerHTML='<button id="selectVehiclesTab" role="tab" aria-selected="true">01 / VEHICLES</button><button id="selectSetupTab" role="tab" aria-selected="false">02 / BUILD & DRIVE</button>';
+  document.querySelector('#menu .garage-header').after(selectionTabs);
+  function selectPanel(panel){$('menu').dataset.selectionPanel=panel;$('selectVehiclesTab').setAttribute('aria-selected',String(panel==='vehicles'));$('selectSetupTab').setAttribute('aria-selected',String(panel==='setup'));$('menu').scrollTop=0;}
+  $('selectVehiclesTab').onclick=()=>selectPanel('vehicles');$('selectSetupTab').onclick=()=>selectPanel('setup');selectPanel('vehicles');
+  $('carCards').addEventListener('click',e=>{if(e.target.closest('[data-car]')&&compactUI())selectPanel('setup');});
+  for(const id of ['homePlay','homeFreestyle'])$(id).addEventListener('click',()=>{selectPanel('vehicles');if(sessionType==='freestyle')document.querySelector('#menu .garage-header p').textContent='All '+cars.length+' vehicles. Choose a ride, then configure your test build.';});
+  $('homeFreestyle').querySelector('span').textContent='Cars + motorcycles. Free upgrades and custom rules →';
+  // Update roster labels without touching persistent IDs or save-key names.
+  document.querySelector('#menu .garage-layout>section>.section-label').textContent='01 / VEHICLES / CARS + MOTORCYCLES';
+  document.querySelector('#dealerView>.section-label').textContent='SHOWROOM / '+cars.length+' VEHICLES / CARS + MOTORCYCLE';
+  const mobileHelp=$('audioPane').querySelector('.cloud-note');
+  if(mobileHelp)mobileHelp.textContent='MOBILE / Drag up to accelerate, down to brake, sideways to steer. Hold the offset; lift to coast. Second finger: wheelie on the dirt bike, nitro on cars. Braking lowers the front wheel. Use landscape for a wider road.';
+
+
+  // REWARDS & ROAD EVENTS / fixed cash awards are not multiplied.
+  let spikeStrips=[],spikeCooldown=18,punctureTimer=0,puncturePhase=0,spikeWarning=0;
+  function drivingRewardMultiplier(){return wheelieActive||(!isBike()&&player.speed*3.6>=325)?2:1;}
+  function grantCareerCash(amount){
+    if(sessionType!=='career'||!runActive)return;
+    amount=Math.round(amount*difficultyReward());economy.cash+=amount;economy.earned=(economy.earned||0)+amount;eventCashPaid+=amount;
+    persistEconomy();updateWallet();
+  }
+  let eventCashPaid=0;
+  function runQuests(){return [
+    {label:'Drive 2 km',difficulty:'EASY',cash:500,progress:distance/2000},
+    {label:'Make 5 near misses',difficulty:'MEDIUM',cash:1000,progress:nearMisses/5},
+    {label:'Drift for 5 seconds',difficulty:'HARD',cash:1500,progress:driftSeconds/5},
+    {label:'Drive 10 km & wreck 3 patrols',difficulty:'EXPERT',cash:5000,progress:Math.min(distance/10000,copWrecks/3)}
+  ];}
+  function resetRoadEvents(){spikeStrips=[];spikeCooldown=18;punctureTimer=0;puncturePhase=0;spikeWarning=0;eventCashPaid=0;resetFuelSystem();}
+  function deploySpikeStrip(){
+    if(!policeEnabled||!pursuit||mode==='empty'||mode==='zen'||spikeStrips.length||(sessionType==='career'&&runDifficulty==='easy'))return false;
+    const lanes=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(Math.random()*(i+1));[lanes[i],lanes[j]]=[lanes[j],lanes[i]];}
+    // Spawn far enough ahead for at least ~3 seconds of reaction at current speed.
+    const travel=Math.max(180,player.speed*PIXELS_PER_METRE);
+    const y=player.y-travel*3.2;
+    spikeStrips.push({y,lanes:lanes.slice(0,2).sort(),hit:false,passed:false});
+    spikeWarning=3.5;toastTimer=3.5;
+    $('toast').textContent='SPIKE STRIP AHEAD / LANES '+lanes.slice(0,2).sort().map(l=>l+1).join(' + ')+' / TWO LANES CLEAR';
+    return true;
+  }
+  function tickSpikeStrips(dt){
+    puncturePhase+=dt;punctureTimer=Math.max(0,punctureTimer-dt);spikeWarning=Math.max(0,spikeWarning-dt);
+    if(!policeEnabled){spikeStrips=[];return;}
+    if(pursuit){spikeCooldown-=dt;if(spikeCooldown<=0){if(deploySpikeStrip())spikeCooldown=runDifficulty==='hard'?random(18,28):random(25,40);else spikeCooldown=4;}}
+    const movement=Math.max(0,player.speed*PIXELS_PER_METRE)*dt;
+    for(const strip of spikeStrips){
+      const previous=strip.y;strip.y+=movement;
+      if(!strip.passed&&previous<=player.y+30&&strip.y>=player.y-30){
+        const halfWidth=(bodyStyles[stats.model]?.width||40)/2;
+        const overlaps=strip.lanes.some(l=>Math.abs(player.x-laneX(l))<LANE_WIDTH*.44+halfWidth);
+        if(overlaps&&!strip.hit){
+          strip.hit=true;strip.passed=true;punctureTimer=5;puncturePhase=0;
+          wheelieActive=false;toastTimer=3;$('toast').textContent='TYRES PUNCTURED / UNSTABLE HANDLING FOR 5 SECONDS';
+          shake=Math.max(shake,6);
+        }
+      }
+      if(strip.y>player.y+35)strip.passed=true;
+    }
+    spikeStrips=spikeStrips.filter(s=>s.y<H+80);
+  }
+  function drawSpikeStrips(){
+    for(const strip of spikeStrips){
+      if(strip.y< -25||strip.y>H+25)continue;
+      for(const lane of strip.lanes){
+        const left=laneX(lane)-LANE_WIDTH*.44,width=LANE_WIDTH*.88;
+        ctx.save();ctx.translate(left,strip.y);
+        ctx.fillStyle='#141a20';ctx.fillRect(0,-5,width,10);
+        ctx.strokeStyle=strip.hit?'#8e5a48':'#ffba52';ctx.lineWidth=2;ctx.strokeRect(0,-5,width,10);
+        for(let x=5;x<width-3;x+=10){ctx.fillStyle='#e4e8eb';ctx.beginPath();ctx.moveTo(x,-4);ctx.lineTo(x+4,-12);ctx.lineTo(x+7,-4);ctx.closePath();ctx.fill();}
+        ctx.fillStyle='#ff7445';ctx.fillRect(0,-8,4,16);ctx.fillRect(width-4,-8,4,16);ctx.restore();
+      }
+    }
+  }
+  const eventHUD=updateHUD;
+  updateHUD=function(){eventHUD();
+    const feedback=$('driveFeedback');let text='GRIP STABLE',colour='';
+    if(punctureTimer>0){text='PUNCTURE / '+punctureTimer.toFixed(1)+'s';colour='#ffac83';}
+    else if(wheelieActive){text='WHEELIE / 2× REWARDS';colour='#f0dfa3';}
+    else if(!isBike()&&player.speed*3.6>=325){text=Math.round(displaySpeed(325))+'+ '+speedUnit().toUpperCase()+' / 2× REWARDS';colour='#f0dfa3';}
+    else if(pursuit){text=escapeTimer>0?'ESCAPING / '+Math.max(0,difficultyRules().escapeSeconds-escapeTimer).toFixed(1)+'s':'POLICE PURSUIT';colour='#ffb7a8';}
+    else if(slip>.2){text='SLIDING / EASE STEERING';colour='#ffca88';}
+    else if(steerLoad>.7){text='TYRE LOAD / '+Math.round(clamp(steerLoad/2,0,1)*100)+'%';}
+    feedback.textContent=text;feedback.style.color=colour;
+    const grip=punctureTimer>0?1:clamp(Math.max(slip,steerLoad*.35),0,1);
+    $('gripFill').style.width=Math.round(grip*100)+'%';
+    $('gripFill').style.background=grip>.7?'#ff8d69':grip>.35?'#e8c780':'#b8d6cc';
+  };
+  const eventWallet=updateWallet;
+  updateWallet=function(){eventWallet();if(sessionType==='career'&&runActive)$('runEarnings').textContent='RUN +$'+(runPaid+eventCashPaid).toLocaleString('en-GB')+(drivingRewardMultiplier()===2?' / 2× DRIVING':'');};
+  // Quest details remain accessible on mobile without expanding the driving HUD.
+  const questDetails=document.createElement('details');questDetails.className='drive-settings';
+  questDetails.innerHTML='<summary>CAREER QUESTS & REWARDS</summary><p class="cloud-note">Easy: drive 2 km / $500. Medium: 5 near misses / $1,000. Hard: drift 5 seconds / $1,500. Expert: 10 km and 3 patrol wrecks / $5,000. Each pays once per run. Escape: $2,500. Patrol wreck: $250 each. Fixed cash rewards do not receive the 2× driving bonus. Wheelies and cars at 325+ km/h earn 2× driving points and money; bonuses do not stack. Freestyle never pays career rewards.</p>';
+  document.querySelector('#menu .launch-panel').insertBefore(questDetails,$('start'));
+
+
+  // HANDLING V2 / deliberately fictional gameplay calibration, not a real
+  // vehicle-dynamics simulation or manufacturer handling specification.
+  // Each vehicle has its own calibration; upgrades multiply rather than replace it.
+  const handlingProfiles={
+    muscle:{label:'MUSCLE',steer:.87,response:5.8,grip:.87,oversteer:1.32,stability:.55,aero:.02,load:1.17,braking:.92,recovery:1.45,turnCommit:.65,breakRatio:.69,powerOversteer:.30,note:'Heavy turn-in, rear-biased slides; ease the throttle on fast turns.'},
+    hyper:{label:'HYPERCAR',steer:1.18,response:12.5,grip:1.32,oversteer:.80,stability:.94,aero:.26,load:.88,braking:1.17,recovery:2.9,turnCommit:.95,breakRatio:.86,powerOversteer:.06,note:'Precise turn-in, strong high-speed grip and progressive steering.'},
+    hypergt:{label:'HIGH-SPEED GT',steer:1.04,response:8.6,grip:1.24,oversteer:.84,stability:1,aero:.16,load:.96,braking:1.09,recovery:2.3,turnCommit:1,breakRatio:.89,powerOversteer:.05,note:'Planted at very high speed, with more weight and slower direction changes.'},
+    super:{label:'SUPERCAR',steer:1.16,response:11.6,grip:1.20,oversteer:.94,stability:.85,aero:.18,load:.96,braking:1.12,recovery:2.6,turnCommit:.85,breakRatio:.82,powerOversteer:.11,note:'Sharp responses and strong grip; abrupt reversals can unsettle the rear.'},
+    track:{label:'TRACK FOCUSED',steer:1.30,response:14.2,grip:1.43,oversteer:.77,stability:.96,aero:.32,load:.85,braking:1.25,recovery:3.3,turnCommit:.95,breakRatio:.89,powerOversteer:.06,note:'Fastest turn-in and strongest aero grip, with firm, direct responses.'},
+    lightSport:{label:'LIGHTWEIGHT SPORTS',steer:1.30,response:13.3,grip:1.13,oversteer:1.04,stability:.66,aero:.05,load:.98,braking:1.08,recovery:2.6,turnCommit:.75,breakRatio:.78,powerOversteer:.12,note:'Very agile at low speed; lighter and less settled near maximum speed.'},
+    sport:{label:'SPORTS COUPE',steer:1.10,response:9.8,grip:1.08,oversteer:1.04,stability:.76,aero:.08,load:1,braking:1.03,recovery:2.2,turnCommit:.8,breakRatio:.80,powerOversteer:.14,note:'Balanced steering and grip with progressive throttle-on oversteer.'},
+    tuner:{label:'TUNER COUPE',steer:1.09,response:9.2,grip:1.01,oversteer:1.14,stability:.70,aero:.04,load:1.05,braking:.99,recovery:2,turnCommit:.72,breakRatio:.77,powerOversteer:.20,note:'Responsive but lively; power upgrades make the rear easier to slide.'},
+    hotHatch:{label:'HOT HATCH',steer:1.23,response:11.5,grip:1.12,oversteer:.75,stability:.68,aero:.03,load:1.06,braking:1.02,recovery:2.5,turnCommit:.85,breakRatio:.78,powerOversteer:.03,note:'Quick low-speed direction changes; front-end push and calmer rear grip.'},
+    rally:{label:'RALLY / AWD',steer:1.20,response:10.7,grip:1.22,oversteer:.83,stability:.78,aero:.05,load:.96,braking:1.02,recovery:2.8,turnCommit:.9,breakRatio:.82,powerOversteer:.06,note:'Secure grip and quick recovery; forgiving in poor weather.'},
+    sedan:{label:'SPORTS SALOON',steer:1.02,response:8.2,grip:1.04,oversteer:1.01,stability:.80,aero:.03,load:1.06,braking:.98,recovery:2.1,turnCommit:.85,breakRatio:.79,powerOversteer:.13,note:'Stable and predictable, with more inertia than a small sports car.'},
+    gt:{label:'GRAND TOURER',steer:.98,response:7.2,grip:1.08,oversteer:.96,stability:.91,aero:.07,load:1.07,braking:1.02,recovery:2.05,turnCommit:.95,breakRatio:.84,powerOversteer:.10,note:'Smooth high-speed stability; heavier and slower to change direction.'},
+    classicSport:{label:'CLASSIC SPORTS',steer:1.04,response:7.6,grip:.90,oversteer:1.24,stability:.56,aero:0,load:1.15,braking:.87,recovery:1.7,turnCommit:.65,breakRatio:.72,powerOversteer:.23,note:'Mechanical grip and lively weight transfer; less forgiving at the limit.'},
+    suv:{label:'SUV / OFF-ROAD',steer:.80,response:5.7,grip:.91,oversteer:.94,stability:.62,aero:0,load:1.28,braking:.86,recovery:1.6,turnCommit:.65,breakRatio:.71,powerOversteer:.10,note:'Slower turn-in, body weight and a lower safe cornering pace.'},
+    truck:{label:'PICKUP',steer:.70,response:4.5,grip:.83,oversteer:1.17,stability:.53,aero:0,load:1.36,braking:.78,recovery:1.4,turnCommit:.6,breakRatio:.68,powerOversteer:.23,note:'Heavy steering, long settling time and a loose rear under power.'},
+    van:{label:'VAN / COMMERCIAL',steer:.64,response:4.0,grip:.79,oversteer:.92,stability:.50,aero:0,load:1.42,braking:.74,recovery:1.3,turnCommit:.6,breakRatio:.67,powerOversteer:.04,note:'Slowest direction changes and braking; avoid abrupt high-speed inputs.'},
+    dirtbike:{label:'DIRT MOTORCYCLE',steer:1.34,response:12,grip:1.02,oversteer:.90,stability:.62,aero:0,load:1,braking:.94,recovery:2.3,turnCommit:.85,breakRatio:.82,powerOversteer:.08,note:'Nimble trail-bike steering; wheelies reduce steering authority.'},
+    nakedbike:{label:'NAKED MOTORCYCLE',steer:1.38,response:13.5,grip:1.12,oversteer:.90,stability:.73,aero:.02,load:.98,braking:1.06,recovery:2.7,turnCommit:.9,breakRatio:.84,powerOversteer:.08,note:'Agile road-bike steering with a lighter high-speed feel.'},
+    sportbike:{label:'SPORT MOTORCYCLE',steer:1.29,response:12.5,grip:1.23,oversteer:.86,stability:.86,aero:.12,load:.92,braking:1.15,recovery:2.9,turnCommit:.95,breakRatio:.88,powerOversteer:.07,note:'Precise road steering and more settled high-speed cornering.'}
+  };
+  const handlingClasses=["muscle","hypergt","hyper","rally","track","sport","hyper","hyper","hyper","sedan","gt","track","muscle","super","hotHatch","hotHatch","rally","tuner","rally","super","sport","suv","suv","van","truck","super","super","lightSport","track","track","classicSport","super","rally","track","gt","track","gt","sport","hypergt","track","gt","track","track","super","muscle","muscle","muscle","track","hyper","classicSport","classicSport","super","hyper","muscle","classicSport","tuner","truck","hyper","lightSport","hotHatch","hotHatch","classicSport","sport","hyper","suv","hyper","hypergt","hyper","hyper","track","classicSport","classicSport","rally","rally","gt","super","hyper","lightSport","super","sport","lightSport","sport","hyper","track","hyper","track","rally","gt","gt","rally","rally","tuner","sport","tuner","track","sport","hyper","rally","muscle","muscle","hyper","track","super","gt","truck","hypergt","classicSport","rally","rally","sport","classicSport","classicSport","hotHatch","classicSport","classicSport","lightSport","muscle","classicSport","sport","sport","rally","sedan","classicSport","sport","hotHatch","sport","classicSport","track","gt","hypergt","gt","super","muscle","super","classicSport","muscle","sport","super","sport","super","hyper","hyper","track","rally","muscle","hotHatch","hyper","hyper","sport","rally","sport","track","super","classicSport","hyper","hyper","hyper","track","hyper","hyper","hyper","sport","track","classicSport","rally","track","sedan","lightSport","track","gt","classicSport","classicSport","hotHatch","super","sport","hypergt","gt","track","classicSport","track","rally","tuner","classicSport","sport","rally","gt","hyper","track","hyper","muscle","muscle","sport","track","sport","track","super","track","sport","hyper","muscle","classicSport","super","hyper","sedan","lightSport","rally","hyper","classicSport","hotHatch","super","dirtbike","sportbike","nakedbike","sportbike"];
+
+  for(let i=0;i<cars.length;i++){
+    const c=cars[i],base=handlingProfiles[handlingClasses[i]||'sport'];
+    const hash=[...c.name].reduce((v,ch)=>(v*31+ch.charCodeAt(0))>>>0,7);
+    const character=hash/4294967295-.5;
+    const original=c.handling,calibration=1+character*.075+clamp(original-1.1,-.35,.3)*.05;
+    c.handlingClass=handlingClasses[i]||'sport';
+    c.dynamics={...base,steer:base.steer*calibration,response:base.response*(1+character*.09),grip:base.grip*(1+character*.05),stability:clamp(base.stability+character*.045,.3,1),braking:base.braking*(1+character*.04)};
+    c.handling=c.dynamics.steer;
+  }
+  function handlingAtSpeed(i,kph){
+    const c=cars[i],p=c.dynamics||handlingProfiles.sport;
+    const top=Math.max(100,i===selected?stats.top:c.top),ratio=clamp(kph/top,0,1.4);
+    const high=clamp((ratio-.38)/.62,0,1.3),aero=p.aero*clamp(kph/300,0,1.4);
+    const speedSteer=1-(.43-p.stability*.16)*Math.pow(high,1.15);
+    const wetBenefit=c.handlingClass==='rally'?.12:0;
+    return {
+      steerScale:clamp(speedSteer,.48,1.05),
+      response:p.response*(1-high*(.20-p.stability*.1)),
+      grip:p.grip+aero+wetBenefit*rainAmount,
+      oversteer:p.oversteer,load:p.load*(1+high*(1-p.stability)*.25),
+      loadResponse:clamp(p.response*.34,1.6,5),braking:p.braking,
+      recovery:p.recovery,turnCommit:p.turnCommit,
+      breakSpeed:Math.max(95,Math.min(top*.97,top*p.breakRatio+15)),
+      reversalSpeed:Math.max(85,top*(.45+p.stability*.12)),
+      powerOversteer:p.powerOversteer,
+      label:p.label,note:p.note
+    };
+  }
+  const handlingRefresh=refreshBuild;
+  refreshBuild=function(){handlingRefresh();
+    const c=cars[selected],p=c.dynamics;
+    let note=$('handlingNotes');
+    if(!note){note=document.createElement('p');note.id='handlingNotes';note.className='cloud-note';$('selectedSummary').after(note);}
+    note.textContent=p.label+' / '+p.note;
+    note.title='Fictional gameplay tuning. Steering reduces progressively near this vehicle’s upgraded top speed. Tyres and suspension still modify grip and response.';
+  };
+  // Refresh current preview after installing per-vehicle calibrations.
+  stats=currentStats();refreshBuild();
+
+
+  // GENERAL / display preferences. All physics, cloud scores and station
+  // positions stay in SI units; only presentation changes to miles/MPH.
+  function displaySpeed(kph){return displayUnits==='imperial'?kph/1.609344:kph;}
+  function speedUnit(){return displayUnits==='imperial'?'mph':'km/h';}
+  function formatSpeed(kph){return Math.round(displaySpeed(kph)).toLocaleString('en-GB')+' '+speedUnit();}
+  function distanceValue(metres){return metres/(displayUnits==='imperial'?1609.344:1000);}
+  function distanceUnit(){return displayUnits==='imperial'?'mi':'km';}
+  function formatDistance(metres,decimals=2){return distanceValue(metres).toLocaleString('en-GB',{minimumFractionDigits:decimals,maximumFractionDigits:decimals})+' '+distanceUnit();}
+  function difficultyReward(){return sessionType==='career'?(runDifficulty==='hard'?1.75:runDifficulty==='easy'?.75:1):1;}
+  function difficultyRules(){
+    if(sessionType!=='career')return difficultyPresets.normal;
+    return difficultyPresets[runDifficulty]||difficultyPresets.normal;
+  }
+  const difficultyPresets={
+    easy:{spot:350,nearby:450,vision:600,heatSeconds:60,escapeSeconds:5,dispatchDelay:6,dispatchCooldown:30,tracking:.65,pitRate:.45,policeSpeed:.80,policeAccel:.65,policeSteer:.65,density:.72},
+    normal:{spot:550,nearby:650,vision:850,heatSeconds:35,escapeSeconds:8,dispatchDelay:3,dispatchCooldown:18,tracking:1.5,pitRate:1,policeSpeed:1,policeAccel:1,policeSteer:1,density:1},
+    hard:{spot:650,nearby:750,vision:1000,heatSeconds:22,escapeSeconds:11,dispatchDelay:2,dispatchCooldown:12,tracking:2.5,pitRate:1.45,policeSpeed:1.08,policeAccel:1.25,policeSteer:1.2,density:1.18}
+  };
+  function applyDifficultyRules(){
+    if(sessionType!=='career')return;
+    const rules=difficultyRules();density=rules.density;
+    $('density').value='1'; // career runtime density is authoritative; freestyle selector stays valid
+    if(runDifficulty==='easy'){$('weather').value='dry';weatherMode='dry';}
+  }
+  function fuelRequired(){return sessionType==='career'&&runDifficulty==='hard';}
+  function stationSpacing(){return runDifficulty==='hard'?4500:3000;}
+  function resetFuelSystem(){
+    fuelPercent=100;fuelStations=[];nextFuelStop=stationSpacing();refuelling=false;fuelEmptyClock=0;fuelLowWarned=false;
+  }
+  function fuelUseForDistance(metres,kph){
+    if(!fuelRequired())return 0;
+    const base=10000;
+    // Hard's 10 km quoted range is at <=120 km/h. High speed progressively costs
+    // up to 50% extra, still allowing a full tank to reach the first 4.5 km stop.
+    const extra=runDifficulty==='hard'?1+clamp((kph-120)/280,0,.5):1;
+    return Math.max(0,metres)/base*100*extra;
+  }
+  function stationBayOpen(){
+    return fuelRequired()&&fuelStations.some(st=>Math.abs(distance-st.at)<90);
+  }
+  function stationBayX(){return ROAD_RIGHT+(W-ROAD_RIGHT)*.52;}
+  function tickFuelSystem(dt,metres){
+    if(state!=='playing')return;
+    if(!fuelRequired()){fuelPercent=100;refuelling=false;fuelStations=[];return;}
+    fuelPercent=clamp(fuelPercent-fuelUseForDistance(metres,player.speed*3.6),0,100);
+    const stoppingDistance=player.speed*player.speed/(2*Math.max(7,10.5*(stats.braking||1)*(cars[selected].dynamics?.braking||1)));
+    const approachNotice=Math.max(350,stoppingDistance+100);
+    while(distance+Math.max(450,approachNotice+100)>=nextFuelStop){fuelStations.push({at:nextFuelStop,announced:false,filled:false});nextFuelStop+=stationSpacing();}
+    fuelStations=fuelStations.filter(st=>distance-st.at<110);
+    refuelling=false;
+    for(const st of fuelStations){
+      const ahead=st.at-distance;
+      if(!st.announced&&ahead<=approachNotice&&ahead>=0){st.announced=true;toastTimer=4;$('toast').textContent='FUEL STATION / '+formatDistance(Math.max(0,ahead))+' / SLOW DOWN, KEEP RIGHT';}
+      const atPump=Math.abs(ahead)<=18&&player.x>ROAD_RIGHT+2;
+      const pressingThrottle=keys.has('KeyW')||keys.has('ArrowUp')||touchDrive.throttle>0;
+      if(atPump&&player.speed*3.6<8&&!pressingThrottle){
+        player.speed=0;player.vx=0;wheelieActive=false;boostActive=false;
+        if(fuelPercent<100){
+          refuelling=true;fuelPercent=Math.min(100,fuelPercent+dt*20);
+          if(fuelPercent>=100&&!st.filled){st.filled=true;toastTimer=3;$('toast').textContent='TANK FULL / 100% / STEER LEFT AND ACCELERATE TO REJOIN';}
+        }
+        fuelEmptyClock=0;
+      }
+    }
+    if(fuelPercent<=20&&!fuelLowWarned){fuelLowWarned=true;toastTimer=3;$('toast').textContent='LOW FUEL / '+Math.ceil(fuelPercent)+'% / NEXT STATION '+formatDistance(Math.max(0,nextFuelStop-distance));}
+    if(fuelPercent>30)fuelLowWarned=false;
+    if(fuelPercent<=0&&!refuelling){
+      wheelieActive=false;boostActive=false;player.speed=Math.max(0,player.speed-1.8*dt);
+      if(player.speed<.4){fuelEmptyClock+=dt;if(fuelEmptyClock>=4)finishFuelRun();}
+    }else fuelEmptyClock=0;
+  }
+  function finishFuelRun(){
+    if(state!=='playing')return;
+    bankRun();player.speed=0;player.vx=0;
+    const score=Math.floor((distance+bonus)*difficultyReward());
+    if(sessionType==='career'){best=Math.max(best,score);localStorage.setItem(gameStorageKey('midnight-highway-best'),String(best));}
+    $('finalScore').textContent=score.toLocaleString('en-GB');$('finalDistance').textContent=formatDistance(distance);$('finalSpeed').textContent=formatSpeed(maxSpeed);$('bestScore').textContent=best.toLocaleString('en-GB');
+    document.querySelector('#gameOver h1').textContent='OUT OF FUEL';
+    $('crashText').textContent='Your tank is empty. Earned career rewards are kept. Stop in a roadside station bay before the next tank runs out.';
+    setState('over');
+  }
+  function drawFuelStations(){
+    if(!fuelRequired())return;
+    for(const st of fuelStations){
+      const y=player.y+(distance-st.at)*PIXELS_PER_METRE;
+      if(y< -250||y>H+260)continue;
+      const margin=W-ROAD_RIGHT,bayW=Math.max(34,margin-8),bayX=ROAD_RIGHT+4;
+      ctx.save();
+      // Connected right-side forecourt with a long deceleration/rejoin apron.
+      ctx.fillStyle='#30383c';ctx.beginPath();ctx.moveTo(ROAD_RIGHT-2,y-150);ctx.lineTo(bayX+bayW,y-100);ctx.lineTo(bayX+bayW,y+100);ctx.lineTo(ROAD_RIGHT-2,y+150);ctx.closePath();ctx.fill();
+      ctx.strokeStyle='#c9ddbd';ctx.lineWidth=1;ctx.setLineDash([8,8]);ctx.strokeRect(bayX+3,y-68,Math.max(24,bayW-8),136);ctx.setLineDash([]);
+      const pumpX=bayX+bayW*.88;
+      ctx.fillStyle='#153a31';ctx.fillRect(bayX+2,y-118,bayW-3,32);
+      ctx.fillStyle='#d8f1d9';ctx.textAlign='center';ctx.font='bold '+Math.max(7,Math.min(11,bayW/6))+'px sans-serif';ctx.fillText('FUEL',bayX+bayW*.5,y-98);
+      ctx.fillStyle='#d6e4dc';ctx.fillRect(pumpX-6,y-28,12,25);ctx.fillStyle='#19362d';ctx.fillRect(pumpX-4,y-25,8,8);
+      ctx.strokeStyle='#101b1c';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(pumpX+6,y-22);ctx.bezierCurveTo(pumpX+17,y-15,pumpX+14,y+6,pumpX+6,y-2);ctx.stroke();
+      ctx.fillStyle='#c5e3c7';ctx.font='7px sans-serif';ctx.fillText('STOP',bayX+bayW*.4,y+50);ctx.fillText('FREE',bayX+bayW*.4,y+61);
+      ctx.restore();
+    }
+  }
+  // Public General tab: units first, existing audio controls underneath.
+  $('audioTab').textContent='GENERAL';
+  const generalPane=$('audioPane');
+  const unitSection=document.createElement('div');unitSection.className='general-units';unitSection.id='unitSection';
+  unitSection.innerHTML='<div class="section-label">DISPLAY UNITS</div><label class="general-select">DISTANCE / SPEED<select id="displayUnits"><option value="metric">Kilometres / KM/H</option><option value="imperial">Miles / MPH</option></select></label><p class="cloud-note">Changes display units only. Physics, fuel range, scores and cloud saves keep the same values.</p><div class="section-label">AUDIO</div>';
+  generalPane.prepend(unitSection);
+  document.querySelector('#audioSettings h1').textContent='SETTINGS.';
+  document.querySelector('#audioSettings .eyebrow').textContent='MH / GENERAL & ACCOUNT';
+  const difficultyBox=document.createElement('div');difficultyBox.id='difficultyBox';
+  difficultyBox.innerHTML='<label class="general-select" for="careerDifficulty">CAREER DIFFICULTY<select id="careerDifficulty"><option value="easy">Easy / no fuel / 0.75× rewards</option><option value="normal">Normal / no fuel / standard rewards</option><option value="hard">Hard / tougher police / 1.75× rewards</option></select></label><p id="difficultyDescription" class="cloud-note"></p>';
+  $('careerRules').prepend(difficultyBox);
+  function difficultyDescription(){
+    const d=$('careerDifficulty').value;
+    $('difficultyDescription').textContent=d==='easy'?'No fuel consumption. Lighter traffic, dry weather and slower, less reactive police. 0.75× points and cash.':d==='hard'?
+      '1.75× points and cash. Full tank: '+formatDistance(10000)+' at up to '+formatSpeed(120)+'; high speed burns more. Stations every '+formatDistance(4500)+'. Denser traffic and tougher police.':
+      'Standard traffic, police and rewards. No fuel requirement or fuel stops. Hard mode adds fuel management and 1.75× rewards.';
+  }
+  function saveGeneralPreferences(){
+    localStorage.setItem('midnight-general-v1',JSON.stringify({units:displayUnits,difficulty:preferredDifficulty}));
+    markCloudDirty();if(cloud.owner)scheduleCloudSave();
+  }
+  function applyGeneralPreferences(prefs){
+    if(prefs?.units==='metric'||prefs?.units==='imperial')displayUnits=prefs.units;
+    if(['easy','normal','hard'].includes(prefs?.difficulty))preferredDifficulty=prefs.difficulty;
+    if($('displayUnits'))$('displayUnits').value=displayUnits;
+    if($('careerDifficulty'))$('careerDifficulty').value=preferredDifficulty;
+    if($('difficultyDescription'))difficultyDescription();
+    try{localStorage.setItem('midnight-general-v1',JSON.stringify({units:displayUnits,difficulty:preferredDifficulty}));}catch(_){}
+  }
+  // Preserve original text per node so toggling units never converts twice.
+  const measurementText=new WeakMap();
+  function localiseMeasurements(root){
+    if(!root)return;
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let node;
+    while(node=walker.nextNode()){
+      if(node.parentElement?.closest('script,style,input,select,textarea,#unitSection,#displayUnits,#difficultyDescription'))continue;
+      const previous=measurementText.get(node),current=node.nodeValue;
+      const original=previous&&current===previous.output?previous.original:current;
+      let output=original;
+      if(displayUnits==='imperial')output=original.replace(/(\d+(?:[.,]\d+)?)\s*(km\/h|km)\b/gi,(_,num,unit)=>{
+        const value=Number(num.replace(',',''))/1.609344;
+        return (unit.toLowerCase()==='km/h'?Math.round(value):Number(value.toFixed(2)))+' '+(unit.toLowerCase()==='km/h'?'mph':'mi');
+      });
+      if(displayUnits==='imperial')output=output.replace(/\b0([–-])(100|200|300)(?=\s*(?:TARGET|target|game target))/g,(_,dash,n)=>'0'+dash+Math.round(Number(n)/1.609344));
+      if(output!==current)node.nodeValue=output;
+      measurementText.set(node,{original,output});
+    }
+  }
+  function refreshUnitMenus(){
+    for(const id of ['home','menu','workshop','showcase','gameOver'])localiseMeasurements($(id));
+  }
+  $('displayUnits').onchange=()=>{
+    displayUnits=$('displayUnits').value;saveGeneralPreferences();difficultyDescription();
+    refreshUnitMenus();if(state==='over'){$('finalDistance').textContent=formatDistance(distance);$('finalSpeed').textContent=formatSpeed(maxSpeed);}updateHUD();drawCluster();
+  };
+  $('careerDifficulty').onchange=()=>{preferredDifficulty=$('careerDifficulty').value;saveGeneralPreferences();difficultyDescription();};
+  applyGeneralPreferences(rawRead('midnight-general-v1',{}));
+  // Render hooks handle fresh text/cards after searches, purchases and selection.
+  const unitGarage=updateGarage;updateGarage=function(){unitGarage();localiseMeasurements($('menu'));};
+  const unitRefresh=refreshBuild;refreshBuild=function(){unitRefresh();localiseMeasurements($('menu'));localiseMeasurements($('workshop'));};
+  const unitHome=renderHome;renderHome=function(){unitHome();localiseMeasurements($('home'));};
+  const unitDealer=renderDealer;renderDealer=function(){unitDealer();localiseMeasurements($('dealerView'));};
+  const unitMod=renderModGarage;renderModGarage=function(){unitMod();localiseMeasurements($('modGarage'));};
+  const unitShop=renderShop;renderShop=function(){unitShop();localiseMeasurements($('workshop'));};
+  const unitCollection=renderCollection;renderCollection=function(){unitCollection();localiseMeasurements($('showcase'));};
+  // A compact percentage display shares the existing status card, no touch UI.
+  const fuelPanel=document.createElement('div');fuelPanel.id='fuelPanel';fuelPanel.innerHTML='<span id="fuelLabel">FUEL</span><strong id="fuelPercent">100%</strong><div class="fuel-track"><i id="fuelFill"></i></div><small id="fuelStationHint"></small>';
+  document.querySelector('.session-card').append(fuelPanel);
+  const fuelHUD=updateHUD;
+  updateHUD=function(){fuelHUD();
+    localiseMeasurements($('challengeList'));
+    $('speed').textContent=Math.round(displaySpeed(player.speed*3.6));$('speedImperial').textContent=speedUnit().toUpperCase();
+    $('distance').textContent=distanceValue(distance).toFixed(2);$('distance').nextElementSibling.textContent=distanceUnit().toUpperCase();
+    $('runMode').textContent=sessionType==='career'?'CAREER / '+runDifficulty.toUpperCase()+(runDifficulty==='hard'?' / 1.75×':runDifficulty==='easy'?' / 0.75×':''):'FREESTYLE';
+    $('fuelPanel').classList.toggle('hidden',!fuelRequired());
+    if(fuelRequired()){
+      $('fuelPercent').textContent=Math.ceil(fuelPercent)+'%';$('fuelFill').style.width=fuelPercent+'%';
+      $('fuelPanel').dataset.low=String(fuelPercent<=20);
+      const nearest=fuelStations.find(st=>st.at>=distance-18);
+      const toStation=Math.max(0,(nearest?.at??nextFuelStop)-distance);
+      $('fuelStationHint').textContent=refuelling?'REFUELLING / FREE':nearest&&Math.abs(nearest.at-distance)<=18?'STOP RIGHT / RELEASE THROTTLE':'NEXT '+formatDistance(toStation);
+      if(refuelling){$('driveFeedback').textContent='REFUELLING / '+Math.ceil(fuelPercent)+'%';$('driveFeedback').style.color='#bce5c8';}
+      else if(fuelPercent<=0){$('driveFeedback').textContent='EMPTY TANK / COAST TO A PUMP';$('driveFeedback').style.color='#ffac83';}
+    }
+  };
+  const difficultySelection=setSelectionMode;
+  setSelectionMode=function(kind){difficultySelection(kind);difficultyDescription();};
+  const fuelStart=startGame;
+  startGame=function(){fuelStart();if(sessionType==='career'){
+    $('careerDifficulty').disabled=true;
+    document.querySelector('#gameOver h1').textContent='RUN ENDED';
+  }};
+  // Existing click listeners captured the original start wrapper; state hooks
+  // enforce the disabled selection and reset it on returning to menus.
+  const fuelState=setState;
+  setState=function(next){fuelState(next);if($('careerDifficulty'))$('careerDifficulty').disabled=next!=='menu';if(next==='over')refreshUnitMenus();};
+  // Unit labels in static quest help are converted at menu-render time.
+  questDetails.querySelector('p').textContent+=' Easy pays 0.75× career cash and points. Normal pays 1× and has no fuel system. Hard multiplies all career cash and points by 1.75, including fixed quest and police rewards. Fuel starts at 100% each run. Normal has no fuel requirement; Hard range is 10 km at up to 120 km/h and less when faster. Fuel stations are free.';
+  refreshUnitMenus();difficultyDescription();
 
   accountUI();bootCloud();
 
