@@ -472,6 +472,12 @@ body[data-state="playing"] #skidWarning{pointer-events:none}
 #runDifficultyControls{align-items:center;gap:10px}#runDifficultyControls label{font-size:10px;color:#aaa}
 #runDifficultyFilter{min-height:40px;padding:9px;background:#121619;color:#eee;border:1px solid #48524e;font-size:12px}
 @media(max-width:760px){#runDifficultyControls{display:flex;flex-wrap:wrap}#runDifficultyFilter{flex:1;min-width:140px;font-size:11px}}
+
+.dev-test-panel{border-top:1px solid #444;border-bottom:1px solid #444;padding:14px 0;margin:16px 0}
+.dev-test-panel .dev-actions button{min-height:44px;white-space:normal;line-height:1.4;padding:10px 7px}
+.dev-test-panel button[aria-pressed=true]{background:#d8eadc;color:#102318;border-color:#b6d6bf}
+#devFuelReadout{font-size:9px;line-height:1.6;margin-top:10px}
+@media(max-width:760px){#devMenu .panel{padding:16px;max-height:calc(100dvh - 24px)}#devMenu h2{font-size:25px}.dev-test-panel .cloud-note{font-size:9px!important}}
 </style>
 </head>
 <body data-state="menu">
@@ -958,6 +964,9 @@ window.MH_SUPABASE = {
   const speedFeel = () => clamp((player.speed * 3.6 - 65) / 335, 0, 1);
   const FIXED_STEP = 1 / 120;
   const keys = new Set();
+  // Session-only developer testing switches. Never stored in career/cloud saves.
+  const devTesting={noclip:false,infiniteNitro:false,infiniteFuel:false,disableTraffic:false,disablePolice:false};
+
   let displayUnits='metric',preferredDifficulty='normal',runDifficulty='normal';
   let fuelPercent=100,fuelStations=[],nextFuelStop=3000,refuelling=false,fuelEmptyClock=0,fuelLowWarned=false;
 
@@ -1105,6 +1114,7 @@ window.MH_SUPABASE = {
   // Fictional gameplay interceptors, not real police vehicle specifications.
   const policeSpecs={patrol:{name:'Patrol',top:400,accel:13,model:1},sport:{name:'Sports interceptor',top:465,accel:16,model:2},hyper:{name:'Elite interceptor',top:515,accel:18,model:2}};
   function deployInterceptor(tier){
+    if(devTestActive('disableTraffic')||devTestActive('disablePolice'))return false;
     if(mode==='empty'||!policeEnabled||!pursuit)return false;
     const active=traffic.filter(c=>c.police&&!c.wrecked&&c.chasing);
     if(active.length>=4||active.filter(c=>c.policeTier==='sport'||c.policeTier==='hyper').length>=2)return false;
@@ -1121,6 +1131,7 @@ window.MH_SUPABASE = {
     if(daySeconds>0)gameHour=(gameHour+dt*24/daySeconds)%24;
     daylight=lightLevel();
     dispatchCooldown=Math.max(0,dispatchCooldown-dt);
+    if(devTestActive('disableTraffic')||devTestActive('disablePolice')){applyDevWorldOverrides();return;}
     if(!policeEnabled){resetPursuit();return;}
     const nearby=traffic.filter(c=>c.police&&!c.wrecked&&Math.abs(c.y-player.y)<difficultyRules().nearby);
     if(!pursuit&&nearby.some(c=>Math.abs(c.y-player.y)<difficultyRules().spot)){
@@ -1434,6 +1445,7 @@ window.MH_SUPABASE = {
   });
 
   function spawnTraffic() {
+    if(devTestActive('disableTraffic'))return;
     if(mode==='empty')return;
     const candidates = [0, 1, 2, 3].filter(lane =>
       !traffic.some(car => Math.abs(car.x - laneX(lane)) < 70 && car.y < 150)
@@ -1443,7 +1455,7 @@ window.MH_SUPABASE = {
     const isHeavy=Math.random()<.32;
     const pool=isHeavy?[6,7,23,24,25]:[0,1,2,3,4,5,20,21,22];
     let model=pool[Math.floor(Math.random()*pool.length)];
-    const isPolice=policeEnabled&&Math.random()<.18;
+    const isPolice=policeEnabled&&!devTestActive('disablePolice')&&Math.random()<.18;
     if(isPolice)model=1;
     const shape=bodyStyles[model];
     const cruise=isPolice?40:(shape.heavy||model===6||model===7)?random(17,23):model===20?random(20,26):model===5||model===22?random(22,28):model===2?random(29,38):random(23,32);
@@ -1482,6 +1494,7 @@ window.MH_SUPABASE = {
     return {axes:[{x:c,y:sn},{x:-sn,y:c}],hw:shape.width*.45,hh:shape.height*.46};
   }
   function collisionInfo(a,b,swept=false){
+    if((a===player||b===player)&&devTestActive('noclip'))return null;
     const A=bodyBox(a),B=bodyBox(b),axes=[...A.axes,...B.axes];
     let entry=0,exit=1,depth=Infinity,normal=null;
     const dx=b.x-a.x,dy=b.y-a.y;
@@ -1548,6 +1561,7 @@ window.MH_SUPABASE = {
   }
 
   function crash(hit=null) {
+    if(hit&&devTestActive('noclip'))return;
     if (state !== "playing") return;
     const score = Math.floor((distance+bonus)*difficultyReward());
     if(sessionType==='career')best = Math.max(best, score);
@@ -1586,13 +1600,14 @@ window.MH_SUPABASE = {
     tickWorld(dt);
     tickSpikeStrips(dt);
     const throttleInput=Math.max(Number(keys.has("KeyW")||keys.has("ArrowUp")),touchDrive.throttle);
-    const accelerate=throttleInput>0&&(!fuelRequired()||fuelPercent>0);
+    const accelerate=throttleInput>0&&(!fuelRequired()||fuelPercent>0||devTestActive('infiniteFuel'));
     const brakeInput=Math.max(Number(keys.has("KeyS")||keys.has("ArrowDown")),touchDrive.brake);
     const brake=brakeInput>0;
     spinTimer=Math.max(0,spinTimer-dt);
     const keyboardSteering=Number(keys.has("KeyD")||keys.has("ArrowRight"))-Number(keys.has("KeyA")||keys.has("ArrowLeft"));
     const requestedSteering=keyboardSteering||touchDrive.steer;
     const steering=punctureTimer>0?clamp(requestedSteering*.45+Math.sin(puncturePhase*7)*.68,-1,1):requestedSteering;
+    if(devTestActive('infiniteNitro'))nitroFuel=100;
     const c=cars[selected];
     const wheelieRequest=keys.has('ControlLeft')||keys.has('ControlRight')||(isBike()&&touchDrive.boost);
     wheelieActive=punctureTimer<=0&&isBike()&&wheelieRequest&&accelerate&&!brake&&!keys.has('Space')&&player.speed>3&&slip<.3;
@@ -1604,8 +1619,8 @@ window.MH_SUPABASE = {
     if(!manual&&shiftTimer===0){if(kph>gearLimits[gear]*.91&&gear<7)shift(1);else if(gear>1&&kph<gearLimits[gear-1]*.68)shift(-1);}
     const targetRPM=clamp(900+kph/gearLimits[gear]*(c.redline-900),900,c.redline);
     rpm=lerp(rpm,targetRPM,1-Math.exp(-dt*18));
-    boostActive=(!fuelRequired()||fuelPercent>0)&&nitro&&accelerate&&!brake&&nitroFuel>0&&(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()));
-    nitroFuel=clamp(nitroFuel+(boostActive?-22/(stats.nitroEfficiency||1):(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()))?0:9)*dt,0,100);
+    boostActive=(!fuelRequired()||fuelPercent>0||devTestActive('infiniteFuel'))&&nitro&&accelerate&&!brake&&nitroFuel>0&&(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()));
+    nitroFuel=devTestActive('infiniteNitro')?100:clamp(nitroFuel+(boostActive?-22/(stats.nitroEfficiency||1):(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()))?0:9)*dt,0,100);
     const topMS=stats.top/3.6*(boostActive?1.025:1)*(wheelieActive?1.10:1);
     if(brake)player.speed-=10.5*(stats.braking||1)*dynamics.braking*brakeInput*dt;
     else if(accelerate){
@@ -3004,6 +3019,7 @@ window.MH_SUPABASE = {
     return {...raw,economy:out};
   }
   function applySnapshot(raw){
+    if(cloud.user&&cloud.ready&&!cloud.applying)rememberAccountBest(cloud.user.id,snapshot());
     cloud.applying=true;
     try{
       const s=normalise(raw);applyGeneralPreferences(s.preferences);economy=s.economy;career={runs:cleanNumber(s.career?.runs),bestDistance:cleanNumber(s.career?.bestDistance),nearMisses:cleanNumber(s.career?.nearMisses)};
@@ -3026,7 +3042,7 @@ window.MH_SUPABASE = {
   <div class="cloud-actions hidden" id="signedInActions"><button id="completeProfile">COMPLETE PROFILE</button><button id="cloudSaveNow" class="primary">SAVE NOW</button><button id="cloudTakeControl">TAKE CONTROL / LOAD CLOUD</button><button id="accountSignOut">SIGN OUT</button></div>
   <div id="cloudRecovery" class="hidden"><p class="cloud-note">Password recovery: enter your new password above, then save it here.</p><button id="accountUpdatePassword" class="primary">SAVE NEW PASSWORD</button></div>
   <div class="cloud-actions"><button id="accountLeaderboard">GLOBAL LEADERBOARD</button><button id="accountDev" class="hidden">DEVELOPER TOOLS</button></div>
-  <p class="cloud-note">One device controls your cloud career at a time. Saves checkpoint every 15 seconds and after purchases. Other devices refresh while idle. Taking control loads the cloud copy and discards unsynced changes on this device. Audio is included in cloud saves.</p>
+  <p class="cloud-note">One device controls your cloud career at a time. Saves checkpoint every 15 seconds and after purchases. Other devices refresh while idle. Signing in or taking control compares this account’s device cache with its cloud save: most owned vehicles wins, then highest lifetime points if vehicle counts tie. Exact ties keep the cloud copy. Guest saves and other accounts are never imported automatically. Audio is included in cloud saves.</p>
   <p class="cloud-note">Existing guest progress is kept separately. Online accounts start a fresh career. Ranked points start at zero and only count completed online career runs. Developer accounts are permanently excluded from both leaderboards, even after access is revoked.</p>
   </div>`;
   const settings=$('audioSettings').querySelector('.settings-panel');
@@ -3051,10 +3067,11 @@ window.MH_SUPABASE = {
   }
   async function rpc(name,args={}){if(!cloud.client)throw Error('Online connection is not configured. Contact the game owner.');const {data,error}=await cloud.client.rpc(name,args);if(error)throw Error(error.message);return data;}
   function cloudFailure(e){
+    resetDevTesting();
     cloud.owner=false;cloud.ready=false;cloud.dev=false;
     if(state==='playing')setState('paused');if(devOpen){devResume=false;closeDev();}accountUI();cloudMessage(e.message||String(e),true);
   }
-  function markCloudDirty(){if(!cloud.applying&&cloud.user&&cloud.ready){cloud.dirty++;}}
+  function markCloudDirty(){if(!cloud.applying&&cloud.user&&cloud.ready){cloud.dirty++;rememberAccountBest(cloud.user.id,snapshot());}}
   const originalPersistEconomy=persistEconomy;
   persistEconomy=function(){originalPersistEconomy();markCloudDirty();if(!runActive&&cloud.owner)scheduleCloudSave();};
   const cloudApplyVolumes=applyVolumes;applyVolumes=function(){cloudApplyVolumes();markCloudDirty();if(cloud.owner)scheduleCloudSave();};
@@ -3064,6 +3081,7 @@ window.MH_SUPABASE = {
     if(cloud.saving)return cloud.saving;
     if(!cloud.user||!cloud.ready||!cloud.owner)return;
     const uid=cloud.user.id,revision=cloud.dirty,payload=snapshot();
+    rememberAccountBest(uid,payload);
     cloud.saving=(async()=>{const row=await rpc('mh_save',{p_writer:cloud.writer,p_version:cloud.version,p_payload:payload});
       if(cloud.user?.id!==uid)return;cloud.version=row.version;cloud.saved=revision;
       cloudMessage('Synced '+new Date(row.updated_at).toLocaleTimeString('en-GB')+(cloud.profile?.ranked_disabled?' / TEST ACCOUNT, UNRANKED':''));
@@ -3072,18 +3090,30 @@ window.MH_SUPABASE = {
   }
   async function claimCloud(takeover=false){
     if(cloud.saving)await cloud.saving;
+    const uid=cloud.user.id;
+    // Read this account's cache BEFORE applySnapshot can replace legacy keys.
+    if(cloud.ready&&localStorage.getItem('mh-active-account')===uid)rememberAccountBest(uid,snapshot());
+    const localBest=readAccountBest(uid);
     const row=await rpc('mh_claim',{p_writer:cloud.writer,p_takeover:takeover});
+    if(cloud.user?.id!==uid)throw Error('Account changed during save load.');
+    const cloudPayload=row.payload?.economy?normalise(row.payload):null;
+    const localWins=!!localBest&&(!cloudPayload||compareCareerSaves(localBest,cloudPayload)>0);
+    const winner=localWins?localBest:cloudPayload||{economy:freshEconomy(),career:{},best:0,selected:0};
     cloud.owner=true;cloud.version=row.version;cloud.run=null;cloud.pending=null;
-    localStorage.setItem('mh-active-account',cloud.user.id);
-    applySnapshot(row.payload?.economy?row.payload:{economy:freshEconomy(),career:{},best:0,selected:0});
+    cloud.ready=false; // do not archive another account's in-memory state
+    localStorage.setItem('mh-active-account',uid);
+    applySnapshot(winner);
+    rememberAccountBest(uid,snapshot());
     cloud.ready=true;cloud.dirty=0;cloud.saved=0;cloud.dev=await rpc('mh_is_dev');
-    accountUI();cloudMessage('Cloud loaded / '+(cloud.dev?'DEVELOPER, UNRANKED':'online career ready'));
-    if(!row.payload?.economy){cloud.dirty++;await saveCloud();}
+    accountUI();
+    if(localWins||!cloudPayload){cloud.dirty++;await saveCloud();}
+    const rank=careerSaveRank(winner);
+    cloudMessage((localWins?'Best device save loaded and synced':'Cloud save loaded')+' / '+rank.cars+' vehicles / '+rank.points.toLocaleString('en-GB')+' lifetime points'+(cloud.dev?' / DEVELOPER, UNRANKED':''));
   }
   async function connectUser(user){
     if(cloud.connecting)return;
     if(cloud.user?.id===user.id&&cloud.ready){cloud.user=user;return;}
-    cloud.connecting=true;cloud.ready=false;cloud.owner=false;cloud.dev=false;
+    resetDevTesting();cloud.connecting=true;cloud.ready=false;cloud.owner=false;cloud.dev=false;
     try{
       if(!cloud.user&&!localStorage.getItem('mh-active-account'))guestSnapshot=snapshot();
       if(state==='playing')setState('paused');
@@ -3094,6 +3124,7 @@ window.MH_SUPABASE = {
     }catch(e){cloudFailure(e);}finally{cloud.connecting=false;cloud.booting=false;}
   }
   function restoreGuest(){
+    resetDevTesting();
     cloud.user=null;cloud.profile=null;cloud.dev=false;cloud.ready=false;cloud.owner=false;cloud.run=null;cloud.pending=null;
     if(devOpen)closeDev();localStorage.removeItem('mh-active-account');runActive=false;goHome();applySnapshot(guestSnapshot);
     cloud.booting=false;$('accountEmail').value='';$('accountPassword').value='';$('accountUsername').value='';accountUI();cloudMessage('GUEST / LOCAL SAVE');
@@ -3122,7 +3153,7 @@ window.MH_SUPABASE = {
   $('cloudSaveNow').onclick=()=>accountAction(()=>saveCloud());
   $('cloudTakeControl').onclick=()=>accountAction(async()=>{
     if(!cloud.user||!cloud.profile)throw Error('Complete your profile first.');
-    if(!confirm('Load the latest cloud save? Unsynced local changes and any active run on this device will be discarded. The other device will lose save control.'))return;
+    if(!confirm('Take save control? The best available save for this account will load: most vehicles first, then lifetime points. Exact ties keep the cloud copy. Any active run ends, and the other device loses save control.'))return;
     cloud.run=null;cloud.pending=null;runActive=false;goHome();try{await claimCloud(true);}catch(e){cloudFailure(e);throw e;}openAccount();
   });
   $('accountSignOut').onclick=()=>accountAction(async()=>{
@@ -3140,8 +3171,8 @@ window.MH_SUPABASE = {
   $('devMenu').addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b||b.id==='devClose'||devDispatch)return;
     e.preventDefault();e.stopImmediatePropagation();accountAction(async()=>{
-      if(!cloud.user||!cloud.ready||!cloud.owner||!await rpc('mh_is_dev')){closeDev();throw Error('Developer permission denied.');}
-      devDispatch=true;try{b.click();}finally{devDispatch=false;}await saveCloud();
+      if(!cloud.user||!cloud.ready||!cloud.owner||!await rpc('mh_is_dev')){resetDevTesting();closeDev();throw Error('Developer permission denied.');}
+      cloud.dev=true;devDispatch=true;try{b.click();}finally{devDispatch=false;}await saveCloud();
     });
   },true);
   $('accountDev').onclick=()=>toggleDev();
@@ -3258,7 +3289,7 @@ window.MH_SUPABASE = {
       if(cloud.owner&&cloud.ready){
         // claim renews the lease without touching payload/version for the same writer.
         await rpc('mh_claim',{p_writer:cloud.writer,p_takeover:false});
-        const dev=await rpc('mh_is_dev');cloud.dev=dev;if(!dev&&devOpen)closeDev();
+        const dev=await rpc('mh_is_dev');cloud.dev=dev;if(!dev){resetDevTesting();if(devOpen)closeDev();}
         if(dev)cloud.profile.ranked_disabled=true;accountUI();
         if(cloud.dirty!==cloud.saved)await saveCloud();submitPendingRun();
       }else if(state==='menu'){
@@ -3605,6 +3636,7 @@ window.MH_SUPABASE = {
   ];}
   function resetRoadEvents(){spikeStrips=[];spikeCooldown=18;punctureTimer=0;puncturePhase=0;spikeWarning=0;eventCashPaid=0;resetFuelSystem();}
   function deploySpikeStrip(){
+    if(devTestActive('disableTraffic')||devTestActive('disablePolice'))return false;
     if(!policeEnabled||!pursuit||mode==='empty'||mode==='zen'||spikeStrips.length||(sessionType==='career'&&runDifficulty==='easy'))return false;
     const lanes=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(Math.random()*(i+1));[lanes[i],lanes[j]]=[lanes[j],lanes[i]];}
     // Spawn far enough ahead for at least ~3 seconds of reaction at current speed.
@@ -3625,7 +3657,7 @@ window.MH_SUPABASE = {
       if(!strip.passed&&previous<=player.y+30&&strip.y>=player.y-30){
         const halfWidth=(bodyStyles[stats.model]?.width||40)/2;
         const overlaps=strip.lanes.some(l=>Math.abs(player.x-laneX(l))<LANE_WIDTH*.44+halfWidth);
-        if(overlaps&&!strip.hit){
+        if(overlaps&&!strip.hit&&!devTestActive('noclip')){
           strip.hit=true;strip.passed=true;punctureTimer=5;puncturePhase=0;
           wheelieActive=false;toastTimer=3;$('toast').textContent='TYRES PUNCTURED / UNSTABLE HANDLING FOR 5 SECONDS';
           shake=Math.max(shake,6);
@@ -3780,7 +3812,8 @@ window.MH_SUPABASE = {
   function tickFuelSystem(dt,metres){
     if(state!=='playing')return;
     if(!fuelRequired()){fuelPercent=100;refuelling=false;fuelStations=[];return;}
-    fuelPercent=clamp(fuelPercent-fuelUseForDistance(metres,player.speed*3.6),0,100);
+    if(devTestActive('infiniteFuel')){fuelPercent=100;fuelEmptyClock=0;fuelLowWarned=false;}
+    else fuelPercent=clamp(fuelPercent-fuelUseForDistance(metres,player.speed*3.6),0,100);
     const stoppingDistance=player.speed*player.speed/(2*Math.max(7,10.5*(stats.braking||1)*(cars[selected].dynamics?.braking||1)));
     const approachNotice=Math.max(350,stoppingDistance+100);
     while(distance+Math.max(450,approachNotice+100)>=nextFuelStop){fuelStations.push({at:nextFuelStop,announced:false,filled:false});nextFuelStop+=stationSpacing();}
@@ -3935,6 +3968,112 @@ window.MH_SUPABASE = {
   // Unit labels in static quest help are converted at menu-render time.
   questDetails.querySelector('p').textContent+=' Easy pays 0.75× career cash and points. Normal pays 1× and has no fuel system. Hard multiplies all career cash and points by 1.75, including fixed quest and police rewards. Fuel starts at 100% each run. Normal has no fuel requirement; Hard range is 10 km at up to 120 km/h and less when faster. Fuel stations are free.';
   refreshUnitMenus();difficultyDescription();
+
+
+  // Developer tools are gated by the existing server-checked menu dispatcher.
+  // These switches are intentionally session-only and never appear in snapshots.
+  function devTestAuthorised(){return !!(cloud.user&&cloud.ready&&cloud.owner&&cloud.dev);}
+  function devTestActive(key){return devTestAuthorised()&&devTesting[key]===true;}
+  function resetDevTesting(){
+    devTesting.noclip=false;devTesting.infiniteNitro=false;devTesting.infiniteFuel=false;devTesting.disableTraffic=false;devTesting.disablePolice=false;
+    if($('devNoclip'))refreshDevTesting();
+  }
+  function refreshDevTesting(){
+    for(const [id,key,label] of [['devNoclip','noclip','NOCLIP'],['devInfiniteNitro','infiniteNitro','INFINITE NITRO'],['devInfiniteFuel','infiniteFuel','INFINITE FUEL'],['devDisableTraffic','disableTraffic','DISABLE TRAFFIC'],['devDisablePolice','disablePolice','DISABLE POLICE']]){
+      const button=$(id);if(!button)continue;
+      const active=devTestActive(key);button.textContent=label+' / '+(active?'ON':'OFF');button.setAttribute('aria-pressed',String(active));
+    }
+    if($('devFuelReadout'))$('devFuelReadout').textContent='FUEL '+Math.ceil(fuelPercent)+'% / NITRO '+Math.ceil(nitroFuel)+'% / '+(fuelRequired()?'HARD-MODE FUEL ACTIVE':'FUEL NOT REQUIRED IN THIS MODE');
+  }
+  const devTestPanel=document.createElement('section');devTestPanel.className='dev-test-panel';
+  devTestPanel.innerHTML='<div class="section-label">DRIVING TEST TOOLS / UNRANKED</div><p class="cloud-note">Noclip phases through traffic and police vehicles, and ignores spike strips. Road boundaries and driving controls stay active. Infinite nitro requires a fitted nitro kit and the normal boost input. Switches stay on between runs in this session, but reset on sign-out, lost save control, revoked access or page reload.</p><div class="dev-actions"><button id="devNoclip" type="button" aria-pressed="false">NOCLIP / OFF</button><button id="devRefuel" type="button">REFUEL / 100%</button><button id="devInfiniteNitro" type="button" aria-pressed="false">INFINITE NITRO / OFF</button><button id="devInfiniteFuel" type="button" aria-pressed="false">INFINITE FUEL / OFF</button></div><div class="dev-actions"><button id="devDisableTraffic" type="button" aria-pressed="false">DISABLE TRAFFIC / OFF</button><button id="devDisablePolice" type="button" aria-pressed="false">DISABLE POLICE / OFF</button></div><p id="devFuelReadout" class="cloud-note"></p>';
+  $('devStatus').before(devTestPanel);
+  function applyDevWorldOverrides(){
+    if(devTestActive('disableTraffic'))traffic=[];
+    else if(devTestActive('disablePolice'))traffic=traffic.filter(car=>!car.police);
+    if(devTestActive('disableTraffic')||devTestActive('disablePolice')){
+      // This is a testing reset, never an escape or patrol-wreck reward.
+      resetPursuit();spikeStrips=[];spikeWarning=0;
+    }
+  }
+  $('devDisableTraffic').onclick=()=>devTestingAction(()=>{
+    devTesting.disableTraffic=!devTesting.disableTraffic;applyDevWorldOverrides();
+    if(!devTesting.disableTraffic)spawnTimer=Math.min(spawnTimer,1);
+    $('devStatus').textContent=devTesting.disableTraffic?'Traffic disabled. All traffic and patrols cleared; no new vehicles spawn.':'Traffic restored. Vehicles will spawn normally; the police toggle is independent.';
+  });
+  $('devDisablePolice').onclick=()=>devTestingAction(()=>{
+    devTesting.disablePolice=!devTesting.disablePolice;applyDevWorldOverrides();
+    if(!devTesting.disablePolice)spawnTimer=Math.min(spawnTimer,1);
+    $('devStatus').textContent=devTesting.disablePolice?'Police disabled. Patrols, pursuit and spike strips cleared without rewards. Civilian traffic stays active.':'Police restored according to the run rules; the traffic toggle is independent.';
+  });
+  function devTestingAction(action){
+    // A direct button.click() must still pass through the existing async role
+    // check. Only the dispatcher's authorised re-dispatch can reach this action.
+    if(!devDispatch||!devTestAuthorised())return;
+    action();refreshDevTesting();updateHUD();drawCluster();
+  }
+  $('devNoclip').onclick=()=>devTestingAction(()=>{
+    devTesting.noclip=!devTesting.noclip;
+    if(devTesting.noclip){punctureTimer=0;puncturePhase=0;}
+    $('devStatus').textContent='Noclip '+(devTesting.noclip?'enabled. Traffic, patrols and spikes cannot hit your vehicle.':'disabled. Vehicle collisions are active again.');
+  });
+  $('devRefuel').onclick=()=>devTestingAction(()=>{
+    fuelPercent=100;fuelEmptyClock=0;fuelLowWarned=false;refuelling=false;
+    $('devStatus').textContent='Fuel refilled to 100%. Hard-mode fuel use resumes unless Infinite fuel is on.';
+  });
+  $('devInfiniteNitro').onclick=()=>devTestingAction(()=>{
+    devTesting.infiniteNitro=!devTesting.infiniteNitro;if(devTesting.infiniteNitro)nitroFuel=100;
+    $('devStatus').textContent='Infinite nitro '+(devTesting.infiniteNitro?'enabled. Hold the normal boost input with a fitted kit.':'disabled. Normal nitro consumption is active.');
+  });
+  $('devInfiniteFuel').onclick=()=>devTestingAction(()=>{
+    devTesting.infiniteFuel=!devTesting.infiniteFuel;
+    if(devTesting.infiniteFuel){fuelPercent=100;fuelEmptyClock=0;fuelLowWarned=false;}
+    $('devStatus').textContent='Infinite fuel '+(devTesting.infiniteFuel?'enabled. Fuel stays at 100%.':'disabled. Normal fuel consumption is active.');
+  });
+  const testRefreshDev=refreshDev;
+  refreshDev=function(){testRefreshDev();refreshDevTesting();};
+  // Drop toggles immediately when cached authorisation is lost, even while idle.
+  const testAccountUI=accountUI;
+  accountUI=function(){if(!devTestAuthorised())resetDevTesting();testAccountUI();};
+  refreshDevTesting();
+
+
+  // BEST SAVE / compare whole snapshots, never merge cash, upgrades or garages.
+  // Only this browser's cache for the authenticated account is considered.
+  function careerSaveRank(raw){
+    const safe=normalise(raw||{}),owned=safe.economy.owned;
+    return {cars:new Set(owned).size,points:cleanNumber(safe.economy.lifetimePoints)};
+  }
+  function compareCareerSaves(a,b){
+    const x=careerSaveRank(a),y=careerSaveRank(b);
+    return x.cars!==y.cars?Math.sign(x.cars-y.cars):Math.sign(x.points-y.points);
+  }
+  function accountBestKey(uid){return 'mh-best-account-v1:'+uid;}
+  function readAccountBest(uid){
+    if(!uid)return null;
+    let best=null;
+    const archived=rawRead(accountBestKey(uid),null);
+    if(archived?.user_id===uid&&archived.payload?.economy)best=normalise(archived.payload);
+    // Read the account-scoped cache from previous builds, never guest keys.
+    const prefix='mh-account:'+uid+':';
+    const e=rawRead(prefix+'midnight-career-v1',null);
+    if(e&&Array.isArray(e.owned)){
+      const legacy=normalise({schema:1,economy:e,career:rawRead(prefix+'midnight-apex-career',{}),best:Number(localStorage.getItem(prefix+'midnight-highway-best'))||0,selected:0});
+      if(!best||compareCareerSaves(legacy,best)>0)best=legacy;
+    }
+    return best;
+  }
+  function rememberAccountBest(uid,payload){
+    if(!uid||!payload?.economy)return;
+    try{
+      const safe=normalise(copy(payload));
+      const previous=rawRead(accountBestKey(uid),null);
+      // On equal progression preserve the most recently used whole snapshot,
+      // including purchases, cash spent, selected vehicle and settings.
+      if(previous?.user_id===uid&&previous.payload?.economy&&compareCareerSaves(safe,previous.payload)<0)return;
+      localStorage.setItem(accountBestKey(uid),JSON.stringify({user_id:uid,payload:safe,saved_at:Date.now()}));
+    }catch(_){/* A full local cache must not stop cloud saving or gameplay. */}
+  }
 
   accountUI();bootCloud();
 
