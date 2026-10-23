@@ -964,6 +964,10 @@ window.MH_SUPABASE = {
   const speedFeel = () => clamp((player.speed * 3.6 - 65) / 335, 0, 1);
   const FIXED_STEP = 1 / 120;
   const keys = new Set();
+  // Reverse speed is separate from forward engine speed. Signed road position
+  // moves backwards; distance remains the furthest forward progress for scoring.
+  let reverseSpeed=0,reverseHold=0,roadPosition=0;
+
   // Session-only developer testing switches. Never stored in career/cloud saves.
   const devTesting={noclip:false,infiniteNitro:false,infiniteFuel:false,disableTraffic:false,disablePolice:false};
 
@@ -1114,6 +1118,7 @@ window.MH_SUPABASE = {
   // Fictional gameplay interceptors, not real police vehicle specifications.
   const policeSpecs={patrol:{name:'Patrol',top:400,accel:13,model:1},sport:{name:'Sports interceptor',top:465,accel:16,model:2},hyper:{name:'Elite interceptor',top:515,accel:18,model:2}};
   function deployInterceptor(tier){
+    if(reverseSpeed>.01||reverseInputRequested())return false;
     if(devTestActive('disableTraffic')||devTestActive('disablePolice'))return false;
     if(mode==='empty'||!policeEnabled||!pursuit)return false;
     const active=traffic.filter(c=>c.police&&!c.wrecked&&c.chasing);
@@ -1396,6 +1401,7 @@ window.MH_SUPABASE = {
   }
 
   function returnToMenu() {
+    reverseSpeed=0;reverseHold=0;
     resetPursuit();silenceSirens();
     traffic = [];
     particles = [];
@@ -1445,6 +1451,7 @@ window.MH_SUPABASE = {
   });
 
   function spawnTraffic() {
+    if(reverseSpeed>.01||reverseInputRequested())return;
     if(devTestActive('disableTraffic'))return;
     if(mode==='empty')return;
     const candidates = [0, 1, 2, 3].filter(lane =>
@@ -1551,6 +1558,7 @@ window.MH_SUPABASE = {
     for(let i=0;i<22;i++)particles.push({x:car.x,y:car.y,vx:random(-140,140),vy:random(-120,120),life:random(.4,1),maxLife:1});
   }
   function closeShave() {
+    if(reverseSpeed>.01||roadPosition<distance-.01)return;
     nearMisses++;
     combo = Math.min(combo + 1, 12);
     comboTimer = 5;
@@ -1600,9 +1608,11 @@ window.MH_SUPABASE = {
     tickWorld(dt);
     tickSpikeStrips(dt);
     const throttleInput=Math.max(Number(keys.has("KeyW")||keys.has("ArrowUp")),touchDrive.throttle);
-    const accelerate=throttleInput>0&&(!fuelRequired()||fuelPercent>0||devTestActive('infiniteFuel'));
+    const accelerate=reverseSpeed<=.01&&throttleInput>0&&(!fuelRequired()||fuelPercent>0||devTestActive('infiniteFuel'));
     const brakeInput=Math.max(Number(keys.has("KeyS")||keys.has("ArrowDown")),touchDrive.brake);
     const brake=brakeInput>0;
+    const reversingTick=updateReverseDrive(dt,throttleInput,brakeInput);
+
     spinTimer=Math.max(0,spinTimer-dt);
     const keyboardSteering=Number(keys.has("KeyD")||keys.has("ArrowRight"))-Number(keys.has("KeyA")||keys.has("ArrowLeft"));
     const requestedSteering=keyboardSteering||touchDrive.steer;
@@ -1617,12 +1627,13 @@ window.MH_SUPABASE = {
     const kph=player.speed*3.6;
     const dynamics=handlingAtSpeed(selected,kph);
     if(!manual&&shiftTimer===0){if(kph>gearLimits[gear]*.91&&gear<7)shift(1);else if(gear>1&&kph<gearLimits[gear-1]*.68)shift(-1);}
-    const targetRPM=clamp(900+kph/gearLimits[gear]*(c.redline-900),900,c.redline);
+    const targetRPM=reverseSpeed>.01?clamp(900+reverseSpeed/(cars[selected].reverseTop/3.6)*(c.redline-900)*.65,900,c.redline):clamp(900+kph/gearLimits[gear]*(c.redline-900),900,c.redline);
     rpm=lerp(rpm,targetRPM,1-Math.exp(-dt*18));
     boostActive=(!fuelRequired()||fuelPercent>0||devTestActive('infiniteFuel'))&&nitro&&accelerate&&!brake&&nitroFuel>0&&(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()));
     nitroFuel=devTestActive('infiniteNitro')?100:clamp(nitroFuel+(boostActive?-22/(stats.nitroEfficiency||1):(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()))?0:9)*dt,0,100);
     const topMS=stats.top/3.6*(boostActive?1.025:1)*(wheelieActive?1.10:1);
-    if(brake)player.speed-=10.5*(stats.braking||1)*dynamics.braking*brakeInput*dt;
+    if(reversingTick)player.speed=0;
+    else if(brake)player.speed-=10.5*(stats.braking||1)*dynamics.braking*brakeInput*dt;
     else if(accelerate){
       const t=c.times.map(v=>v/(stats.power||1));let acceleration;
       if(kph<100)acceleration=(100/3.6)/(t[0]-.10);
@@ -1662,7 +1673,7 @@ window.MH_SUPABASE = {
     const sharpDemand=sharpTurn>0&&kph>dynamics.reversalSpeed?steerLoad*dynamics.oversteer:extremeTurn?steerLoad*.85*dynamics.oversteer:0;
     const targetSlip=handbrake?clamp(steerLoad*.7,0,1):clamp((sharpDemand-dynamics.grip)*.8,0,.7);
     slip=lerp(slip,targetSlip,1-Math.exp(-dt*(targetSlip>slip?4:dynamics.recovery)));
-    const targetVX = steering * steeringSpeed * clamp(player.speed / 9, 0, 1)*(1-slip*.38);
+    const targetVX=steering*steeringSpeed*clamp(Math.max(player.speed,reverseSpeed)/9,0,1)*(1-slip*.38)*(reverseSpeed>.01?-1:1);
     const response=dynamics.response*(tyres?1.25:1)*(1-rainAmount*.18-snowAmount*(equipped().rubber==='offroad'?.1:.32))*(1-slip*.85);
     player.vx = lerp(player.vx, targetVX, 1 - Math.exp(-dt * response));
     player.x += player.vx * dt;
@@ -1677,7 +1688,7 @@ window.MH_SUPABASE = {
         smoke.push({x:xx,y:player.y+30,r:random(3,7),life:.7,max:.7,vx:random(-12,12)});
       }
     }
-    for(const m of skidMarks){m.y+=player.speed*PIXELS_PER_METRE*dt;m.life-=dt;}
+    for(const m of skidMarks){m.y+=signedRoadSpeed()*PIXELS_PER_METRE*dt;m.life-=dt;}
     skidMarks=skidMarks.filter(m=>m.life>0&&m.y<H+100);
     for(const p of smoke){p.y+=player.speed*PIXELS_PER_METRE*dt*.5;p.x+=p.vx*dt;p.r+=dt*18;p.life-=dt;}
     smoke=smoke.filter(p=>p.life>0);
@@ -1694,10 +1705,13 @@ window.MH_SUPABASE = {
     }
     player.tilt = lerp(player.tilt, player.vx / 1500+Math.sign(player.vx)*slip*.42+(spinTimer>0?Math.sin(spinTimer*15)*.3:0), 1 - Math.exp(-dt * 12));
     const metresThisTick=player.speed*dt;
-    distance+=metresThisTick;
+    const oldProgress=distance;
+    roadPosition+=signedRoadSpeed()*dt;
+    distance=Math.max(distance,roadPosition,0);
+    const newProgress=Math.max(0,distance-oldProgress);
     tickFuelSystem(dt,metresThisTick);
-    bonus+=metresThisTick*(drivingRewardMultiplier()-1);
-    scenery = (scenery + player.speed * PIXELS_PER_METRE * dt) % 120000;
+    bonus+=newProgress*(drivingRewardMultiplier()-1);
+    scenery=((scenery+signedRoadSpeed()*PIXELS_PER_METRE*dt)%120000+120000)%120000;
     maxSpeed = Math.max(maxSpeed, player.speed * 3.6);
 
     hintTimer = Math.max(0, hintTimer - dt);
@@ -1775,7 +1789,7 @@ window.MH_SUPABASE = {
       }
       if(car.wrecked){car.speed=Math.max(0,car.speed-22*dt);car.wreckLife-=dt;}
       car.tilt = lerp(car.tilt, (car.wrecked?.65:0)+(car.x - oldX) / dt / 1100, 1 - Math.exp(-dt * 8));
-      car.y += (player.speed - car.speed) * PIXELS_PER_METRE * dt;
+      car.y += (signedRoadSpeed()-car.speed)*PIXELS_PER_METRE*dt;
 
       if (!car.passed && previousY <= player.y && car.y > player.y) {
         car.passed = true;
@@ -2254,9 +2268,9 @@ window.MH_SUPABASE = {
     g.strokeStyle='#303030';g.lineWidth=1;g.strokeRect(10.5,10.5,439,359);
     g.textAlign='left';g.fillStyle='#888';g.font='11px system-ui';g.fillText('TELEMETRY / LIVE',34,42);
     g.fillStyle='#eee';g.font='bold 16px system-ui';g.fillText(manual?'MANUAL':'AUTOMATIC',34,76);
-    g.textAlign='right';g.fillText('GEAR '+gear,426,76);
-    g.fillStyle='#fff';g.font='bold 112px system-ui';g.fillText(String(Math.round(displaySpeed(player.speed*3.6))),426,201);
-    g.font='12px system-ui';g.fillStyle='#999';g.fillText(speedUnit().toUpperCase()+' / '+(displayUnits==='imperial'?Math.round(player.speed*3.6)+' KM/H':Math.round(player.speed*2.236936)+' MPH'),426,232);
+    g.textAlign='right';g.fillText('GEAR '+(reverseSpeed>.01?'R':gear),426,76);
+    g.fillStyle='#fff';g.font='bold 112px system-ui';g.fillText(String(Math.round(displaySpeed(vehicleSpeed()*3.6))),426,201);
+    g.font='12px system-ui';g.fillStyle='#999';g.fillText(speedUnit().toUpperCase()+' / '+(displayUnits==='imperial'?Math.round(vehicleSpeed()*3.6)+' KM/H':Math.round(vehicleSpeed()*2.236936)+' MPH'),426,232);
     g.fillStyle='#292929';g.fillRect(34,260,392,4);g.fillStyle='#eee';g.fillRect(34,260,392*clamp(rpm/cars[selected].redline,0,1),4);
     g.textAlign='left';g.font='10px system-ui';g.fillStyle='#888';g.fillText('ENGINE RPM',34,287);
     g.textAlign='right';g.fillStyle='#ddd';g.fillText(Math.round(rpm).toLocaleString('en-GB'),426,287);
@@ -3592,13 +3606,13 @@ window.MH_SUPABASE = {
     const c=$('cluster');if(!compactUI()){if(c.height!==380)c.height=380;fullCluster();return;}
     if(c.height!==200)c.height=200;const g=gauge;g.clearRect(0,0,460,200);
     g.fillStyle='#090d12dc';g.fillRect(0,0,460,200);g.strokeStyle='#ffffff35';g.lineWidth=2;g.strokeRect(1,1,458,198);
-    g.fillStyle='#fff';g.textAlign='left';g.font='bold 83px Arial';g.fillText(String(Math.round(displaySpeed(player.speed*3.6))),22,100);
+    g.fillStyle='#fff';g.textAlign='left';g.font='bold 83px Arial';g.fillText(String(Math.round(displaySpeed(vehicleSpeed()*3.6))),22,100);
     g.fillStyle='#aaa';g.font='21px Arial';g.fillText(speedUnit().toUpperCase(),25,132);
-    g.textAlign='right';g.fillStyle='#eee';g.font='bold 33px Arial';g.fillText('G'+gear,434,54);
+    g.textAlign='right';g.fillStyle='#eee';g.font='bold 33px Arial';g.fillText(reverseSpeed>.01?'R':'G'+gear,434,54);
     g.font='18px Arial';g.fillStyle=wheelieActive?'#f1dfa3':'#aaa';g.fillText(wheelieActive?'WHEELIE':manual?'MANUAL':'AUTO',434,91);
     g.fillStyle='#333';g.fillRect(24,151,412,5);g.fillStyle='#eee';g.fillRect(24,151,412*clamp(rpm/cars[selected].redline,0,1),5);
     g.font='17px Arial';g.textAlign='left';g.fillStyle='#aaa';g.fillText(Math.round(rpm)+' RPM',24,185);
-    g.textAlign='right';g.fillStyle='#ccc';g.fillText(nitro?'N2O '+Math.round(nitroFuel)+'%':(displayUnits==='imperial'?Math.round(player.speed*3.6)+' KM/H':Math.round(player.speed*2.236936)+' MPH'),434,185);
+    g.textAlign='right';g.fillStyle='#ccc';g.fillText(nitro?'N2O '+Math.round(nitroFuel)+'%':(displayUnits==='imperial'?Math.round(vehicleSpeed()*3.6)+' KM/H':Math.round(vehicleSpeed()*2.236936)+' MPH'),434,185);
   };
   const trailHUD=updateHUD;
   updateHUD=function(){trailHUD();if(wheelieActive)$('driveFeedback').textContent='WHEELIE / +15% ACCEL';};
@@ -3634,8 +3648,9 @@ window.MH_SUPABASE = {
     {label:'Drift for 5 seconds',difficulty:'HARD',cash:1500,progress:driftSeconds/5},
     {label:'Drive 10 km & wreck 3 patrols',difficulty:'EXPERT',cash:5000,progress:Math.min(distance/10000,copWrecks/3)}
   ];}
-  function resetRoadEvents(){spikeStrips=[];spikeCooldown=18;punctureTimer=0;puncturePhase=0;spikeWarning=0;eventCashPaid=0;resetFuelSystem();}
+  function resetRoadEvents(){reverseSpeed=0;reverseHold=0;roadPosition=0;spikeStrips=[];spikeCooldown=18;punctureTimer=0;puncturePhase=0;spikeWarning=0;eventCashPaid=0;resetFuelSystem();}
   function deploySpikeStrip(){
+    if(reverseSpeed>.01||reverseInputRequested())return false;
     if(devTestActive('disableTraffic')||devTestActive('disablePolice'))return false;
     if(!policeEnabled||!pursuit||mode==='empty'||mode==='zen'||spikeStrips.length||(sessionType==='career'&&runDifficulty==='easy'))return false;
     const lanes=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(Math.random()*(i+1));[lanes[i],lanes[j]]=[lanes[j],lanes[i]];}
@@ -3651,7 +3666,7 @@ window.MH_SUPABASE = {
     puncturePhase+=dt;punctureTimer=Math.max(0,punctureTimer-dt);spikeWarning=Math.max(0,spikeWarning-dt);
     if(!policeEnabled){spikeStrips=[];return;}
     if(pursuit){spikeCooldown-=dt;if(spikeCooldown<=0){if(deploySpikeStrip())spikeCooldown=runDifficulty==='hard'?random(18,28):random(25,40);else spikeCooldown=4;}}
-    const movement=Math.max(0,player.speed*PIXELS_PER_METRE)*dt;
+    const movement=signedRoadSpeed()*PIXELS_PER_METRE*dt;
     for(const strip of spikeStrips){
       const previous=strip.y;strip.y+=movement;
       if(!strip.passed&&previous<=player.y+30&&strip.y>=player.y-30){
@@ -3806,7 +3821,7 @@ window.MH_SUPABASE = {
     return Math.max(0,metres)/base*100*extra;
   }
   function stationBayOpen(){
-    return fuelRequired()&&fuelStations.some(st=>Math.abs(distance-st.at)<90);
+    return fuelRequired()&&fuelStations.some(st=>Math.abs(roadPosition-st.at)<90);
   }
   function stationBayX(){return ROAD_RIGHT+(W-ROAD_RIGHT)*.52;}
   function tickFuelSystem(dt,metres){
@@ -3816,16 +3831,26 @@ window.MH_SUPABASE = {
     else fuelPercent=clamp(fuelPercent-fuelUseForDistance(metres,player.speed*3.6),0,100);
     const stoppingDistance=player.speed*player.speed/(2*Math.max(7,10.5*(stats.braking||1)*(cars[selected].dynamics?.braking||1)));
     const approachNotice=Math.max(350,stoppingDistance+100);
-    while(distance+Math.max(450,approachNotice+100)>=nextFuelStop){fuelStations.push({at:nextFuelStop,announced:false,filled:false});nextFuelStop+=stationSpacing();}
-    fuelStations=fuelStations.filter(st=>distance-st.at<110);
+    // Recreate nearby stations from their fixed kilometre markers. A passed
+    // station remains recoverable even after it left the screen/cache.
+    const spacing=stationSpacing(),reach=Math.max(450,approachNotice+100);
+    const first=Math.max(1,Math.floor((roadPosition-600)/spacing));
+    const last=Math.max(first,Math.ceil((roadPosition+reach)/spacing));
+    const oldStations=new Map(fuelStations.map(st=>[st.at,st]));
+    fuelStations=[];
+    for(let index=first;index<=last;index++){
+      const at=index*spacing;
+      if(at>=roadPosition-600&&at<=roadPosition+reach)fuelStations.push(oldStations.get(at)||{at,announced:false,filled:false});
+    }
+    nextFuelStop=(Math.max(0,Math.floor(roadPosition/spacing))+1)*spacing;
     refuelling=false;
     for(const st of fuelStations){
-      const ahead=st.at-distance;
+      const ahead=st.at-roadPosition;
       if(!st.announced&&ahead<=approachNotice&&ahead>=0){st.announced=true;toastTimer=4;$('toast').textContent='FUEL STATION / '+formatDistance(Math.max(0,ahead))+' / SLOW DOWN, KEEP RIGHT';}
       const atPump=Math.abs(ahead)<=18&&player.x>ROAD_RIGHT+2;
       const pressingThrottle=keys.has('KeyW')||keys.has('ArrowUp')||touchDrive.throttle>0;
-      if(atPump&&player.speed*3.6<8&&!pressingThrottle){
-        player.speed=0;player.vx=0;wheelieActive=false;boostActive=false;
+      if(atPump&&vehicleSpeed()*3.6<8&&!pressingThrottle&&!reverseInputRequested()){
+        player.speed=0;reverseSpeed=0;reverseHold=0;player.vx=0;wheelieActive=false;boostActive=false;
         if(fuelPercent<100){
           refuelling=true;fuelPercent=Math.min(100,fuelPercent+dt*20);
           if(fuelPercent>=100&&!st.filled){st.filled=true;toastTimer=3;$('toast').textContent='TANK FULL / 100% / STEER LEFT AND ACCELERATE TO REJOIN';}
@@ -3833,11 +3858,12 @@ window.MH_SUPABASE = {
         fuelEmptyClock=0;
       }
     }
-    if(fuelPercent<=20&&!fuelLowWarned){fuelLowWarned=true;toastTimer=3;$('toast').textContent='LOW FUEL / '+Math.ceil(fuelPercent)+'% / NEXT STATION '+formatDistance(Math.max(0,nextFuelStop-distance));}
+    if(fuelPercent<=20&&!fuelLowWarned){fuelLowWarned=true;toastTimer=3;$('toast').textContent='LOW FUEL / '+Math.ceil(fuelPercent)+'% / NEXT STATION '+formatDistance(Math.max(0,nextFuelStop-roadPosition));}
     if(fuelPercent>30)fuelLowWarned=false;
     if(fuelPercent<=0&&!refuelling){
       wheelieActive=false;boostActive=false;player.speed=Math.max(0,player.speed-1.8*dt);
-      if(player.speed<.4){fuelEmptyClock+=dt;if(fuelEmptyClock>=4)finishFuelRun();}
+      // Do not end a stranded run: reverse is fuel-free and remains available.
+      fuelEmptyClock=0;
     }else fuelEmptyClock=0;
   }
   function finishFuelRun(){
@@ -3853,7 +3879,7 @@ window.MH_SUPABASE = {
   function drawFuelStations(){
     if(!fuelRequired())return;
     for(const st of fuelStations){
-      const y=player.y+(distance-st.at)*PIXELS_PER_METRE;
+      const y=player.y+(roadPosition-st.at)*PIXELS_PER_METRE;
       if(y< -250||y>H+260)continue;
       const margin=W-ROAD_RIGHT,bayW=Math.max(34,margin-8),bayX=ROAD_RIGHT+4;
       ctx.save();
@@ -3940,18 +3966,18 @@ window.MH_SUPABASE = {
   const fuelHUD=updateHUD;
   updateHUD=function(){fuelHUD();
     localiseMeasurements($('challengeList'));
-    $('speed').textContent=Math.round(displaySpeed(player.speed*3.6));$('speedImperial').textContent=speedUnit().toUpperCase();
+    $('speed').textContent=Math.round(displaySpeed(vehicleSpeed()*3.6));$('speedImperial').textContent=speedUnit().toUpperCase();
     $('distance').textContent=distanceValue(distance).toFixed(2);$('distance').nextElementSibling.textContent=distanceUnit().toUpperCase();
     $('runMode').textContent=sessionType==='career'?'CAREER / '+runDifficulty.toUpperCase()+(runDifficulty==='hard'?' / 1.75×':runDifficulty==='easy'?' / 0.75×':''):'FREESTYLE';
     $('fuelPanel').classList.toggle('hidden',!fuelRequired());
     if(fuelRequired()){
       $('fuelPercent').textContent=Math.ceil(fuelPercent)+'%';$('fuelFill').style.width=fuelPercent+'%';
       $('fuelPanel').dataset.low=String(fuelPercent<=20);
-      const nearest=fuelStations.find(st=>st.at>=distance-18);
-      const toStation=Math.max(0,(nearest?.at??nextFuelStop)-distance);
-      $('fuelStationHint').textContent=refuelling?'REFUELLING / FREE':nearest&&Math.abs(nearest.at-distance)<=18?'STOP RIGHT / RELEASE THROTTLE':'NEXT '+formatDistance(toStation);
+      const nearest=fuelStations.find(st=>st.at>=roadPosition-18);
+      const toStation=Math.max(0,(nearest?.at??nextFuelStop)-roadPosition);
+      $('fuelStationHint').textContent=refuelling?'REFUELLING / FREE':nearest&&Math.abs(nearest.at-roadPosition)<=18?'STOP RIGHT / RELEASE THROTTLE':'NEXT '+formatDistance(toStation);
       if(refuelling){$('driveFeedback').textContent='REFUELLING / '+Math.ceil(fuelPercent)+'%';$('driveFeedback').style.color='#bce5c8';}
-      else if(fuelPercent<=0){$('driveFeedback').textContent='EMPTY TANK / COAST TO A PUMP';$('driveFeedback').style.color='#ffac83';}
+      else if(fuelPercent<=0){$('driveFeedback').textContent='EMPTY / HOLD S TO REVERSE TO FUEL';$('driveFeedback').style.color='#ffac83';}
     }
   };
   const difficultySelection=setSelectionMode;
@@ -4074,6 +4100,69 @@ window.MH_SUPABASE = {
       localStorage.setItem(accountBestKey(uid),JSON.stringify({user_id:uid,payload:safe,saved_at:Date.now()}));
     }catch(_){/* A full local cache must not stop cloud saving or gameplay. */}
   }
+
+
+  // REVERSE / fictional vehicle-specific gearbox tuning. Every vehicle has a
+  // distinct cap; these are game values, not real-world manufacturer figures.
+  const reverseClassSpeeds={muscle:38,hyper:62,hypergt:59,super:53,track:49,lightSport:34,sport:36,tuner:39,hotHatch:28,rally:33,sedan:31,gt:42,classicSport:27,suv:24,truck:21,van:18,dirtbike:8,nakedbike:10,sportbike:11};
+  const reverseCapsUsed=new Set();
+  for(let i=0;i<cars.length;i++){
+    const c=cars[i],base=reverseClassSpeeds[c.handlingClass]||32;
+    const hash=[...c.name].reduce((v,ch)=>(v*33+ch.charCodeAt(0))>>>0,17);
+    let cap=Math.round((base+c.top*.018+(hash%701)/100-3.5)*100)/100;
+    cap=clamp(cap,6,85);
+    while(reverseCapsUsed.has(cap.toFixed(2)))cap=Math.round((cap+.01)*100)/100;
+    reverseCapsUsed.add(cap.toFixed(2));c.reverseTop=cap;
+    c.reverseAccel=clamp(1.2+(c.top/180)+(c.handlingClass==='truck'?-.5:0),1.1,4.2);
+  }
+  function vehicleSpeed(){return Math.max(0,player.speed,reverseSpeed);}
+  function signedRoadSpeed(){return reverseSpeed>.001?-reverseSpeed:Math.max(0,player.speed);}
+  function reverseInputRequested(){
+    return (keys.has('KeyS')||keys.has('ArrowDown')||touchDrive.brake>0)&&
+      !keys.has('KeyW')&&!keys.has('ArrowUp')&&touchDrive.throttle<=0&&player.speed<=.05;
+  }
+  function updateReverseDrive(dt,throttle,brake){
+    const hadReverse=reverseSpeed>.001;
+    const handbrake=keys.has('Space');
+    if(hadReverse){
+      player.speed=0;wheelieActive=false;boostActive=false;
+      if(throttle>0||handbrake)reverseSpeed=Math.max(0,reverseSpeed-(handbrake?8:6.5)*dt);
+      else if(brake>0)reverseSpeed=Math.min(cars[selected].reverseTop/3.6,reverseSpeed+cars[selected].reverseAccel*brake*dt);
+      else reverseSpeed=Math.max(0,reverseSpeed-(.85+reverseSpeed*.045)*dt);
+      if(reverseSpeed<.005)reverseSpeed=0;
+      return true; // W brakes to a complete stop before forward acceleration.
+    }
+    if(brake>0&&throttle<=0&&player.speed<=.05&&!handbrake){
+      player.speed=0;reverseHold+=dt;
+      // Brief neutral dwell prevents a forward brake tap from instantly backing up.
+      if(reverseHold>=.12){reverseSpeed=Math.min(cars[selected].reverseTop/3.6,cars[selected].reverseAccel*brake*dt);wheelieActive=false;boostActive=false;return true;}
+    }else reverseHold=0;
+    return false;
+  }
+  const reverseHUD=updateHUD;
+  updateHUD=function(){reverseHUD();
+    if(reverseSpeed>.01){
+      $('driveFeedback').textContent='REVERSE / NO FUEL USE';$('driveFeedback').style.color='#c9dfeb';
+      if(fuelRequired()){
+        const spacing=stationSpacing(),previous=Math.floor(roadPosition/spacing)*spacing;
+        if(previous>0)$('fuelStationHint').textContent='PREVIOUS '+formatDistance(Math.max(0,roadPosition-previous));
+      }
+    }
+  };
+  const reverseRefresh=refreshBuild;
+  refreshBuild=function(){reverseRefresh();
+    const note=$('handlingNotes');if(note)note.textContent+=' Reverse limit: '+formatSpeed(cars[selected].reverseTop)+'.';
+    localiseMeasurements($('menu'));
+  };
+  const reverseGarage=updateGarage;
+  updateGarage=function(){reverseGarage();
+    const controls=document.querySelector('#menu .controls');
+    controls.textContent+=' / S or drag down: brake, then reverse at rest. W or drag up: brake reverse, then drive forward. Reverse uses no fuel or points.';
+  };
+  const reverseHelp=document.createElement('p');reverseHelp.className='cloud-note';
+  reverseHelp.textContent='REVERSE / Hold S (or Arrow Down) to brake, then keep holding at zero to reverse. On mobile, hold a downward drag. W / upward drag brakes reverse before moving forward. Reverse is fuel-free, including with an empty tank. Passed Hard-mode stations remain reachable. Score only counts new forward progress, so backing up or repeating the same stretch cannot farm distance points.';
+  $('audioPane').append(reverseHelp);
+  refreshBuild();
 
   accountUI();bootCloud();
 
