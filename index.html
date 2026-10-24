@@ -1221,14 +1221,14 @@ window.MH_SUPABASE = {
   // Categories describe vehicle type only. Visual model selection remains independent.
   const simpleCategories=['Sedan','Coupe','Muscle','SUV','Truck','Super','Hyper','Motorcycle'];
   function simpleVehicleCategory(c){
-    if(c.category)return c.category;
     const n=c.name;
+    if(/Mustang|Challenger|Camaro|Charger|Hellcat|Demon|Shelby|Barracuda|Firebird|GTO|Chevelle|Road Runner|Superbird|Viper/.test(n))return 'Muscle';
+    if(c.category)return c.category;
     if(c.motorcycle||bodyStyles[c.model]?.motorcycle)return 'Motorcycle';
     if(/Chiron|Jesko|Agera|Koenigsegg|Bugatti|Huayra|Zonda|Venom|Valkyrie|Bolide|LaFerrari|McLaren P1|SF90|Regera|Nevera/.test(n))return 'Hyper';
     if(/Raptor|TRX|Wrangler|F-150|Silverado|Ram |Tundra|Tacoma|Ranger|Truck|Gladiator|Ridgeline|Sierra|Canyon|Titan|Frontier|Maverick|Colorado/.test(n))return 'Truck';
     if(/SUV|Urus|Cayenne|Range Rover|Sportage|RAV4|Highlander|Tiguan|Tahoe|Edge|Pilot|Outback/.test(n))return 'SUV';
     if(/Ferrari|Lamborghini|McLaren|R8|Corvette|Ford GT|NSX|Vantage|AMG GT|GT R|MC20|911/.test(n))return 'Super';
-    if(/Mustang|Challenger|Camaro|Charger|Hellcat|Demon|Shelby|Barracuda|Firebird|GTO|Chevelle|Road Runner|Superbird|Viper/.test(n))return 'Muscle';
     if(/Supra|Coupe|Skyline|Silvia|RX-|S2000|MX-5|Cayman|Elise|Exige|Emira|LC/.test(n))return 'Coupe';
     return 'Sedan';
   }
@@ -2917,8 +2917,8 @@ window.MH_SUPABASE = {
   }
   function renderModGarage(){
     const q=$('modSearch').value.toLowerCase(),filter=$('modFilter').value;
-    const ids=economy.owned.filter(i=>cars[i].name.toLowerCase().includes(q)&&(filter==='all'||String(cars[i].model)===filter));
-    $('modCards').innerHTML=ids.map(i=>{const c=cars[i],st=currentStats(i);return '<button class="car-card '+(i===selected?'selected':'')+'" data-mod-car="'+i+'" aria-label="Modify '+c.name+'"><canvas class="car-thumb" width="280" height="130" data-mod-preview="'+i+'"></canvas><strong>'+c.name+'</strong><small>'+bodyStyles[c.model].name+' / '+(equipped(i).motor==='stock'?'Original engine':equipped(i).motor.toUpperCase()+' swap')+'</small><div class="stat-label"><span>TOP SPEED</span><span>'+Math.round(st.top)+' km/h</span></div><div class="track"><div class="fill" style="width:'+clamp(st.top/450*100,0,100)+'%"></div></div><div class="stat-label"><span>0–100 TARGET</span><span>'+(c.times[0]/st.power).toFixed(1)+' s</span></div><div class="track"><div class="fill" style="width:'+clamp(100-c.times[0]/st.power*10,0,100)+'%"></div></div><span class="mod-card-action">MODIFY THIS CAR →</span></button>';}).join('')||'<p>No owned cars match your search.</p>';
+    const ids=economy.owned.filter(i=>cars[i]&&cars[i].name.toLowerCase().includes(q)&&(filter==='all'||cars[i].category===filter));
+    $('modCards').innerHTML=ids.map(i=>{const c=cars[i],st=currentStats(i);return '<button class="car-card '+(i===selected?'selected':'')+'" data-mod-car="'+i+'" aria-label="Modify '+c.name+'"><canvas class="car-thumb" width="280" height="130" data-mod-preview="'+i+'"></canvas><strong>'+c.name+'</strong><small>'+bodyStyles[c.model].name+' / '+(equipped(i).motor==='stock'?'Original engine':equipped(i).motor.toUpperCase()+' swap')+'</small><div class="stat-label"><span>TOP SPEED</span><span>'+Math.round(st.top)+' km/h</span></div><div class="track"><div class="fill" style="width:'+clamp(st.top/450*100,0,100)+'%"></div></div><div class="stat-label"><span>0–100 TARGET</span><span>'+(c.times[0]/st.power).toFixed(1)+' s</span></div><div class="track"><div class="fill" style="width:'+clamp(100-c.times[0]/st.power*10,0,100)+'%"></div></div><span class="mod-card-action">MODIFY THIS CAR →</span></button>';}).join('')||'<p>No owned '+(filter==='all'?'cars':filter+' cars')+' match your search.</p>';
     document.querySelectorAll('[data-mod-preview]').forEach(el=>{const i=Number(el.dataset.modPreview),g=el.getContext('2d');g.clearRect(0,0,280,130);g.save();g.translate(140,65);g.rotate(-Math.PI/2);g.scale(.83,.83);baseDraw(0,0,equipped(i).colour,cars[i].model,0,false,0,g);g.restore();});
     $('modCount').textContent=ids.length+' SHOWN / '+economy.owned.length+' OWNED VEHICLES';updateWallet();
   }
