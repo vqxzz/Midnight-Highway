@@ -3499,7 +3499,7 @@ window.MH_SUPABASE = {
   },true);
   function finishOnlineRun(){
     if(!cloud.run||!cloud.user||sessionType!=='career')return;
-    cloud.pending={p_writer:cloud.writer,p_run:cloud.run,p_seconds:Number(runTime.toFixed(3)),p_distance:Math.floor(distance*1000)/1000,p_points:Math.floor((distance+bonus)*difficultyReward())};
+    cloud.pending={p_writer:cloud.writer,p_run:cloud.run,p_seconds:Number(runTime.toFixed(3)),p_points:Math.floor((distance+bonus)*difficultyReward())};
     cloud.run=null;submitPendingRun();
   }
   function submitPendingRun(){
@@ -3522,7 +3522,7 @@ window.MH_SUPABASE = {
   $('resume').addEventListener('click',e=>{if(cloud.user&&(!cloud.ready||!cloud.owner)){e.preventDefault();e.stopImmediatePropagation();}},true);
   // Do not let text fields drive the car or trigger game shortcuts.
   window.addEventListener('keydown',e=>{if(e.target.matches('input,textarea')&&!e.ctrlKey&&!e.metaKey){if(e.code!=='Escape')e.stopImmediatePropagation();}},true);
-  const boardButton=document.createElement('button');boardButton.id='homeLeaderboard';boardButton.className='home-action';boardButton.innerHTML='LEADERBOARD <span>Longest ranked runs + all-time career</span>';$('homeSettings').before(boardButton);
+  const boardButton=document.createElement('button');boardButton.id='homeLeaderboard';boardButton.className='home-action';boardButton.innerHTML='LEADERBOARD <span>Ranked run points + all-time career</span>';$('homeSettings').before(boardButton);
   $('homeSettings').querySelector('span').textContent='General, units, audio and cloud account';
   let boardSection='career',boardRequest=0;
   const boardNumber=n=>Number(n||0).toLocaleString('en-GB');
@@ -3534,8 +3534,8 @@ window.MH_SUPABASE = {
     $('runDifficultyControls').classList.toggle('hidden',careerBoard);
     $('leaderboardDescription').textContent=careerBoard?
       'Latest cloud-saved career: lifetime points, current cash balance and unique cars owned. Sort by any of these. Spending cash can lower your cash rank. Developer accounts are excluded. Save-reported stats are not cheat-proof.':
-      'Ranked by total run points for the selected difficulty. Shows driver, run points, longest run distance and number of completed runs. Guest and developer runs do not count.';
-    const titles=careerBoard?['RANK','DRIVER','LIFETIME POINTS','CASH BALANCE','CARS OWNED']:['DRIVER','RUN POINTS','RUN DISTANCE','NUMBER OF RUNS'];
+      'Ranked by total run points for the selected difficulty. Shows driver, run points and number of completed runs. Guest and developer runs do not count.';
+    const titles=careerBoard?['RANK','DRIVER','LIFETIME POINTS','CASH BALANCE','CARS OWNED']:['DRIVER','RUN POINTS','NUMBER OF RUNS'];
     const tr=document.createElement('tr');for(const title of titles){const th=document.createElement('th');th.textContent=title;tr.append(th);}$('leaderHead').replaceChildren(tr);
   }
   async function refreshLeaderboard(){
@@ -3545,14 +3545,14 @@ window.MH_SUPABASE = {
       const rows=await rpc(section==='career'?'mh_career_leaderboard':'mh_runs_leaderboard',section==='career'?{p_metric:metric}:{p_difficulty:runFilter});
       const me=cloud.user?await rpc(section==='career'?'mh_career_my_rank':'mh_runs_my_rank',section==='career'?{p_metric:metric}:{p_difficulty:runFilter}):null;
       if(request!==boardRequest)return;
-      if(section==='ranked')rows.sort((a,b)=>Number(b.points||0)-Number(a.points||0)||Number(b.best_run||0)-Number(a.best_run||0));
+      if(section==='ranked')rows.sort((a,b)=>Number(b.points||0)-Number(a.points||0)||Number(b.runs||0)-Number(a.runs||0));
       for(let rowIndex=0;rowIndex<rows.length;rowIndex++){const row=rows[rowIndex],tr=document.createElement('tr');if(row.is_me)tr.className='me';
-        const values=section==='career'?[row.rank,row.username,boardNumber(row.lifetime_points),'$'+boardNumber(row.cash),boardNumber(row.cars_owned)]:[row.username,boardNumber(row.points),boardNumber(row.best_run)+' m',boardNumber(row.runs)];
+        const values=section==='career'?[row.rank,row.username,boardNumber(row.lifetime_points),'$'+boardNumber(row.cash),boardNumber(row.cars_owned)]:[row.username,boardNumber(row.points),boardNumber(row.runs)];
         for(const value of values){const td=document.createElement('td');td.textContent=String(value);tr.append(td);}$('leaderRows').append(tr);
       }
       $('boardStatus').textContent=rows.length?rows.length+' drivers shown / top 1,000 maximum / '+(section==='career'?'ranked by '+({points:'lifetime points',cash:'cash balance',cars:'cars owned'})[metric]:runFilter.toUpperCase()+' runs ranked by total points'):
         section==='career'?'No eligible cloud careers yet. Sign in and save your career.':'No ranked runs yet. Complete an online career run.';
-      $('myGlobalRank').textContent=me?(section==='career'?'YOUR CAREER RANK #'+me.rank+' / '+boardNumber(me.lifetime_points)+' LIFETIME PTS / $'+boardNumber(me.cash)+' / '+boardNumber(me.cars_owned)+' CARS':'YOUR '+runFilter.toUpperCase()+' RANK #'+me.rank+' / '+boardNumber(me.points)+' POINTS / '+boardNumber(me.best_run)+' m / '+boardNumber(me.runs)+' RUNS'):
+      $('myGlobalRank').textContent=me?(section==='career'?'YOUR CAREER RANK #'+me.rank+' / '+boardNumber(me.lifetime_points)+' LIFETIME PTS / $'+boardNumber(me.cash)+' / '+boardNumber(me.cars_owned)+' CARS':'YOUR '+runFilter.toUpperCase()+' RANK #'+me.rank+' / '+boardNumber(me.points)+' POINTS / '+boardNumber(me.runs)+' RUNS'):
         cloud.profile?.ranked_disabled?'TEST ACCOUNT / EXCLUDED FROM BOTH LEADERBOARDS':cloud.user?(section==='career'?'YOUR CAREER RANK / Save your online career first':'YOUR RANK / Complete your first online career run'):'Sign in to sync your career and see your own rank.';
     }catch(e){if(request!==boardRequest)return;$('leaderRows').replaceChildren();$('myGlobalRank').textContent='';$('boardStatus').textContent=(section==='career'?'All-time board unavailable. ':'Runs board unavailable. Run the v5 difficulty SQL update. ')+e.message;}
   }
