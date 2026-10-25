@@ -481,6 +481,13 @@ body[data-state="playing"] #skidWarning{pointer-events:none}
 
 #tankUpgradeNote{margin:5px 0 12px;color:#bdd8ca}
 @media(max-width:760px){#freeBuild .parts-group:nth-of-type(4){grid-column:1 / -1}}
+
+/* NEAR MISS POPUP V3 */
+#toast.near-miss-pop{display:block!important;z-index:60;color:#fff;background:linear-gradient(180deg,#111 0%,#050505 100%);border:1.5px solid #fff;border-radius:2px;padding:9px 15px 9px 21px;font-weight:650;font-size:12px;line-height:1.08;letter-spacing:.07em;text-transform:uppercase;text-shadow:none;box-shadow:0 6px 20px rgba(0,0,0,.4),3px 3px 0 rgba(255,255,255,.12);overflow:hidden;animation:nearMissLife 2.5s both;}
+#toast.near-miss-pop::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:#fff;}
+#toast.near-miss-pop::after{content:'';position:absolute;left:21px;right:15px;bottom:5px;height:1px;background:rgba(255,255,255,.28);transform-origin:left;animation:nearMissTimer 2.5s linear both;}
+@keyframes nearMissLife{0%{opacity:0;transform:translateX(-50%) translateY(10px) scale(.9)}8%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.04)}13%,88%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-6px) scale(.97)}}
+@keyframes nearMissTimer{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 </style>
 </head>
 <body data-state="menu">
@@ -1143,6 +1150,12 @@ window.MH_SUPABASE = {
     else if(/911|Cayman|RX-7|RX-8|Supra|Skyline|Silvia|300ZX|S2000|MX-5|Elise|Exige|Emira|Z Nismo|AE86|MR2|Z8/.test(n))c.model=CLASSIC_SPORTS_COUPE_MODEL;
   }
 
+  // MODEL & HITBOX V3 / fixed physical envelopes for every visual family.
+  const modelHitboxes=bodyStyles.map((shape,index)=>{const bike=!!shape.motorcycle,heavy=!!shape.heavy;let width=(shape.width||44)*(bike?.58:heavy?.88:.82),height=(shape.height||92)*(bike?.84:heavy?.93:.88);if(index===8)width*=.78;if(index===19)width*=.92;return {width:Math.max(bike?15:28,width),height:Math.max(bike?58:52,height)};});
+  function hitboxForModel(model){return modelHitboxes[model]||{width:36,height:76};}
+  function vehicleHitbox(v){const model=v.model===undefined?stats.model:v.model,box=hitboxForModel(model);return {width:box.width,height:box.height};}
+  function lateralBodyGap(a,b){const A=vehicleHitbox(a),B=vehicleHitbox(b);return Math.abs(a.x-b.x)-(A.width+B.width)/2;}
+
   // USER VEHICLE PACK / append-only so existing save indices remain stable.
   const MOTORCYCLE_MODEL=bodyStyles.findIndex(b=>b.motorcycle);
   const userVehiclePack=[
@@ -1356,6 +1369,10 @@ window.MH_SUPABASE = {
   const carBuilds={};
   try{Object.assign(carBuilds,JSON.parse(localStorage.getItem(gameStorageKey('midnight-apex-builds'))||'{}'));}catch(_){}
   let weatherMode='auto',weatherKind='clear',weatherTimer=60,rainAmount=0,snowAmount=0;
+  // ATMOSPHERE V3 / biome-aware ambient light and layered weather.
+  let weatherFlash=0,weatherGust=0,weatherGustTarget=0,weatherGustTimer=0,weatherCloudPhase=0;
+  const rainSplashes=Array.from({length:34},(_,i)=>({seed:i*71.37+13,x:(i*97.1)%1000,y:(i*137.9)%800}));
+  const snowFlakes=Array.from({length:180},(_,i)=>({seed:i*43.71+9,depth:.3+(i%11)/10,size:.7+(i%5)*.42}));
   let mode='endless',wet=false,runTime=0,nearMisses=0,driftSeconds=0,challengeDone=[false,false,false,false],sprintFinished=false;
   let career={runs:0,bestDistance:0,nearMisses:0};
   try{Object.assign(career,JSON.parse(localStorage.getItem(gameStorageKey('midnight-apex-career'))||'{}'));}catch(_){}
@@ -1478,6 +1495,7 @@ window.MH_SUPABASE = {
   $("paint").addEventListener("input", event => { paint = event.target.value; });
 
   function setState(next) {
+    if(next!=='playing')clearNearMissPopup();
     if(next==='over'&&state!=='over'&&sessionType==='career'){
       career.runs++;career.bestDistance=Math.max(career.bestDistance,Math.floor(distance));career.nearMisses+=nearMisses;
       try{localStorage.setItem(gameStorageKey('midnight-apex-career'),JSON.stringify(career));}catch(_){}
@@ -1625,9 +1643,9 @@ window.MH_SUPABASE = {
     return !(Math.abs(player.x-x)<65&&Math.abs(player.y-car.y)<(bodyStyles[stats.model].height+car.height)/2+100);
   }
   function bodyBox(v){
-    const shape=bodyStyles[v.model===undefined?stats.model:v.model];
+    const model=v.model===undefined?stats.model:v.model,box=hitboxForModel(model);
     const angle=v.tilt||0,c=Math.cos(angle),sn=Math.sin(angle);
-    return {axes:[{x:c,y:sn},{x:-sn,y:c}],hw:shape.width*.45,hh:shape.height*.46};
+    return {axes:[{x:c,y:sn},{x:-sn,y:c}],hw:box.width/2,hh:box.height/2};
   }
   function collisionInfo(a,b,swept=false){
     if((a===player||b===player)&&devTestActive('noclip'))return null;
@@ -1686,20 +1704,27 @@ window.MH_SUPABASE = {
     car.wrecked=true;car.chasing=false;car.wreckLife=5;car.tactic='wrecked';car.speed*=.35;car.tilt=.65;
     for(let i=0;i<22;i++)particles.push({x:car.x,y:car.y,vx:random(-140,140),vy:random(-120,120),life:random(.4,1),maxLife:1});
   }
+  function clearNearMissPopup(){
+    toastTimer=0;
+    const popup=$("toast");
+    if(!popup)return;
+    popup.classList.add('hidden');
+    popup.classList.remove('near-miss-pop');
+    popup.textContent='';
+  }
+
   function closeShave() {
     if(reverseSpeed>.01||roadPosition<distance-.01)return;
-    nearMisses++;
-    combo = Math.min(combo + 1, 12);
-    comboTimer = 5;
-    const earned = 100 * combo;
-    bonus += earned*drivingRewardMultiplier();
-    toastTimer = 1.7;
-    $("toast").textContent = `CLOSE SHAVE! +${earned} · ×${combo}`;
+    nearMisses++;combo=Math.min(combo+1,12);comboTimer=5;
+    const earned=100*combo;bonus+=earned*drivingRewardMultiplier();toastTimer=2.5;
+    const popup=$("toast");popup.textContent=`NEAR MISS! +${earned} · ×${combo}`;
+    popup.classList.remove('hidden','near-miss-pop');void popup.offsetWidth;popup.classList.add('near-miss-pop');
   }
 
   function crash(hit=null) {
     if(hit&&devTestActive('noclip'))return;
     if (state !== "playing") return;
+    clearNearMissPopup();
     const score = Math.floor((distance+bonus)*difficultyReward());
     if(sessionType==='career')best = Math.max(best, score);
     try { if(sessionType==='career')localStorage.setItem(gameStorageKey("midnight-highway-best"), String(best)); } catch (_) {}
@@ -1758,8 +1783,8 @@ window.MH_SUPABASE = {
     if(!manual&&shiftTimer===0){if(kph>gearLimits[gear]*.91&&gear<7)shift(1);else if(gear>1&&kph<gearLimits[gear-1]*.68)shift(-1);}
     const targetRPM=reverseSpeed>.01?clamp(900+reverseSpeed/(cars[selected].reverseTop/3.6)*(c.redline-900)*.65,900,c.redline):clamp(900+kph/gearLimits[gear]*(c.redline-900),900,c.redline);
     rpm=lerp(rpm,targetRPM,1-Math.exp(-dt*18));
-    boostActive=(!fuelRequired()||fuelPercent>0||devTestActive('infiniteFuel'))&&nitro&&accelerate&&!brake&&nitroFuel>0&&(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()));
-    nitroFuel=devTestActive('infiniteNitro')?100:clamp(nitroFuel+(boostActive?-22/(stats.nitroEfficiency||1):(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touchDrive.boost&&!isBike()))?0:9)*dt,0,100);
+    boostActive=(!fuelRequired()||fuelPercent>0||devTestActive('infiniteFuel'))&&nitro&&accelerate&&!brake&&nitroFuel>0&&(keys.has('ShiftLeft')||keys.has('ShiftRight')||touchDrive.boost);
+    nitroFuel=devTestActive('infiniteNitro')?100:clamp(nitroFuel+(boostActive?-22/(stats.nitroEfficiency||1):(keys.has('ShiftLeft')||keys.has('ShiftRight')||touchDrive.boost)?0:9)*dt,0,100);
     const topMS=stats.top/3.6*(boostActive?1.025:1)*(wheelieActive?1.10:1);
     if(reversingTick)player.speed=0;
     else if(brake)player.speed-=10.5*(stats.braking||1)*dynamics.braking*brakeInput*dt;
@@ -1845,6 +1870,10 @@ window.MH_SUPABASE = {
 
     hintTimer = Math.max(0, hintTimer - dt);
     toastTimer = Math.max(0, toastTimer - dt);
+    const liveToast=$('toast');
+    if(state==='playing'&&toastTimer>0)liveToast.classList.remove('hidden');
+    else {liveToast.classList.add('hidden');liveToast.classList.remove('near-miss-pop');}
+
     comboTimer = Math.max(0, comboTimer - dt);
     if (comboTimer <= 0) combo = 1;
 
@@ -1922,8 +1951,12 @@ window.MH_SUPABASE = {
 
       if (!car.passed && previousY <= player.y && car.y > player.y) {
         car.passed = true;
-        const edgeGap = Math.abs(car.x - player.x) - (car.width * .86 + bodyStyles[stats.model].width * .86) / 2;
-        if (edgeGap > 0 && edgeGap < 28 && player.speed - car.speed > 5) closeShave();
+        const edgeGap=lateralBodyGap(player,car);
+        const sizeBonus=Math.min(18,(vehicleHitbox(car).width+vehicleHitbox(player).width)*.12);
+        const speedBonus=clamp((player.speed-car.speed-5)*.55,0,22);
+        const nearMissRange=42+sizeBonus+speedBonus;
+        const longitudinalSweep=Math.abs(car.y-player.y)<=Math.max(70,(vehicleHitbox(car).height+vehicleHitbox(player).height)*.65);
+        if(edgeGap>1.5&&edgeGap<nearMissRange&&longitudinalSweep&&player.speed-car.speed>4)closeShave();
       }
     }
     // Register continuous impacts before non-penetration can separate vehicles.
@@ -1936,10 +1969,14 @@ window.MH_SUPABASE = {
   function tickWeather(dt){
     if(weatherMode==='auto'){
       weatherTimer-=dt;
-      if(weatherTimer<=0){weatherKind=weatherKind==='clear'?(Math.random()<.55?'rain':'snow'):'clear';weatherTimer=weatherKind==='clear'?random(50,100):random(30,60);}
+      if(weatherTimer<=0){weatherKind=weatherKind==='clear'?(Math.random()<.58?'rain':'snow'):'clear';weatherTimer=weatherKind==='clear'?random(55,105):random(38,72);}
     }
-    rainAmount=lerp(rainAmount,weatherKind==='rain'?1:0,1-Math.exp(-dt*.18));
-    snowAmount=lerp(snowAmount,weatherKind==='snow'?1:0,1-Math.exp(-dt*.12));wet=rainAmount>.08;
+    rainAmount=lerp(rainAmount,weatherKind==='rain'?1:0,1-Math.exp(-dt*.2));
+    snowAmount=lerp(snowAmount,weatherKind==='snow'?1:0,1-Math.exp(-dt*.14));wet=rainAmount>.08;
+    weatherCloudPhase+=dt*(.8+player.speed*.018);weatherGustTimer-=dt;
+    if(weatherGustTimer<=0){weatherGustTimer=random(1.8,4.8);weatherGustTarget=random(-1,1)*(rainAmount*.9+snowAmount*.65);}
+    weatherGust=lerp(weatherGust,weatherGustTarget,1-Math.exp(-dt*.8));weatherFlash=Math.max(0,weatherFlash-dt*2.8);
+    if(rainAmount>.72&&daylight<.55&&Math.random()<dt*.018){weatherFlash=1;shake=Math.max(shake,.8);}
   }
   function finishSprint(){
     sprintFinished=true;const score=Math.floor((distance+bonus)*difficultyReward());if(sessionType==='career')best=Math.max(best,score);
@@ -2177,6 +2214,27 @@ window.MH_SUPABASE = {
     const phase=routePhase(H*.5),segment=BIOME_SEGMENTS.find(b=>phase>=b.start&&phase<b.end);
     if(segment){const edgeDistance=Math.min(phase-segment.start,segment.end-phase);if(edgeDistance<900){ctx.save();ctx.globalAlpha=(1-edgeDistance/900)*.08;ctx.fillStyle='#e8f1eb';ctx.fillRect(0,0,W,H);ctx.restore();}}
   }
+  function biomeLightPalette(biome){
+    const palettes={DOWNTOWN:{day:[128,151,170],night:[22,42,74],accent:[86,179,255]},FOREST:{day:[95,145,105],night:[9,39,31],accent:[74,168,112]},DESERT:{day:[235,174,91],night:[62,39,56],accent:[255,138,68]},MOUNTAINS:{day:[155,177,184],night:[23,36,48],accent:[151,205,231]},COAST:{day:[99,186,206],night:[8,47,79],accent:[71,207,229]},FARMLAND:{day:[173,183,103],night:[24,46,32],accent:[214,196,101]}};
+    return palettes[biome]||palettes.DOWNTOWN;
+  }
+  function drawAtmosphereGrade(){
+    const biome=biomeAt(PLAYER_Y),p=biomeLightPalette(biome),night=1-daylight;ctx.save();ctx.globalCompositeOperation='screen';
+    const c=daylight>.45?p.day:p.night;ctx.fillStyle=`rgba(${c[0]},${c[1]},${c[2]},${.035+night*.095})`;ctx.fillRect(0,0,W,H);
+    const focus=ctx.createRadialGradient(player.x,player.y,45,player.x,player.y,Math.max(W,H)*.72);focus.addColorStop(0,`rgba(${p.accent[0]},${p.accent[1]},${p.accent[2]},${.055+night*.07})`);focus.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=focus;ctx.fillRect(0,0,W,H);
+    ctx.globalCompositeOperation='multiply';ctx.fillStyle=`rgba(7,12,22,${.08+night*.30+rainAmount*.08+snowAmount*.035})`;ctx.fillRect(0,0,W,H);ctx.globalCompositeOperation='source-over';
+    const sunset=clamp(1-Math.abs(gameHour-18)/1.9,0,1)+clamp(1-Math.abs(gameHour-6)/1.5,0,1)*.65;if(sunset>0){const glow=ctx.createLinearGradient(0,0,0,H);glow.addColorStop(0,`rgba(255,129,58,${sunset*.18})`);glow.addColorStop(.64,'rgba(255,104,45,0)');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);}
+    ctx.globalCompositeOperation='multiply';ctx.globalAlpha=.035+rainAmount*.11;for(let i=0;i<5;i++){const x=((i*257+weatherCloudPhase*(12+i*2))%(W+420))-210,y=90+i*155,cloud=ctx.createRadialGradient(x,y,10,x,y,230);cloud.addColorStop(0,'rgba(74,84,99,.75)');cloud.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=cloud;ctx.fillRect(x-240,y-180,480,360);}ctx.restore();
+  }
+  function drawEnhancedWeather(){
+    if(rainAmount>.01){ctx.save();const storm=ctx.createLinearGradient(0,0,0,H);storm.addColorStop(0,`rgba(24,37,56,${rainAmount*.22})`);storm.addColorStop(1,`rgba(8,15,27,${rainAmount*.08})`);ctx.fillStyle=storm;ctx.fillRect(0,0,W,H);ctx.lineCap='round';
+      for(let i=0;i<125;i++){const d=.35+(i%9)/8,x=((i*83.7+ambient*(90+player.speed*2.6)*d+weatherGust*120*d)%W+W)%W,y=(i*137.3+ambient*(520+player.speed*3.4)*d)%H;ctx.strokeStyle=`rgba(201,228,255,${rainAmount*(.10+d*.25)})`;ctx.lineWidth=.55+d*1.25;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-5-weatherGust*15*d,y+13+player.speed*.09*d);ctx.stroke();}
+      const spray=Math.pow(clamp(vehicleSpeed()/55,0,1),1.15)*rainAmount;if(state==='playing'&&spray>.02){for(const side of [-1,1]){const sx=player.x+side*(bodyStyles[stats.model]?.width||40)*.32,sy=player.y+35,mist=ctx.createRadialGradient(sx,sy,2,sx,sy,44+spray*30);mist.addColorStop(0,`rgba(211,232,241,${spray*.24})`);mist.addColorStop(1,'rgba(210,230,240,0)');ctx.fillStyle=mist;ctx.fillRect(sx-80,sy-70,160,140);}}
+      for(const drop of rainSplashes){const x=(drop.x+weatherGust*35+scenery*.013)%W,y=(drop.y+ambient*170+drop.seed)%H;if(x<ROAD_LEFT||x>ROAD_RIGHT)continue;ctx.globalAlpha=rainAmount*.22;ctx.strokeStyle='#d8efff';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(x,y,5+(drop.seed%9),2,0,0,Math.PI*2);ctx.stroke();}ctx.restore();}
+    if(snowAmount>.01){ctx.save();ctx.fillStyle=`rgba(222,235,242,${snowAmount*.07})`;ctx.fillRect(0,0,W,H);for(let i=0;i<snowFlakes.length;i++){const f=snowFlakes[i],x=((f.seed*17+ambient*(18+f.depth*34)+Math.sin(ambient*.65+i)*24+weatherGust*85*f.depth)%W+W)%W,y=(f.seed*31+ambient*(38+player.speed*.78)*f.depth)%H;ctx.globalAlpha=snowAmount*(.25+f.depth*.58);ctx.fillStyle='#f5fbff';ctx.beginPath();ctx.arc(x,y,f.size*(.7+f.depth),0,Math.PI*2);ctx.fill();}ctx.globalAlpha=snowAmount*(.16+.12*(1-daylight));ctx.fillStyle='#e8f0ef';ctx.fillRect(ROAD_LEFT,0,15,H);ctx.fillRect(ROAD_RIGHT-15,0,15,H);ctx.restore();}
+    if(weatherFlash>0){ctx.save();ctx.globalCompositeOperation='screen';ctx.fillStyle=`rgba(218,235,255,${weatherFlash*.52})`;ctx.fillRect(0,0,W,H);ctx.restore();}
+  }
+
   function drawBridgeDeck(){
     for(const y of bridgeBands()){
       rounded(ROAD_LEFT-22,y,ROAD_RIGHT-ROAD_LEFT+44,430,2,'#606e7b');
@@ -2374,6 +2432,14 @@ window.MH_SUPABASE = {
     g.restore();
   }
 
+  function drawModelUpgrade(x,y,model,tilt,isPlayer,g=ctx){
+    const shape=bodyStyles[model]||bodyStyles[0],w=shape.width,h=shape.height;if(shape.motorcycle)return;g.save();g.translate(x,y);g.rotate(tilt||0);
+    const glow=g.createLinearGradient(-w/2,0,w/2,0);glow.addColorStop(0,'rgba(0,0,0,.24)');glow.addColorStop(.28,'rgba(255,255,255,.025)');glow.addColorStop(.52,'rgba(255,255,255,.11)');glow.addColorStop(.77,'rgba(255,255,255,.02)');glow.addColorStop(1,'rgba(0,0,0,.28)');g.fillStyle=glow;g.beginPath();g.roundRect(-w*.47,-h*.46,w*.94,h*.92,Math.max(2,shape.radius||3));g.fill();
+    g.strokeStyle='rgba(228,240,247,.16)';g.lineWidth=.8;g.beginPath();g.moveTo(-w*.31,-h*.33);g.lineTo(-w*.36,h*.31);g.moveTo(w*.31,-h*.33);g.lineTo(w*.36,h*.31);g.stroke();
+    for(const side of [-1,1]){g.fillStyle='#151b20';g.beginPath();g.ellipse(side*w*.53,-h*.08,3.5,6,0,0,Math.PI*2);g.fill();for(const yy of [-h*.31,h*.25]){g.strokeStyle='rgba(0,0,0,.38)';g.lineWidth=2.2;g.beginPath();g.arc(side*w*.47,yy,7,-Math.PI/2,Math.PI/2,side<0);g.stroke();}}
+    if(isPlayer){g.strokeStyle='rgba(225,246,255,.23)';g.lineWidth=1;g.beginPath();g.moveTo(-w*.27,-h*.43);g.lineTo(w*.27,-h*.43);g.stroke();}g.restore();
+  }
+
   function drawCar(x,y,colour,model,tilt,isPlayer,signal=0,g=ctx,cargo=false){
     if(model===BIKE_MODEL){drawDirtBike(x,y,colour,tilt,isPlayer,g);return;}
     if(model>=8){drawVarietyCar(x,y,colour,model,tilt,isPlayer,signal,g);return;}
@@ -2417,7 +2483,23 @@ window.MH_SUPABASE = {
     if(signal&&Math.sin(ambient*10)>0){const sx=signal<0?-w/2+2:w/2-6;box(sx,-h/2+11,4,7,1,'#ffc14a');box(sx,h/2-18,4,7,1,'#ffc14a');}
     if(isPlayer&&engine){box(-6,-h*.43,4,12,1,'#13202a');box(2,-h*.43,4,12,1,'#13202a');}
     g.restore();
+    drawModelUpgrade(x,y,model,tilt,isPlayer,g);
   }
+  function drawTrafficUpgrade(car){
+    if(car.model===BIKE_MODEL)return;
+    const shape=bodyStyles[car.model]||bodyStyles[0],w=shape.width,h=shape.height;
+    ctx.save();ctx.translate(car.x,car.y);ctx.rotate(car.tilt||0);
+    // Traffic-only road grime, window reflection, bumpers and visible lamp clusters.
+    const roof=ctx.createLinearGradient(0,-h*.34,0,h*.28);roof.addColorStop(0,'rgba(205,238,250,.20)');roof.addColorStop(.48,'rgba(68,104,124,.10)');roof.addColorStop(1,'rgba(0,0,0,.17)');
+    ctx.fillStyle=roof;ctx.beginPath();ctx.roundRect(-w*.30,-h*.27,w*.60,h*.52,Math.max(3,w*.09));ctx.fill();
+    ctx.strokeStyle='rgba(230,245,250,.19)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-w*.34,-h*.39);ctx.lineTo(w*.34,-h*.39);ctx.moveTo(-w*.38,h*.39);ctx.lineTo(w*.38,h*.39);ctx.stroke();
+    const braking=car.speed<8||car.wrecked;for(const side of [-1,1]){ctx.fillStyle=braking?'#ff4b62':'#bc263c';ctx.shadowColor='#ff294d';ctx.shadowBlur=braking?12:3;ctx.fillRect(side*w*.25-4,h*.43,8,4);ctx.shadowBlur=0;ctx.fillStyle=daylight<.72?'#daefff':'#b9d4dc';ctx.fillRect(side*w*.25-4,-h*.47,8,4);}
+    // Side trim and tyre detail make vans, trucks and small traffic cars distinct.
+    ctx.strokeStyle='rgba(5,8,12,.42)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-w*.45,h*.05);ctx.lineTo(-w*.45,h*.34);ctx.moveTo(w*.45,h*.05);ctx.lineTo(w*.45,h*.34);ctx.stroke();
+    if(car.cargo||shape.heavy){ctx.fillStyle='rgba(10,14,18,.26)';ctx.fillRect(-w*.40,h*.18,w*.80,h*.16);ctx.strokeStyle='rgba(225,235,238,.14)';ctx.strokeRect(-w*.38,h*.20,w*.76,h*.12);}
+    ctx.restore();
+  }
+
   function render(dt) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.fillStyle = "#070b15";
@@ -2451,6 +2533,7 @@ window.MH_SUPABASE = {
     } else {
       for (const car of traffic) {
         drawCar(car.x, car.y, car.wrecked?'#4d5058':car.policeTier==='hyper'?'#c2b3f5':car.policeTier==='sport'?'#a5d9ee':car.police?'#e6edf5':car.colour, car.model, car.tilt, false, car.signal,ctx,car.cargo);
+        drawTrafficUpgrade(car);
         if(car.policeTier&&!car.wrecked){ctx.save();ctx.translate(car.x,car.y);ctx.rotate(car.tilt);ctx.fillStyle=car.policeTier==='hyper'?'#a16aff':'#4af1ff';ctx.fillRect(-3,-35,6,23);ctx.restore();}
         if(car.police&&!car.wrecked){ctx.save();ctx.translate(car.x,car.y);ctx.rotate(car.tilt);rounded(-17,-2,34,8,2,'#101725');for(const side of [-1,1]){ctx.shadowColor=side<0?'#ff345a':'#3b9cff';ctx.shadowBlur=18;rounded(side<0?-15:2,-1,13,6,2,Math.sin(ambient*18+side*1.6)>0?ctx.shadowColor:'#263348');}ctx.restore();}
       }
@@ -2476,10 +2559,8 @@ window.MH_SUPABASE = {
         }
       }
       drawSpikeStrips();
-      // Ambient light affects the entire world, not just the road material.
-      ctx.save();ctx.fillStyle=`rgba(0,7,22,${(1-daylight)*.38})`;ctx.fillRect(0,0,W,H);
-      const sunset=clamp(1-Math.abs(gameHour-18)/1.8,0,1);
-      ctx.fillStyle=`rgba(255,141,57,${sunset*.12})`;ctx.fillRect(0,0,W,H);ctx.restore();
+      // Biome-specific ambient colour, moving cloud shadows and time-of-day grading.
+      drawAtmosphereGrade();
       // Render headlights after ambient shading so night beams remain visible.
       if(daylight<.8){
         for(const v of [{x:player.x,y:player.y,tilt:player.tilt,motorcycle:isBike()},...traffic]){
@@ -2515,6 +2596,8 @@ window.MH_SUPABASE = {
       for(let i=0;i<150;i++){const z=.4+(i%7)/7;const x=((i*97.37+Math.sin(ambient*.8+i)*18+ambient*12*z)%W+W)%W;const y=(i*113.7+ambient*(35+player.speed*.7)*z)%H;ctx.beginPath();ctx.arc(x,y,1+z*2,0,Math.PI*2);ctx.fill();}
       ctx.globalAlpha=snowAmount*.18;ctx.fillRect(ROAD_LEFT,0,12,H);ctx.fillRect(ROAD_RIGHT-12,0,12,H);ctx.restore();
     }
+    ctx.globalAlpha = 1;
+    drawEnhancedWeather();
     ctx.globalAlpha = 1;
     particles = particles.filter(p => p.life > 0);
 
@@ -3535,7 +3618,7 @@ window.MH_SUPABASE = {
     $('leaderboardDescription').textContent=careerBoard?
       'Latest cloud-saved career: lifetime points, current cash balance and unique cars owned. Sort by any of these. Spending cash can lower your cash rank. Developer accounts are excluded. Save-reported stats are not cheat-proof.':
       'Ranked by total run points for the selected difficulty. Shows driver, run points and number of completed runs. Guest and developer runs do not count.';
-    const titles=careerBoard?['RANK','DRIVER','LIFETIME POINTS','CASH BALANCE','CARS OWNED']:['DRIVER','RUN POINTS','NUMBER OF RUNS'];
+    const titles=careerBoard?['RANK','DRIVER','LIFETIME POINTS','CASH BALANCE','CARS OWNED']:['RANK','DRIVER','RUN POINTS','NUMBER OF RUNS'];
     const tr=document.createElement('tr');for(const title of titles){const th=document.createElement('th');th.textContent=title;tr.append(th);}$('leaderHead').replaceChildren(tr);
   }
   async function refreshLeaderboard(){
@@ -3547,7 +3630,7 @@ window.MH_SUPABASE = {
       if(request!==boardRequest)return;
       if(section==='ranked')rows.sort((a,b)=>Number(b.points||0)-Number(a.points||0)||Number(b.runs||0)-Number(a.runs||0));
       for(let rowIndex=0;rowIndex<rows.length;rowIndex++){const row=rows[rowIndex],tr=document.createElement('tr');if(row.is_me)tr.className='me';
-        const values=section==='career'?[row.rank,row.username,boardNumber(row.lifetime_points),'$'+boardNumber(row.cash),boardNumber(row.cars_owned)]:[row.username,boardNumber(row.points),boardNumber(row.runs)];
+        const values=section==='career'?[row.rank,row.username,boardNumber(row.lifetime_points),'$'+boardNumber(row.cash),boardNumber(row.cars_owned)]:[rowIndex+1,row.username,boardNumber(row.points),boardNumber(row.runs)];
         for(const value of values){const td=document.createElement('td');td.textContent=String(value);tr.append(td);}$('leaderRows').append(tr);
       }
       $('boardStatus').textContent=rows.length?rows.length+' drivers shown / top 1,000 maximum / '+(section==='career'?'ranked by '+({points:'lifetime points',cash:'cash balance',cars:'cars owned'})[metric]:runFilter.toUpperCase()+' runs ranked by total points'):
