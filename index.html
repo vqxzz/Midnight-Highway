@@ -3592,7 +3592,13 @@ window.MH_SUPABASE = {
       const result=await rpc('mh_finish_run_v2',pending);cloud.pending=null;
       cloudMessage(result.accepted?'Run submitted / +'+result.points.toLocaleString('en-GB')+' ranked points':result.reason);
       markCloudDirty();await saveCloud();
-    }catch(e){cloudMessage('Run submission failed: '+e.message,true);}finally{cloud.submitting=null;}})();
+    }catch(e){
+      // Never trap the player on Game Over if the backend RPC is missing/offline.
+      // The failed ranked result is discarded locally so Restart can begin a clean run.
+      const failedPoints=pending.p_points||0;
+      cloud.pending=null;cloud.run=null;
+      cloudMessage('Run was not submitted ('+failedPoints.toLocaleString('en-GB')+' pts). You can restart now. Database error: '+e.message,true);
+    }finally{cloud.submitting=null;}})();
   }
   const onlineState=setState;
   setState=function(next){
