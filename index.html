@@ -488,6 +488,66 @@ body[data-state="playing"] #skidWarning{pointer-events:none}
 #toast.near-miss-pop::after{content:'';position:absolute;left:21px;right:15px;bottom:5px;height:1px;background:rgba(255,255,255,.28);transform-origin:left;animation:nearMissTimer 2.5s linear both;}
 @keyframes nearMissLife{0%{opacity:0;transform:translateX(-50%) translateY(10px) scale(.9)}8%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.04)}13%,88%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-6px) scale(.97)}}
 @keyframes nearMissTimer{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+
+#showcase .showcase-layout>aside #trophyShop{display:none}.trophy-shop-open{width:100%;margin-top:18px}.trophy-shop-screen{position:fixed;inset:0;z-index:90;background:#080808;overflow:auto;padding:28px}.trophy-shop-screen.hidden{display:none}.trophy-shop-shell{width:min(1350px,100%);margin:auto}.trophy-shop-screen #trophyShop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.trophy-shop-screen #trophyShop button{min-height:72px;text-align:left}.trophy-shop-screen #trophyNotice{margin-top:18px}@media(max-width:760px){.trophy-shop-screen{padding:14px}.trophy-shop-screen #trophyShop{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Visual Trophy Shop cards and selected-trophy preview */
+.trophy-shop-browser{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:22px}.trophy-shop-screen #trophyShop{grid-template-columns:repeat(3,minmax(0,1fr))}.trophy-shop-screen #trophyShop button{min-height:220px;padding:14px;background:#0d0f12;border:1px solid #30343a;color:#fff}.trophy-shop-screen #trophyShop button.selected{border-color:#fff;background:#171b20}.trophy-card-preview{display:block;width:100%;height:125px;background:radial-gradient(circle at 50% 40%,#263744,#101720 52%,#05070a);border-bottom:1px solid #303840;margin-bottom:12px}.trophy-selected-panel{align-self:start;position:sticky;top:15px}.trophy-selected-panel canvas{display:block;width:100%;height:auto;background:radial-gradient(circle at 50% 40%,#263744,#101720 52%,#05070a);border:1px solid #33404b;margin:14px 0}.trophy-selected-panel strong{display:block;font-size:20px;margin:14px 0}.trophy-selected-panel button{width:100%;min-height:52px;background:#fff!important;color:#000!important;-webkit-text-fill-color:#000!important;font-weight:950;border:2px solid #fff}.trophy-selected-panel button:disabled{background:#d4d4d4!important;color:#111!important;-webkit-text-fill-color:#111!important;opacity:.75}@media(max-width:900px){.trophy-shop-browser{grid-template-columns:minmax(0,1fr) 280px}.trophy-shop-screen #trophyShop{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:680px){.trophy-shop-browser{display:block}.trophy-selected-panel{position:static;margin-top:16px}.trophy-shop-screen #trophyShop button{min-height:190px}.trophy-card-preview{height:100px}}
+
+/* Organised two-column Trophy Shop */
+.trophy-shop-browser{grid-template-columns:minmax(0,1fr) 360px!important;align-items:start}.trophy-shop-screen #trophyShop{grid-template-columns:repeat(3,minmax(180px,1fr))!important;align-content:start}.trophy-selected-panel{top:24px!important;padding:22px!important}.trophy-selected-panel h2{margin:8px 0 6px}.trophy-selected-panel p{min-height:42px;color:#aeb5bc}.trophy-selected-panel #selectedTrophyPrice{padding:12px;background:#111820;border:1px solid #303d48}.trophy-selected-panel .clear-spot-button{margin-top:10px!important;background:#111!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border:1px solid #444!important}.trophy-shop-screen #trophyShop button{display:block!important;overflow:hidden}.trophy-shop-screen #trophyShop button .trophy-card-preview{pointer-events:none}.trophy-shop-screen #trophyShop button.selected{box-shadow:0 0 0 2px #fff inset}.trophy-slot-status{font-size:11px;color:#8e99a3;margin-top:8px}@media(max-width:1050px){.trophy-shop-screen #trophyShop{grid-template-columns:repeat(2,minmax(170px,1fr))!important}}@media(max-width:720px){.trophy-shop-browser{display:flex!important;flex-direction:column}.trophy-selected-panel{position:static!important;order:-1;width:100%}.trophy-shop-screen #trophyShop{grid-template-columns:repeat(2,minmax(135px,1fr))!important}}
+
+/* Match the Showroom and Trophy Shop typography to the rest of Midnight Highway. */
+#showcase,
+#showcase button,
+#showcase input,
+#showcase select,
+#trophyShopScreen,
+#trophyShopScreen button,
+#trophyShopScreen input,
+#trophyShopScreen select {
+  font-family:Arial,Helvetica,system-ui,sans-serif !important;
+}
+#showcase h1,
+#showcase h2,
+#showcase .showcase-caption h2,
+#trophyShopScreen h1,
+#trophyShopScreen h2,
+#trophyShopScreen #trophyShop button,
+#trophyShopScreen #trophyShop button strong,
+#trophyShopScreen #selectedTrophyName {
+  font-family:Impact,'Arial Narrow',Arial,sans-serif !important;
+  text-transform:uppercase !important;
+  font-style:normal !important;
+  letter-spacing:.025em !important;
+}
+#showcase .eyebrow,
+#showcase .section-label,
+#showcase small,
+#trophyShopScreen .eyebrow,
+#trophyShopScreen .section-label,
+#trophyShopScreen small {
+  font-family:Arial,Helvetica,system-ui,sans-serif !important;
+  font-weight:700 !important;
+  letter-spacing:.16em !important;
+  text-transform:uppercase !important;
+}
+#showcase button,
+#trophyShopScreen button,
+#trophyShopScreen #selectedTrophyAction,
+#trophyShopScreen #clearSelectedTrophySpot {
+  font-family:Arial,Helvetica,system-ui,sans-serif !important;
+  font-weight:900 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+}
+#showcase p,
+#showcase strong,
+#showcase select,
+#trophyShopScreen p,
+#trophyShopScreen #selectedTrophyPrice {
+  font-family:Arial,Helvetica,system-ui,sans-serif !important;
+}
 </style>
 </head>
 <body data-state="menu">
@@ -502,7 +562,7 @@ body[data-state="playing"] #skidWarning{pointer-events:none}
 <div id="cloudRows"><table class="cloud-table"><thead id="leaderHead"><tr><th>RANK</th><th>DRIVER</th><th>RANKED POINTS</th><th>BEST RUN</th><th>RUNS</th></tr></thead><tbody id="leaderRows"></tbody></table></div>
 </div></section><div id="cloudBadge">GUEST / LOCAL SAVE</div>
 
-<section id="devMenu" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="devTitle"><div class="panel"><div class="eyebrow">LOCAL / DEVELOPER TOOLS</div><h2 id="devTitle">DEV MENU</h2><p>Ctrl + Shift + V to toggle. Changes save immediately.</p><div class="home-balance"><small>CURRENT BALANCE</small><strong id="devBalance"></strong></div><label for="devAmount">AMOUNT / WHOLE DOLLARS</label><input id="devAmount" type="number" min="0" max="999999999" step="1" value="10000"><div class="dev-actions"><button id="devAdd" class="primary">ADD MONEY</button><button id="devSet">SET BALANCE</button><button id="devUnlock">UNLOCK ALL CARS</button><button id="devRefill">REFILL NITROUS</button></div><label for="devPointAmount">POINTS / WHOLE AMOUNT</label><input id="devPointAmount" type="number" min="0" max="999999999" step="1" value="10000"><div class="dev-actions"><button id="devAddPoints">ADD POINTS</button><button id="devSetPoints">SET POINTS</button></div><p id="devPointsBalance"></p><p id="devStatus" role="status" aria-live="polite"></p><button id="devClose">CLOSE / ESC</button></div></section>
+<section id="devMenu" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="devTitle"><div class="panel"><div class="eyebrow">LOCAL / DEVELOPER TOOLS</div><h2 id="devTitle">DEV MENU</h2><p>Ctrl + Shift + V to toggle. Changes save immediately.</p><div class="home-balance"><small>CURRENT BALANCE</small><strong id="devBalance"></strong></div><label for="devAmount">AMOUNT / WHOLE DOLLARS</label><input id="devAmount" type="number" min="0" step="1" value="10000"><div class="dev-actions"><button id="devAdd" class="primary">ADD MONEY</button><button id="devSet">SET BALANCE</button><button id="devUnlock">UNLOCK ALL CARS</button><button id="devRefill">REFILL NITROUS</button></div><label for="devPointAmount">POINTS / WHOLE AMOUNT</label><input id="devPointAmount" type="number" min="0" step="1" value="10000"><div class="dev-actions"><button id="devAddPoints">ADD POINTS</button><button id="devSetPoints">SET POINTS</button></div><p id="devPointsBalance"></p><p id="devStatus" role="status" aria-live="polite"></p><button id="devClose">CLOSE / ESC</button></div></section>
 <section id="audioSettings" class="overlay hidden" aria-label="Audio settings"><div class="panel settings-panel"><div class="eyebrow">MH / SETTINGS</div><h1>SETTINGS.</h1><p>Volume changes apply immediately and save in this browser.</p><div id="volumeSliders"></div><div class="footer"><button id="resetVolumes">RESET AUDIO</button><button id="settingsBack" class="primary">← MAIN MENU</button></div></div></section>
 <section id="showcase" class="overlay hidden"><div class="showcase-shell"><header class="garage-header"><div><div class="eyebrow">MH / PRIVATE SHOWROOM</div><h1>YOUR COLLECTION.</h1><p id="showcaseBalance"></p></div><button id="showcaseBack">← MAIN MENU</button></header><div class="showcase-layout"><div><div class="showcase-stage"><canvas id="showcaseCanvas" width="1100" height="700"></canvas><div class="showcase-caption"><small id="showcasePhase"></small><h2 id="showcaseName"></h2></div></div><div class="showcase-tools"><select id="showcaseCar" aria-label="Owned car to showcase"></select><button id="setShowcase" class="primary">SET SHOWCASE CAR</button><button id="replayShowcase">REPLAY REVEAL</button><button id="skipShowcase">SKIP REVEAL</button></div><div class="section-label">DISPLAY SPACES / SELECT A SLOT, THEN BUY OR EQUIP AN ITEM</div><div id="trophySlots"></div></div><aside class="launch-panel"><div class="section-label">POINTS-ONLY COLLECTION</div><p>Cash cannot buy these items. Spending points never reduces lifetime points.</p><div id="trophyShop"></div><p id="trophyNotice" role="status" aria-live="polite"></p></aside></div></div></section>
 <section id="home" class="overlay"><div class="home-layout"><div class="home-left"><div id="homeBrand" class="eyebrow">MH</div><h1>MIDNIGHT<br>HIGHWAY.</h1><p>Your garage. Your career. Your playground.</p><button id="homePlay" class="home-action primary">CAREER <span>Owned cars. Fixed rules. Earn cash & points →</span></button><button id="homeFreestyle" class="home-action">FREESTYLE <span>Test all 185 vehicles. Set your own rules →</span></button><button id="homeWorkshop" class="home-action">WORKSHOP <span>Buy vehicles. Build your specification →</span></button><button id="homeShowcase" class="home-action">SHOWROOM <span>Showcase your car. Build your trophy collection →</span></button><button id="homeSettings" class="home-action">SETTINGS <span>Master, engine, rain & effects volume →</span></button><div class="home-balance"><small>AVAILABLE FUNDS</small><strong id="homeCash"></strong><small class="points-label">LIFETIME POINTS</small><strong id="homeLifetime"></strong><small id="homeSpendable"></small></div><small class="sim-note">Earn $100 per kilometre and $1 per 10 bonus points.<br>Progress saves automatically in this browser. Fictional game currency.</small></div><div class="home-right"><div class="section-label">YOUR CURRENT RIDE</div><div class="home-film"><canvas id="homeCar" width="1000" height="600" aria-label="Looping traffic-free drive of your current car"></canvas><span id="homeFilmLabel">LIVE DRIVE / NO TRAFFIC</span></div><h2 id="homeCarName"></h2><p id="homeSpec"></p><div class="home-stats"><span id="homeOwned"></span><span>OFFLINE / SINGLE PLAYER</span></div></div></div></section>
@@ -1001,236 +1061,377 @@ window.MH_SUPABASE = {
   const laneX = lane => ROAD_LEFT + LANE_WIDTH * (lane + .5);
 
   // Times are gameplay targets in seconds at 100/200/300 km/h.
-  const cars = [
-    {name:"Dodge Charger SRT Hellcat",subtitle:"Supercharged muscle",top:328,times:[3.7,12,30],handling:.95,model:1,redline:6500},
-    {name:"Bugatti Chiron",subtitle:"W16 hypercar",top:420,times:[2.4,6.5,13.6],handling:1.15,model:2,redline:7000},
-    {name:"Lamborghini Aventador SVJ",subtitle:"Naturally aspirated V12",top:350,times:[2.8,8.6,24],handling:1.1,model:2,redline:8500},
-    {name:"Nissan GT-R Nismo",subtitle:"Twin-turbo AWD",top:315,times:[2.9,10,34],handling:1.08,model:0,redline:7000},
-    {name:"Porsche 911 GT3 RS",subtitle:"Track-focused flat six",top:296,times:[3.2,10.6,40],handling:1.3,model:2,redline:9000},
-    {name:"Toyota Supra MK4",subtitle:"Stock twin-turbo classic",top:250,times:[5.1,19,65],handling:1,model:0,redline:6800},
-    {name:"McLaren P1",subtitle:"Hybrid hypercar",top:350,times:[2.8,6.8,17],handling:1.23,model:2,redline:8500},
-    {name:"Koenigsegg Jesko",subtitle:"High-speed hypercar",top:440,times:[2.7,6.8,15],handling:1.2,model:2,redline:8500},
-    {name:"Ferrari SF90",subtitle:"Hybrid AWD supercar",top:340,times:[2.5,6.7,20],handling:1.25,model:2,redline:8000},
-    {"name": "BMW M3 Competition", "subtitle": "Performance saloon", "top": 290, "times": [3.9, 13, 43], "handling": 1.16, "model": 0, "redline": 7200},
-    {"name": "Audi RS6 Avant GT", "subtitle": "630 PS twin-turbo petrol V8 performance estate", "top": 306, "times": [3.3, 10.9, 33], "handling": 1.12, "model": 4, "redline": 7000, "category": "Estate", "electric": false, "fuelType": "Petrol"},
-    {"name": "Mercedes-AMG GT R", "subtitle": "Long-bonnet sports coupe", "top": 318, "times": [3.6, 11, 35], "handling": 1.18, "model": 0, "redline": 7500},
-    {"name": "Ford Mustang GT", "subtitle": "V8 muscle coupe", "top": 265, "times": [4.4, 16, 55], "handling": 0.98, "model": 1, "redline": 7500},
-    {"name": "Chevrolet Corvette Z06", "subtitle": "Mid-engine supercar", "top": 312, "times": [2.9, 10, 34], "handling": 1.23, "model": 2, "redline": 8600},
-    {"name": "Honda Civic Type R", "subtitle": "Hot hatchback", "top": 275, "times": [5.4, 20, 65], "handling": 1.24, "model": 3, "redline": 7000},
-    {"name": "Volkswagen Golf R", "subtitle": "AWD hot hatchback", "top": 270, "times": [4.7, 18, 60], "handling": 1.2, "model": 3, "redline": 6800},
-    {"name": "Toyota GR Yaris", "subtitle": "Compact rally hatchback", "top": 230, "times": [5.5, 23, 75], "handling": 1.3, "model": 3, "redline": 7200},
-    {"name": "Mazda RX-7", "subtitle": "Rotary sports coupe", "top": 250, "times": [5.3, 21, 70], "handling": 1.16, "model": 0, "redline": 8000},
-    {"name": "Nissan Skyline GT-R R34", "subtitle": "Classic AWD coupe", "top": 250, "times": [5.2, 20, 65], "handling": 1.13, "model": 0, "redline": 8000},
-    {"name": "Lexus LFA", "subtitle": "V10 sports coupe", "top": 325, "times": [3.7, 12, 37], "handling": 1.2, "model": 0, "redline": 9000},
-    {"name": "Aston Martin Vantage", "subtitle": "V8 grand tourer", "top": 314, "times": [3.6, 12, 39], "handling": 1.15, "model": 0, "redline": 7200},
-    {"name": "Lamborghini Urus", "subtitle": "Performance SUV", "top": 305, "times": [3.6, 13, 43], "handling": 0.96, "model": 5, "redline": 6800},
-    {"name": "Range Rover Sport", "subtitle": "Luxury SUV", "top": 240, "times": [5.8, 25, 80], "handling": 0.88, "model": 5, "redline": 6500},
-    {"name": "Ford Transit Custom", "subtitle": "Panel van", "top": 175, "times": [12, 65, 120], "handling": 0.8, "model": 6, "redline": 5000},
-    {"name": "Ford F-150 Raptor", "subtitle": "Off-road pickup truck", "top": 190, "times": [6.5, 40, 100], "handling": 0.82, "model": 7, "redline": 6500},
-    {name:"Jeep Grand Cherokee Trackhawk",subtitle:"707 hp 6.2L supercharged V8 performance SUV",top:290,times:[3.5,11.6,39],handling:.91,model:5,redline:6200,category:"SUV",electric:false,fuelType:"Petrol"},
-    {name:"Koenigsegg Jesko Absolut",subtitle:"Twin-turbo V8 ultra-high-speed hypercar",top:531,times:[2.5,7.4,18],handling:1.08,model:2,redline:8500,category:"Hyper",electric:false,fuelType:"Petrol",fixedPrice:275000,fixedTopSpeed:true},
-];
-  // User-requested expansion. Existing IDs are never reordered.
-  const rosterAliases={"Audi RS6 Avant": "Audi RS6 Avant", "Chevrolet Corvette Z06 (C8)": "Chevrolet Corvette Z06", "Ferrari SF90 Stradale": "Ferrari SF90", "Honda Civic Type R (FL5)": "Honda Civic Type R", "Lamborghini Aventador SVJ": "Lamborghini Aventador SVJ", "Lexus LFA": "Lexus LFA", "Mazda RX-7 Spirit R (FD)": "Mazda RX-7", "McLaren P1": "McLaren P1", "Nissan GT-R Nismo (R35)": "Nissan GT-R Nismo", "Nissan Skyline GT-R V-Spec II (R34)": "Nissan Skyline GT-R R34", "Porsche 911 GT3 RS (992)": "Porsche 911 GT3 RS", "Toyota Supra RZ (JZA80)": "Toyota Supra MK4", "Toyota GR Yaris": "Toyota GR Yaris", "Volkswagen Golf R (MK8)": "Volkswagen Golf R"};
-  for(const [label,oldName] of Object.entries(rosterAliases)){
-    const existing=cars.find(c=>c.name===oldName);if(existing)existing.name=label;
-  }
-  const rosterAdditions=[["Acura NSX Type S", 8], ["Alfa Romeo Giulia GTA", 9], ["Alpine A110 R", 4], ["Ariel Atom 4", 4], ["Aston Martin Valkyrie", 7], ["Aston Martin DB5", 17], ["Audi R8 V10 Performance", 13], ["Audi Quattro S1", 16], ["BAC Mono", 4], ["Bentley Continental GT Speed", 10], ["BMW M3 GTR (E46)", 9], ["BMW M5 CS (F90)", 10], ["BMW M2 CS", 9], ["Bugatti Chiron Super Sport", 1], ["Bugatti Bolide", 7], ["Cadillac CT5-V Blackwing", 0], ["Caterham Seven 620R", 4], ["Chevrolet Camaro ZL1 1LE", 0], ["Chevrolet Corvette Stingray (C3)", 12], ["Chevrolet Chevelle SS 454", 12], ["Dodge Charger SRT Hellcat Redeye", 0], ["Dodge Challenger SRT Demon 170", 0], ["Dodge Viper ACR (VX I)", 13], ["Ferrari LaFerrari", 6], ["Ferrari F40", 11], ["Ferrari 250 GTO", 17], ["Ferrari 458 Italia", 11], ["Ford GT (2017)", 6], ["Ford Mustang Shelby GT500 (2020)", 0], ["Ford GT40 Mk II", 11], ["Ford Sierra RS Cosworth", 18], ["Ford F-150 Raptor R", 24], ["Hennessey Venom F5", 7], ["Honda S2000 CR", 17], ["Honda Integra Type R (DC2)", 14], ["Hyundai Ioniq 5 N", 15], ["Jaguar E-Type Series 1", 17], ["Jaguar F-Type SVR", 11], ["Jaguar XJ220", 6], ["Jeep Wrangler Rubicon 392", 22], ["Koenigsegg Jesko Attack", 7], ["Koenigsegg Gemera", 6], ["Koenigsegg Agera RS", 7], ["Lamborghini Revuelto", 8], ["Lamborghini Huracán STO", 13], ["Lamborghini Countach LP400", 11], ["Lamborghini Diablo SV", 11], ["Lancia Stratos HF", 16], ["Lancia Delta HF Integrale Evo II", 16], ["Lexus IS 500 F Sport", 9], ["Lotus Emira", 4], ["Lotus Evija", 7], ["Lotus Elise Cup 250", 16], ["Maserati MC20", 13], ["Mazda RX-8 R3", 17], ["Mazda MX-5 Miata (ND2)", 16], ["McLaren 720S Spider", 6], ["McLaren F1 LM", 6], ["McLaren Senna", 6], ["Mercedes-AMG ONE", 6], ["Mercedes-AMG GT Black Series", 11], ["Mercedes-Benz 190E 2.5-16 Evolution II", 18], ["Mercedes-Benz SL 65 AMG Black Series", 11], ["Mercedes-Benz SLS AMG GT", 11], ["Mitsubishi Lancer Evolution VI Tommi Mäkinen Edition", 18], ["Mitsubishi Lancer Evolution X FQ-440", 3], ["Nissan Skyline GT-R (R32)", 18], ["Nissan Z Nismo (RZ34)", 9], ["Nissan Silvia Spec-R (S15)", 17], ["Pagani Huayra R", 6], ["Pagani Zonda Cinque Roadster", 6], ["Pagani Utopia", 6], ["Peugeot 205 T16", 16], ["Plymouth Hemi Cuda", 12], ["Pontiac GTO Judge", 12], ["Porsche 918 Spyder", 6], ["Porsche 911 GT2 RS (991)", 13], ["Porsche Carrera GT", 11], ["Porsche Taycan Turbo S", 10], ["RAM 1500 TRX", 24], ["Rimac Nevera", 7], ["Shelby Cobra 427 S/C", 12], ["Subaru Impreza WRX STI 22B", 18], ["Subaru WRX STI S209", 3], ["Toyota GR Supra 3.0", 9], ["Toyota AE86 Sprinter Trueno", 17]];
-  const originalTemplates=cars.slice();
-  for(const [name,template] of rosterAdditions){
-    if(cars.some(c=>c.name===name))continue;
-    const base=originalTemplates[template];
-    cars.push({...base,name,times:[...base.times],subtitle:'Fictional gameplay preset / shared stylised body',gameplayPreset:true});
-  }
-  // Expansion II: one Subaru 22B naming equivalent skipped. Append-only IDs.
-  const secondRoster=[["AC Shelby Cobra Daytona Coupe", 300, 0], ["Acura Integra Type S (DE4)", 270, 3], ["Alfa Romeo 8C Competizione", 292, 0], ["Alfa Romeo 33 Stradale (1967)", 260, 0], ["Alpine A110 (1973)", 210, 0], ["AMC AMX", 205, 1], ["Aston Martin One-77", 354, 2], ["Aston Martin Vantage F1 Edition", 314, 0], ["Aston Martin Victor", 320, 0], ["Audi Sport Quattro", 250, 3], ["Audi RS7 Sportback", 250, 4], ["Bentley Blower 4½ Litre", 200, 0], ["BMW M1 (E26)", 262, 0], ["BMW M135i xDrive", 250, 3], ["BMW M4 CSL (G82)", 307, 0], ["BMW Z8", 250, 0], ["Brabham BT62", 300, 2], ["Bugatti EB110 SS", 351, 2], ["Bugatti Divo", 380, 2], ["Cadillac CTS-V Wagon", 308, 4], ["Chevrolet Corvette ZR1 (C6)", 330, 0], ["Chevrolet Camaro SS (1969)", 210, 1], ["Chevrolet Corvette Z06 (C5)", 275, 0], ["De Tomaso Pantera GTS", 280, 0], ["Dodge Super Bee (1970)", 210, 1], ["Dodge Viper GTS (SR II)", 298, 0], ["Ferrari 288 GTO", 305, 2], ["Ferrari 812 Competizione", 340, 0], ["Ferrari F50", 325, 2], ["Ferrari Enzo", 350, 2], ["Ferrari Daytona SP3", 340, 2], ["Ford GT70", 270, 0], ["Ford Escort RS Cosworth", 232, 3], ["Ford Mustang Boss 429", 200, 1], ["Ford Focus RS (MK3)", 266, 3], ["Gordon Murray T.50", 364, 2], ["Hennessey Venom GT", 435, 2], ["Honda NSX-R (NA2)", 280, 0], ["Honda CR-X Si", 200, 3], ["Hyundai N Vision 74", 250, 0], ["Jaguar XJR-15", 307, 2], ["Jaguar C-X75", 330, 2], ["Jaguar D-Type", 260, 0], ["Koenigsegg CCXR Trevita", 410, 2], ["Koenigsegg Regera", 410, 2], ["Koenigsegg CC850", 400, 2], ["KTM X-Bow GTX", 280, 2], ["Lamborghini Reventón", 340, 2], ["Lamborghini Murciélago LP670-4 SV", 342, 2], ["Lamborghini Sian FKP 37", 350, 2], ["Lamborghini Miura P400 SV", 285, 0], ["Lamborghini Sesto Elemento", 320, 2], ["Lancia Fulvia Coupe HF", 190, 0], ["Lancia 037 Stradale", 220, 0], ["Lexus RC F Track Edition", 270, 0], ["Lotus Carlsson / Lotus Carlton", 283, 0], ["Lotus Exige Sport 410", 290, 0], ["Maserati MC12", 330, 2], ["Maserati GranTurismo Folgore", 325, 0], ["Mazda Cosmo Sport 110S", 185, 0], ["Mazda RX-3", 180, 0], ["Mazda Speed3 (BL)", 250, 3], ["McLaren 600LT", 328, 2], ["McLaren Elva", 326, 2], ["McLaren Speedtail", 403, 2], ["Mercedes-AMG SL 63 S E Performance", 317, 0], ["Mercedes-Benz CLK GTR", 320, 2], ["Mercedes-Benz 300 SL Gullwing", 250, 0], ["Mercedes-Benz C 63 AMG Black Series (W204)", 300, 0], ["Mitsubishi Lancer Evolution IX MR", 250, 0], ["Mitsubishi Eclipse GSX (2nd Gen)", 230, 0], ["Nissan Skyline GT-R (KPGC10 \"Hakosuka\")", 200, 0], ["Nissan 300ZX Twin Turbo (Z32)", 250, 0], ["Nissan Pulsar GTI-R", 230, 3], ["Nissan Stagea Autech 260RS", 250, 4], ["Noble M600", 362, 2], ["Pagani Zonda R", 350, 2], ["Pagani Huayra BC", 370, 2], ["Plymouth Road Runner Superbird", 240, 1], ["Pontiac Trans Am SD-455", 210, 1], ["Porsche 959 Dakar", 210, 0], ["Porsche 911 GT1 Strassenversion", 308, 2], ["Porsche 911 Singer DLS", 300, 0], ["Porsche 718 Cayman GT4 RS", 315, 0], ["Porsche 911 Turbo S (992)", 330, 0], ["Radical SR10", 290, 2], ["Ruf CTR Yellowbird", 342, 0], ["Saleen S7 Twin Turbo", 399, 2], ["Shelby Mustang GT350R (1965)", 240, 1], ["Shelby Series 1", 274, 0], ["TVR Sagaris", 298, 0], ["TVR Cerbera Speed 12", 380, 0], ["Toyota Chaser JZX100 Tourer V", 180, 0], ["Toyota MR2 GT-S (SW20)", 245, 0], ["Toyota Celica GT-Four (ST205)", 245, 0], ["Ultima RS", 400, 2], ["Vector W8 Twin Turbo", 350, 2], ["Volkswagen Golf GTI Clubsport S (MK7)", 265, 3], ["Zenvo TSR-S", 325, 2]];
-  const priorCaps=[328, 420, 350, 315, 296, 250, 350, 400, 340, 250, 250, 318, 250, 312, 275, 250, 230, 250, 250, 325, 314, 305, 225, 175, 180, 307, 307, 285, 260, 350, 233, 331, 220, 274, 335, 280, 305, 280, 440, 380, 322, 249, 305, 225, 210, 327, 299, 241, 330, 348, 324, 270, 180, 437, 241, 235, 260, 246, 322, 341, 160, 400, 400, 447, 350, 310, 309, 325, 230, 220, 240, 290, 320, 248, 325, 235, 220, 341, 362, 335, 352, 318, 250, 320, 250, 270, 250, 250, 240, 370, 350, 350, 210, 210, 210, 345, 340, 330, 260, 190, 412, 265, 248, 255, 250, 226, 180, 250, 250, 250, 250];
-  for(let i=0;i<cars.length;i++){if(!cars[i].fixedTopSpeed&&Number.isFinite(priorCaps[i]))cars[i].top=priorCaps[i];}
-  for(const [rawName,top,model] of secondRoster){
-    const name=rawName==='Lotus Carlsson / Lotus Carlton'?'Lotus Carlton':rawName;
-    if(cars.some(c=>c.name===name))continue;
-    const base=originalTemplates[model===2?6:model===1?12:model===3?14:model===4?10:17];
-    cars.push({...base,name,top,model,times:[...base.times],subtitle:'Individual game speed cap / shared stylised body',gameplayPreset:true});
-  }
-  const namedGameCaps={"Acura NSX Type S": 307, "Alfa Romeo Giulia GTA": 307, "Alpine A110 R": 285, "Ariel Atom 4": 260, "Aston Martin Valkyrie": 350, "Aston Martin DB5": 233, "Audi R8 V10 Performance": 331, "Audi Quattro S1": 220, "BAC Mono": 274, "Bentley Continental GT Speed": 335, "BMW M3 GTR (E46)": 280, "BMW M5 CS (F90)": 305, "BMW M2 CS": 280, "Bugatti Chiron Super Sport": 440, "Bugatti Bolide": 380, "Cadillac CT5-V Blackwing": 322, "Caterham Seven 620R": 249, "Chevrolet Camaro ZL1 1LE": 305, "Chevrolet Corvette Stingray (C3)": 225, "Chevrolet Chevelle SS 454": 210, "Dodge Charger SRT Hellcat Redeye": 327, "Dodge Challenger SRT Demon 170": 241, "Dodge Viper ACR (VX I)": 285, "Ferrari LaFerrari": 350, "Ferrari F40": 324, "Ferrari 250 GTO": 280, "Ferrari 458 Italia": 325, "Ford GT (2017)": 348, "Ford Mustang Shelby GT500 (2020)": 290, "Ford GT40 Mk II": 330, "Ford Sierra RS Cosworth": 241, "Ford F-150 Raptor R": 180, "Hennessey Venom F5": 437, "Honda S2000 CR": 241, "Honda Integra Type R (DC2)": 235, "Hyundai Ioniq 5 N": 260, "Jaguar E-Type Series 1": 246, "Jaguar F-Type SVR": 322, "Jaguar XJ220": 341, "Jeep Wrangler Rubicon 392": 160, "Koenigsegg Jesko Attack": 355, "Koenigsegg Gemera": 400, "Koenigsegg Agera RS": 447, "Lamborghini Revuelto": 350, "Lamborghini Huracán STO": 310, "Lamborghini Countach LP400": 309, "Lamborghini Diablo SV": 325, "Lancia Stratos HF": 230, "Lancia Delta HF Integrale Evo II": 220, "Lexus IS 500 F Sport": 240, "Lotus Emira": 290, "Lotus Evija": 320, "Lotus Elise Cup 250": 248, "Maserati MC20": 325, "Mazda RX-8 R3": 235, "Mazda MX-5 Miata (ND2)": 220, "McLaren 720S Spider": 341, "McLaren F1 LM": 362, "McLaren Senna": 335, "Mercedes-AMG ONE": 352, "Mercedes-AMG GT Black Series": 325, "Mercedes-Benz 190E 2.5-16 Evolution II": 250, "Mercedes-Benz SL 65 AMG Black Series": 320, "Mercedes-Benz SLS AMG GT": 320, "Mitsubishi Lancer Evolution VI Tommi Mäkinen Edition": 250, "Mitsubishi Lancer Evolution X FQ-440": 250, "Nissan Skyline GT-R (R32)": 250, "Nissan Z Nismo (RZ34)": 250, "Nissan Silvia Spec-R (S15)": 240, "Pagani Huayra R": 370, "Pagani Zonda Cinque Roadster": 350, "Pagani Utopia": 350, "Peugeot 205 T16": 210, "Plymouth Hemi Cuda": 210, "Pontiac GTO Judge": 210, "Porsche 918 Spyder": 345, "Porsche 911 GT2 RS (991)": 340, "Porsche Carrera GT": 330, "Porsche Taycan Turbo S": 260, "RAM 1500 TRX": 190, "Rimac Nevera": 412, "Shelby Cobra 427 S/C": 265, "Subaru Impreza WRX STI 22B": 248, "Subaru WRX STI S209": 255, "Toyota GR Supra 3.0": 250, "Toyota AE86 Sprinter Trueno": 180};
-  for(const c of cars)if(namedGameCaps[c.name])c.top=namedGameCaps[c.name];
-  const bodyStyles = [
-    {name:'Sports coupe',width:44,height:88,radius:10},
-    {name:'Muscle',width:49,height:99,radius:6},
-    {name:'Supercar',width:49,height:88,radius:4},
-    {name:'Hatchback',width:43,height:73,radius:11},
-    {name:'Estate',width:46,height:105,radius:7},
-    {name:'SUV',width:53,height:105,radius:9},
-    {name:'Panel van',width:55,height:123,radius:5},
-    {name:'Truck / pickup',width:58,height:137,radius:3}
+  // ================================================================
+  // VEHICLE MODELS AND COMPLETE VEHICLE LIST
+  // Add a vehicle by copying the final example object at the bottom
+  // of VEHICLES, pasting it above the closing ]; and changing values.
+  // IMPORTANT: only add at the bottom. Reordering entries changes save IDs.
+  // ================================================================
+  const VEHICLE_MODELS = Object.freeze({
+    SPORTS_COUPE: {"name":"Sports coupe","width":44,"height":88,"radius":10},
+    MUSCLE: {"name":"Muscle","width":49,"height":99,"radius":6},
+    SUPERCAR: {"name":"Supercar","width":49,"height":88,"radius":4},
+    HATCHBACK: {"name":"Hatchback","width":43,"height":73,"radius":11},
+    ESTATE: {"name":"Estate","width":46,"height":105,"radius":7},
+    SUV: {"name":"SUV","width":53,"height":105,"radius":9},
+    PANEL_VAN: {"name":"Panel van","width":55,"height":123,"radius":5},
+    TRUCK_PICKUP: {"name":"Truck / pickup","width":58,"height":137,"radius":3},
+    OPEN_WHEEL_ROADSTER: {"name":"Open-wheel roadster","width":48,"height":86,"radius":2},
+    CLASSIC_LONG_BONNET_GT: {"name":"Classic long-bonnet GT","width":45,"height":101,"radius":8},
+    WEDGE_SUPERCAR: {"name":"Wedge supercar","width":50,"height":92,"radius":2},
+    ENDURANCE_PROTOTYPE: {"name":"Endurance prototype","width":54,"height":106,"radius":3},
+    CLASSIC_MUSCLE_FASTBACK: {"name":"Classic muscle fastback","width":51,"height":109,"radius":4},
+    COMPACT_RALLY_SPECIAL: {"name":"Compact rally special","width":43,"height":78,"radius":3},
+    MODERN_FOUR_DOOR_GT: {"name":"Modern four-door GT","width":49,"height":108,"radius":6},
+    TARGA_SPORTS_CAR: {"name":"Targa sports car","width":46,"height":89,"radius":7},
+    VINTAGE_RACE_ROADSTER: {"name":"Vintage race roadster","width":44,"height":95,"radius":9},
+    WIDE_TRACK_HYPERCAR: {"name":"Wide track hypercar","width":55,"height":100,"radius":3},
+    RETRO_BOX_COUPE: {"name":"Retro box coupe","width":44,"height":94,"radius":2},
+    OFF_ROAD_PERFORMANCE_TRUCK: {"name":"Off-road performance truck","width":57,"height":120,"radius":3},
+    TRAFFIC_CITY_MICROCAR: {"name":"Traffic city microcar","width":37,"height":64,"radius":7,"trafficOnly":true},
+    TRAFFIC_TAXI_SALOON: {"name":"Traffic taxi saloon","width":47,"height":102,"radius":5,"trafficOnly":true},
+    TRAFFIC_PEOPLE_CARRIER: {"name":"Traffic people carrier","width":51,"height":112,"radius":7,"trafficOnly":true},
+    TRAFFIC_DELIVERY_BOX_TRUCK: {"name":"Traffic delivery box truck","width":59,"height":146,"radius":2,"trafficOnly":true,"heavy":true},
+    TRAFFIC_CITY_BUS: {"name":"Traffic city bus","width":61,"height":177,"radius":3,"trafficOnly":true,"heavy":true},
+    TRAFFIC_FLATBED_TRUCK: {"name":"Traffic flatbed truck","width":58,"height":143,"radius":2,"trafficOnly":true,"heavy":true},
+    MOTORCYCLES: {"name":"Motorcycles","width":27,"height":78,"radius":2,"motorcycle":true},
+    PERFORMANCE_SALOON: {"name":"Performance saloon","width":49,"height":108,"radius":5},
+    MODERN_GT_COUPE: {"name":"Modern GT coupe","width":48,"height":101,"radius":6},
+    MID_ENGINE_EXOTIC: {"name":"Mid-engine exotic","width":53,"height":94,"radius":3},
+    LONG_TAIL_HYPERCAR: {"name":"Long-tail hypercar","width":55,"height":107,"radius":2},
+    CLASSIC_SPORTS_COUPE: {"name":"Classic sports coupe","width":46,"height":96,"radius":7},
+    ELECTRIC_PERFORMANCE_GT: {"name":"Electric performance GT","width":51,"height":111,"radius":7},
+    TRAFFIC_COMPACT_CROSSOVER: {"name":"Traffic compact crossover","width":50,"height":105,"radius":8,"trafficOnly":true},
+    TRAFFIC_EXECUTIVE_SALOON: {"name":"Traffic executive saloon","width":48,"height":108,"radius":5,"trafficOnly":true},
+    TRAFFIC_SPORTS_COUPE: {"name":"Traffic sports coupe","width":47,"height":96,"radius":6,"trafficOnly":true},
+    TRAFFIC_MINIVAN: {"name":"Traffic minivan","width":54,"height":124,"radius":7,"trafficOnly":true},
+    TRAFFIC_TANKER_TRUCK: {"name":"Traffic tanker truck","width":61,"height":158,"radius":3,"trafficOnly":true,"heavy":true},
+    TRAFFIC_MOTORWAY_COACH: {"name":"Traffic motorway coach","width":62,"height":180,"radius":5,"trafficOnly":true,"heavy":true},
+  });
+  const MODEL_NAMES = Object.keys(VEHICLE_MODELS);
+  const bodyStyles = MODEL_NAMES.map(name => ({name, ...VEHICLE_MODELS[name]}));
+  const MODEL_INDEX = Object.freeze(Object.fromEntries(bodyStyles.map((model,index)=>[model.name,index])));
+
+  const VEHICLES = [
+    {"name":"Dodge Charger SRT Hellcat","subtitle":"Supercharged muscle","top":328,"times":[3.7,12,30],"handling":0.95,"modelName":"Muscle","redline":6500,"price":0},
+    {"name":"Bugatti Chiron","subtitle":"W16 hypercar","top":420,"times":[2.4,6.5,13.6],"handling":1.15,"modelName":"Long-tail hypercar","redline":7000,"price":145000},
+    {"name":"Lamborghini Aventador SVJ","subtitle":"Naturally aspirated V12","top":350,"times":[2.8,8.6,24],"handling":1.1,"modelName":"Mid-engine exotic","redline":8500,"price":99000},
+    {"name":"Nissan GT-R Nismo (R35)","subtitle":"Twin-turbo AWD","top":315,"times":[2.9,10,34],"handling":1.08,"modelName":"Sports coupe","redline":7000,"price":91000},
+    {"name":"Porsche 911 GT3 RS (992)","subtitle":"Track-focused flat six","top":296,"times":[3.2,10.6,40],"handling":1.3,"modelName":"Classic sports coupe","redline":9000,"price":85000},
+    {"name":"Toyota Supra RZ (JZA80)","subtitle":"Stock twin-turbo classic","top":250,"times":[5.1,19,65],"handling":1,"modelName":"Classic sports coupe","redline":6800,"price":65000},
+    {"name":"McLaren P1","subtitle":"Hybrid hypercar","top":350,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"price":99000},
+    {"name":"Koenigsegg Jesko","subtitle":"High-speed hypercar","top":400,"times":[2.7,6.8,15],"handling":1.2,"modelName":"Long-tail hypercar","redline":8500,"price":109000},
+    {"name":"Ferrari SF90 Stradale","subtitle":"Hybrid AWD supercar","top":340,"times":[2.5,6.7,20],"handling":1.25,"modelName":"Mid-engine exotic","redline":8000,"price":101000},
+    {"name":"BMW M3 Competition","subtitle":"Performance saloon","top":250,"times":[3.9,13,43],"handling":1.16,"modelName":"Performance saloon","redline":7200,"price":71000},
+    {"name":"Audi RS6 Avant GT","subtitle":"630 PS twin-turbo petrol V8 performance estate","category":"Estate","price":75000,"top":250,"times":[3.3,10.9,33],"handling":1.12,"modelName":"Estate","redline":7000,"electric":false,"fuelType":"Petrol"},
+    {"name":"Mercedes-AMG GT R","subtitle":"Long-bonnet sports coupe","top":318,"times":[3.6,11,35],"handling":1.18,"modelName":"Modern GT coupe","redline":7500,"price":140000},
+    {"name":"Ford Mustang GT","subtitle":"V8 muscle coupe","top":250,"times":[4.4,16,55],"handling":0.98,"modelName":"Muscle","redline":7500,"price":68000},
+    {"name":"Chevrolet Corvette Z06 (C8)","subtitle":"Mid-engine supercar","top":312,"times":[2.9,10,34],"handling":1.23,"modelName":"Mid-engine exotic","redline":8600,"price":91000},
+    {"name":"Honda Civic Type R (FL5)","subtitle":"Hot hatchback","top":275,"times":[5.4,20,65],"handling":1.24,"modelName":"Hatchback","redline":7000,"price":68000},
+    {"name":"Volkswagen Golf R (MK8)","subtitle":"AWD hot hatchback","top":250,"times":[4.7,18,60],"handling":1.2,"modelName":"Hatchback","redline":6800,"price":66000},
+    {"name":"Toyota GR Yaris","subtitle":"Compact rally hatchback","top":230,"times":[5.5,23,75],"handling":1.3,"modelName":"Compact rally special","redline":7200,"price":60000},
+    {"name":"Mazda RX-7 Spirit R (FD)","subtitle":"Rotary sports coupe","top":250,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"price":64000},
+    {"name":"Nissan Skyline GT-R V-Spec II (R34)","subtitle":"Classic AWD coupe","top":250,"times":[5.2,20,65],"handling":1.13,"modelName":"Classic sports coupe","redline":8000,"price":64000},
+    {"name":"Lexus LFA","subtitle":"V10 sports coupe","top":325,"times":[3.7,12,37],"handling":1.2,"modelName":"Modern GT coupe","redline":9000,"price":141000},
+    {"name":"Aston Martin Vantage","subtitle":"V8 grand tourer","top":314,"times":[3.6,12,39],"handling":1.15,"modelName":"Modern GT coupe","redline":7200,"price":139000},
+    {"name":"Lamborghini Urus","subtitle":"Performance SUV","top":305,"times":[3.6,13,43],"handling":0.96,"modelName":"Mid-engine exotic","redline":6800,"price":83000},
+    {"name":"Range Rover Sport","subtitle":"Luxury SUV","top":225,"times":[5.8,25,80],"handling":0.88,"modelName":"SUV","redline":6500,"price":58000},
+    {"name":"Ford Transit Custom","subtitle":"Panel van","top":175,"times":[12,65,120],"handling":0.8,"modelName":"Panel van","redline":5000,"price":40000},
+    {"name":"Ford F-150 Raptor","subtitle":"Off-road pickup truck","top":180,"times":[6.5,40,100],"handling":0.82,"modelName":"Off-road performance truck","redline":6500,"price":48000},
+    {"name":"Jeep Grand Cherokee Trackhawk","subtitle":"707 hp 6.2L supercharged V8 performance SUV","category":"SUV","price":84000,"top":307,"times":[3.5,11.6,39],"handling":0.91,"modelName":"SUV","redline":6200,"electric":false,"fuelType":"Petrol"},
+    {"name":"Koenigsegg Jesko Absolut","subtitle":"Twin-turbo V8 ultra-high-speed hypercar","category":"Hyper","price":275000,"top":531,"times":[2.5,7.4,18],"handling":1.08,"modelName":"Long-tail hypercar","redline":8500,"electric":false,"fuelType":"Petrol","fixedPrice":275000,"fixedTopSpeed":true},
+    {"name":"Acura NSX Type S","subtitle":"Fictional gameplay preset / shared stylised body","top":307,"times":[2.5,6.7,20],"handling":1.25,"modelName":"Mid-engine exotic","redline":8000,"gameplayPreset":true,"price":95000},
+    {"name":"Alfa Romeo Giulia GTA","subtitle":"Fictional gameplay preset / shared stylised body","top":307,"times":[3.9,13,43],"handling":1.16,"modelName":"Performance saloon","redline":7200,"gameplayPreset":true,"price":81000},
+    {"name":"Alpine A110 R","subtitle":"Fictional gameplay preset / shared stylised body","top":285,"times":[3.2,10.6,40],"handling":1.3,"modelName":"Supercar","redline":9000,"gameplayPreset":true,"price":83000},
+    {"name":"Ariel Atom 4","subtitle":"Fictional gameplay preset / shared stylised body","top":260,"times":[3.2,10.6,40],"handling":1.3,"modelName":"Open-wheel roadster","redline":9000,"gameplayPreset":true,"price":78000},
+    {"name":"Aston Martin Valkyrie","subtitle":"Fictional gameplay preset / shared stylised body","top":350,"times":[2.7,6.8,15],"handling":1.2,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":100000},
+    {"name":"Aston Martin DB5","subtitle":"Fictional gameplay preset / shared stylised body","top":233,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic long-bonnet GT","redline":8000,"gameplayPreset":true,"price":61000},
+    {"name":"Audi R8 V10 Performance","subtitle":"Fictional gameplay preset / shared stylised body","top":331,"times":[2.9,10,34],"handling":1.23,"modelName":"Supercar","redline":8600,"gameplayPreset":true,"price":94000},
+    {"name":"Audi Quattro S1","subtitle":"Fictional gameplay preset / shared stylised body","top":220,"times":[5.5,23,75],"handling":1.3,"modelName":"Compact rally special","redline":7200,"gameplayPreset":true,"price":58000},
+    {"name":"BAC Mono","subtitle":"Fictional gameplay preset / shared stylised body","top":274,"times":[3.2,10.6,40],"handling":1.3,"modelName":"Open-wheel roadster","redline":9000,"gameplayPreset":true,"price":81000},
+    {"name":"Bentley Continental GT Speed","subtitle":"Fictional gameplay preset / shared stylised body","category":"Estate","price":146000,"top":335,"times":[3.3,10.9,33],"handling":1.12,"modelName":"Modern GT coupe","redline":7000,"electric":false,"fuelType":"Petrol","gameplayPreset":true},
+    {"name":"BMW M3 GTR (E46)","subtitle":"Fictional gameplay preset / shared stylised body","top":280,"times":[3.9,13,43],"handling":1.16,"modelName":"Performance saloon","redline":7200,"gameplayPreset":true,"price":76000},
+    {"name":"BMW M5 CS (F90)","subtitle":"Fictional gameplay preset / shared stylised body","category":"Estate","price":85000,"top":305,"times":[3.3,10.9,33],"handling":1.12,"modelName":"Performance saloon","redline":7000,"electric":false,"fuelType":"Petrol","gameplayPreset":true},
+    {"name":"BMW M2 CS","subtitle":"Fictional gameplay preset / shared stylised body","top":280,"times":[3.9,13,43],"handling":1.16,"modelName":"Performance saloon","redline":7200,"gameplayPreset":true,"price":76000},
+    {"name":"Bugatti Chiron Super Sport","subtitle":"Fictional gameplay preset / shared stylised body","top":440,"times":[2.4,6.5,13.6],"handling":1.15,"modelName":"Long-tail hypercar","redline":7000,"gameplayPreset":true,"price":121000},
+    {"name":"Bugatti Bolide","subtitle":"Fictional gameplay preset / shared stylised body","top":380,"times":[2.7,6.8,15],"handling":1.2,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":105000},
+    {"name":"Cadillac CT5-V Blackwing","subtitle":"Fictional gameplay preset / shared stylised body","top":322,"times":[3.7,12,30],"handling":0.95,"modelName":"Performance saloon","redline":6500,"gameplayPreset":true,"price":85000},
+    {"name":"Caterham Seven 620R","subtitle":"Fictional gameplay preset / shared stylised body","top":249,"times":[3.2,10.6,40],"handling":1.3,"modelName":"Open-wheel roadster","redline":9000,"gameplayPreset":true,"price":76000},
+    {"name":"Chevrolet Camaro ZL1 1LE","subtitle":"Fictional gameplay preset / shared stylised body","top":305,"times":[3.7,12,30],"handling":0.95,"modelName":"Muscle","redline":6500,"gameplayPreset":true,"price":82000},
+    {"name":"Chevrolet Corvette Stingray (C3)","subtitle":"Fictional gameplay preset / shared stylised body","top":225,"times":[4.4,16,55],"handling":0.98,"modelName":"Mid-engine exotic","redline":7500,"gameplayPreset":true,"price":63000},
+    {"name":"Chevrolet Chevelle SS 454","subtitle":"Fictional gameplay preset / shared stylised body","top":210,"times":[4.4,16,55],"handling":0.98,"modelName":"Classic muscle fastback","redline":7500,"gameplayPreset":true,"price":61000},
+    {"name":"Dodge Charger SRT Hellcat Redeye","subtitle":"Fictional gameplay preset / shared stylised body","top":327,"times":[3.7,12,30],"handling":0.95,"modelName":"Muscle","redline":6500,"gameplayPreset":true,"price":86000},
+    {"name":"Dodge Challenger SRT Demon 170","subtitle":"Fictional gameplay preset / shared stylised body","top":241,"times":[3.7,12,30],"handling":0.95,"modelName":"Muscle","redline":6500,"gameplayPreset":true,"price":70000},
+    {"name":"Dodge Viper ACR (VX I)","subtitle":"Fictional gameplay preset / shared stylised body","top":285,"times":[2.9,10,34],"handling":1.23,"modelName":"Wide track hypercar","redline":8600,"gameplayPreset":true,"price":86000},
+    {"name":"Ferrari LaFerrari","subtitle":"Fictional gameplay preset / shared stylised body","top":350,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":99000},
+    {"name":"Ferrari F40","subtitle":"Fictional gameplay preset / shared stylised body","top":324,"times":[3.6,11,35],"handling":1.18,"modelName":"Mid-engine exotic","redline":7500,"gameplayPreset":true,"price":86000},
+    {"name":"Ferrari 250 GTO","subtitle":"Fictional gameplay preset / shared stylised body","top":280,"times":[5.3,21,70],"handling":1.16,"modelName":"Mid-engine exotic","redline":8000,"gameplayPreset":true,"price":69000},
+    {"name":"Ferrari 458 Italia","subtitle":"Fictional gameplay preset / shared stylised body","top":325,"times":[3.6,11,35],"handling":1.18,"modelName":"Mid-engine exotic","redline":7500,"gameplayPreset":true,"price":86000},
+    {"name":"Ford GT (2017)","subtitle":"Fictional gameplay preset / shared stylised body","top":348,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":98000},
+    {"name":"Ford Mustang Shelby GT500 (2020)","subtitle":"Fictional gameplay preset / shared stylised body","top":290,"times":[3.7,12,30],"handling":0.95,"modelName":"Muscle","redline":6500,"gameplayPreset":true,"price":79000},
+    {"name":"Ford GT40 Mk II","subtitle":"Fictional gameplay preset / shared stylised body","top":330,"times":[3.6,11,35],"handling":1.18,"modelName":"Vintage race roadster","redline":7500,"gameplayPreset":true,"price":87000},
+    {"name":"Ford Sierra RS Cosworth","subtitle":"Fictional gameplay preset / shared stylised body","top":241,"times":[5.2,20,65],"handling":1.13,"modelName":"Retro box coupe","redline":8000,"gameplayPreset":true,"price":63000},
+    {"name":"Ford F-150 Raptor R","subtitle":"Fictional gameplay preset / shared stylised body","top":180,"times":[6.5,40,100],"handling":0.82,"modelName":"Off-road performance truck","redline":6500,"gameplayPreset":true,"price":48000},
+    {"name":"Hennessey Venom F5","subtitle":"Fictional gameplay preset / shared stylised body","top":437,"times":[2.7,6.8,15],"handling":1.2,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":116000},
+    {"name":"Honda S2000 CR","subtitle":"Fictional gameplay preset / shared stylised body","top":241,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":62000},
+    {"name":"Honda Integra Type R (DC2)","subtitle":"Fictional gameplay preset / shared stylised body","top":235,"times":[5.4,20,65],"handling":1.24,"modelName":"Retro box coupe","redline":7000,"gameplayPreset":true,"price":61000},
+    {"name":"Hyundai Ioniq 5 N","subtitle":"Fictional gameplay preset / shared stylised body","top":260,"times":[4.7,18,60],"handling":1.2,"modelName":"Electric performance GT","redline":6800,"gameplayPreset":true,"price":68000},
+    {"name":"Jaguar E-Type Series 1","subtitle":"Fictional gameplay preset / shared stylised body","top":246,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic long-bonnet GT","redline":8000,"gameplayPreset":true,"price":63000},
+    {"name":"Jaguar F-Type SVR","subtitle":"Fictional gameplay preset / shared stylised body","top":322,"times":[3.6,11,35],"handling":1.18,"modelName":"Modern GT coupe","redline":7500,"gameplayPreset":true,"price":141000},
+    {"name":"Jaguar XJ220","subtitle":"Fictional gameplay preset / shared stylised body","top":341,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":97000},
+    {"name":"Jeep Wrangler Rubicon 392","subtitle":"Fictional gameplay preset / shared stylised body","top":160,"times":[5.8,25,80],"handling":0.88,"modelName":"Off-road performance truck","redline":6500,"gameplayPreset":true,"price":46000},
+    {"name":"Koenigsegg Jesko Attack","subtitle":"Fictional gameplay preset / shared stylised body","top":355,"times":[2.7,6.8,15],"handling":1.2,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":101000},
+    {"name":"Koenigsegg Gemera","subtitle":"Fictional gameplay preset / shared stylised body","top":400,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Modern four-door GT","redline":8500,"gameplayPreset":true,"price":108000},
+    {"name":"Koenigsegg Agera RS","subtitle":"Fictional gameplay preset / shared stylised body","top":447,"times":[2.7,6.8,15],"handling":1.2,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":117000},
+    {"name":"Lamborghini Revuelto","subtitle":"Fictional gameplay preset / shared stylised body","top":350,"times":[2.5,6.7,20],"handling":1.25,"modelName":"Mid-engine exotic","redline":8000,"gameplayPreset":true,"price":103000},
+    {"name":"Lamborghini Huracán STO","subtitle":"Fictional gameplay preset / shared stylised body","top":310,"times":[2.9,10,34],"handling":1.23,"modelName":"Mid-engine exotic","redline":8600,"gameplayPreset":true,"price":90000},
+    {"name":"Lamborghini Countach LP400","subtitle":"Fictional gameplay preset / shared stylised body","top":309,"times":[3.6,11,35],"handling":1.18,"modelName":"Mid-engine exotic","redline":7500,"gameplayPreset":true,"price":83000},
+    {"name":"Lamborghini Diablo SV","subtitle":"Fictional gameplay preset / shared stylised body","top":325,"times":[3.6,11,35],"handling":1.18,"modelName":"Mid-engine exotic","redline":7500,"gameplayPreset":true,"price":86000},
+    {"name":"Lancia Stratos HF","subtitle":"Fictional gameplay preset / shared stylised body","top":230,"times":[5.5,23,75],"handling":1.3,"modelName":"Compact rally special","redline":7200,"gameplayPreset":true,"price":60000},
+    {"name":"Lancia Delta HF Integrale Evo II","subtitle":"Fictional gameplay preset / shared stylised body","top":220,"times":[5.5,23,75],"handling":1.3,"modelName":"Compact rally special","redline":7200,"gameplayPreset":true,"price":58000},
+    {"name":"Lexus IS 500 F Sport","subtitle":"Fictional gameplay preset / shared stylised body","top":240,"times":[3.9,13,43],"handling":1.16,"modelName":"Performance saloon","redline":7200,"gameplayPreset":true,"price":69000},
+    {"name":"Lotus Emira","subtitle":"Fictional gameplay preset / shared stylised body","top":290,"times":[3.2,10.6,40],"handling":1.3,"modelName":"Classic sports coupe","redline":9000,"gameplayPreset":true,"price":83000},
+    {"name":"Lotus Evija","subtitle":"Fictional gameplay preset / shared stylised body","top":320,"times":[2.7,6.8,15],"handling":1.2,"modelName":"Electric performance GT","redline":8500,"gameplayPreset":true,"price":95000},
+    {"name":"Lotus Elise Cup 250","subtitle":"Fictional gameplay preset / shared stylised body","top":248,"times":[5.5,23,75],"handling":1.3,"modelName":"Classic sports coupe","redline":7200,"gameplayPreset":true,"price":63000},
+    {"name":"Maserati MC20","subtitle":"Fictional gameplay preset / shared stylised body","top":325,"times":[2.9,10,34],"handling":1.23,"modelName":"Mid-engine exotic","redline":8600,"gameplayPreset":true,"price":93000},
+    {"name":"Mazda RX-8 R3","subtitle":"Fictional gameplay preset / shared stylised body","top":235,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":61000},
+    {"name":"Mazda MX-5 Miata (ND2)","subtitle":"Fictional gameplay preset / shared stylised body","top":220,"times":[5.5,23,75],"handling":1.3,"modelName":"Classic sports coupe","redline":7200,"gameplayPreset":true,"price":58000},
+    {"name":"McLaren 720S Spider","subtitle":"Fictional gameplay preset / shared stylised body","top":341,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":97000},
+    {"name":"McLaren F1 LM","subtitle":"Fictional gameplay preset / shared stylised body","top":362,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":101000},
+    {"name":"McLaren Senna","subtitle":"Fictional gameplay preset / shared stylised body","top":335,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":96000},
+    {"name":"Mercedes-AMG ONE","subtitle":"Fictional gameplay preset / shared stylised body","top":352,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Supercar","redline":8500,"gameplayPreset":true,"price":99000},
+    {"name":"Mercedes-AMG GT Black Series","subtitle":"Fictional gameplay preset / shared stylised body","top":325,"times":[3.6,11,35],"handling":1.18,"modelName":"Modern GT coupe","redline":7500,"gameplayPreset":true,"price":141000},
+    {"name":"Mercedes-Benz 190E 2.5-16 Evolution II","subtitle":"Fictional gameplay preset / shared stylised body","top":250,"times":[5.2,20,65],"handling":1.13,"modelName":"Performance saloon","redline":8000,"gameplayPreset":true,"price":64000},
+    {"name":"Mercedes-Benz SL 65 AMG Black Series","subtitle":"Fictional gameplay preset / shared stylised body","top":320,"times":[3.6,11,35],"handling":1.18,"modelName":"Sports coupe","redline":7500,"gameplayPreset":true,"price":85000},
+    {"name":"Mercedes-Benz SLS AMG GT","subtitle":"Fictional gameplay preset / shared stylised body","top":320,"times":[3.6,11,35],"handling":1.18,"modelName":"Modern GT coupe","redline":7500,"gameplayPreset":true,"price":140000},
+    {"name":"Mitsubishi Lancer Evolution VI Tommi Mäkinen Edition","subtitle":"Fictional gameplay preset / shared stylised body","top":250,"times":[5.2,20,65],"handling":1.13,"modelName":"Retro box coupe","redline":8000,"gameplayPreset":true,"price":64000},
+    {"name":"Mitsubishi Lancer Evolution X FQ-440","subtitle":"Fictional gameplay preset / shared stylised body","top":250,"times":[2.9,10,34],"handling":1.08,"modelName":"Sports coupe","redline":7000,"gameplayPreset":true,"price":79000},
+    {"name":"Nissan Skyline GT-R (R32)","subtitle":"Fictional gameplay preset / shared stylised body","top":250,"times":[5.2,20,65],"handling":1.13,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":64000},
+    {"name":"Nissan Z Nismo (RZ34)","subtitle":"Fictional gameplay preset / shared stylised body","top":250,"times":[3.9,13,43],"handling":1.16,"modelName":"Classic sports coupe","redline":7200,"gameplayPreset":true,"price":71000},
+    {"name":"Nissan Silvia Spec-R (S15)","subtitle":"Fictional gameplay preset / shared stylised body","top":240,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":62000},
+    {"name":"Pagani Huayra R","subtitle":"Fictional gameplay preset / shared stylised body","top":370,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":102000},
+    {"name":"Pagani Zonda Cinque Roadster","subtitle":"Fictional gameplay preset / shared stylised body","top":350,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":99000},
+    {"name":"Pagani Utopia","subtitle":"Fictional gameplay preset / shared stylised body","top":350,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":99000},
+    {"name":"Peugeot 205 T16","subtitle":"Fictional gameplay preset / shared stylised body","top":210,"times":[5.5,23,75],"handling":1.3,"modelName":"Compact rally special","redline":7200,"gameplayPreset":true,"price":56000},
+    {"name":"Plymouth Hemi Cuda","subtitle":"Fictional gameplay preset / shared stylised body","top":210,"times":[4.4,16,55],"handling":0.98,"modelName":"Classic muscle fastback","redline":7500,"gameplayPreset":true,"price":61000},
+    {"name":"Pontiac GTO Judge","subtitle":"Fictional gameplay preset / shared stylised body","top":210,"times":[4.4,16,55],"handling":0.98,"modelName":"Classic muscle fastback","redline":7500,"gameplayPreset":true,"price":61000},
+    {"name":"Porsche 918 Spyder","subtitle":"Fictional gameplay preset / shared stylised body","top":345,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":98000},
+    {"name":"Porsche 911 GT2 RS (991)","subtitle":"Fictional gameplay preset / shared stylised body","top":340,"times":[2.9,10,34],"handling":1.23,"modelName":"Classic sports coupe","redline":8600,"gameplayPreset":true,"price":96000},
+    {"name":"Porsche Carrera GT","subtitle":"Fictional gameplay preset / shared stylised body","top":330,"times":[3.6,11,35],"handling":1.18,"modelName":"Mid-engine exotic","redline":7500,"gameplayPreset":true,"price":87000},
+    {"name":"Porsche Taycan Turbo S","subtitle":"Fictional gameplay preset / shared stylised body","category":"Estate","price":77000,"top":260,"times":[3.3,10.9,33],"handling":1.12,"modelName":"Electric performance GT","redline":7000,"electric":false,"fuelType":"Petrol","gameplayPreset":true},
+    {"name":"RAM 1500 TRX","subtitle":"Fictional gameplay preset / shared stylised body","top":190,"times":[6.5,40,100],"handling":0.82,"modelName":"Off-road performance truck","redline":6500,"gameplayPreset":true,"price":50000},
+    {"name":"Rimac Nevera","subtitle":"Fictional gameplay preset / shared stylised body","top":412,"times":[2.7,6.8,15],"handling":1.2,"modelName":"Electric performance GT","redline":8500,"gameplayPreset":true,"price":111000},
+    {"name":"Shelby Cobra 427 S/C","subtitle":"Fictional gameplay preset / shared stylised body","top":265,"times":[4.4,16,55],"handling":0.98,"modelName":"Vintage race roadster","redline":7500,"gameplayPreset":true,"price":70000},
+    {"name":"Subaru Impreza WRX STI 22B","subtitle":"Fictional gameplay preset / shared stylised body","top":248,"times":[5.2,20,65],"handling":1.13,"modelName":"Retro box coupe","redline":8000,"gameplayPreset":true,"price":64000},
+    {"name":"Subaru WRX STI S209","subtitle":"Fictional gameplay preset / shared stylised body","top":255,"times":[2.9,10,34],"handling":1.08,"modelName":"Sports coupe","redline":7000,"gameplayPreset":true,"price":80000},
+    {"name":"Toyota GR Supra 3.0","subtitle":"Fictional gameplay preset / shared stylised body","top":250,"times":[3.9,13,43],"handling":1.16,"modelName":"Classic sports coupe","redline":7200,"gameplayPreset":true,"price":71000},
+    {"name":"Toyota AE86 Sprinter Trueno","subtitle":"Fictional gameplay preset / shared stylised body","top":180,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":51000},
+    {"name":"AC Shelby Cobra Daytona Coupe","subtitle":"Individual game speed cap / shared stylised body","top":300,"times":[5.3,21,70],"handling":1.16,"modelName":"Vintage race roadster","redline":8000,"gameplayPreset":true,"price":73000},
+    {"name":"Acura Integra Type S (DE4)","subtitle":"Individual game speed cap / shared stylised body","top":270,"times":[5.4,20,65],"handling":1.24,"modelName":"Retro box coupe","redline":7000,"gameplayPreset":true,"price":67000},
+    {"name":"Alfa Romeo 8C Competizione","subtitle":"Individual game speed cap / shared stylised body","top":292,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic long-bonnet GT","redline":8000,"gameplayPreset":true,"price":71000},
+    {"name":"Alfa Romeo 33 Stradale (1967)","subtitle":"Individual game speed cap / shared stylised body","top":260,"times":[5.3,21,70],"handling":1.16,"modelName":"Vintage race roadster","redline":8000,"gameplayPreset":true,"price":66000},
+    {"name":"Alpine A110 (1973)","subtitle":"Individual game speed cap / shared stylised body","top":210,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":57000},
+    {"name":"AMC AMX","subtitle":"Individual game speed cap / shared stylised body","top":205,"times":[4.4,16,55],"handling":0.98,"modelName":"Muscle","redline":7500,"gameplayPreset":true,"price":60000},
+    {"name":"Aston Martin One-77","subtitle":"Individual game speed cap / shared stylised body","top":354,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Modern GT coupe","redline":8500,"gameplayPreset":true,"price":154000},
+    {"name":"Aston Martin Vantage F1 Edition","subtitle":"Individual game speed cap / shared stylised body","top":314,"times":[5.3,21,70],"handling":1.16,"modelName":"Modern GT coupe","redline":8000,"gameplayPreset":true,"price":130000},
+    {"name":"Aston Martin Victor","subtitle":"Individual game speed cap / shared stylised body","top":320,"times":[5.3,21,70],"handling":1.16,"modelName":"Modern GT coupe","redline":8000,"gameplayPreset":true,"price":131000},
+    {"name":"Audi Sport Quattro","subtitle":"Individual game speed cap / shared stylised body","top":250,"times":[5.4,20,65],"handling":1.24,"modelName":"Compact rally special","redline":7000,"gameplayPreset":true,"price":64000},
+    {"name":"Audi RS7 Sportback","subtitle":"Individual game speed cap / shared stylised body","category":"Estate","price":75000,"top":250,"times":[3.3,10.9,33],"handling":1.12,"modelName":"Modern four-door GT","redline":7000,"electric":false,"fuelType":"Petrol","gameplayPreset":true},
+    {"name":"Bentley Blower 4½ Litre","subtitle":"Individual game speed cap / shared stylised body","top":200,"times":[5.3,21,70],"handling":1.16,"modelName":"Vintage race roadster","redline":8000,"gameplayPreset":true,"price":55000},
+    {"name":"BMW M1 (E26)","subtitle":"Individual game speed cap / shared stylised body","top":262,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":66000},
+    {"name":"BMW M135i xDrive","subtitle":"Individual game speed cap / shared stylised body","top":250,"times":[5.4,20,65],"handling":1.24,"modelName":"Hatchback","redline":7000,"gameplayPreset":true,"price":64000},
+    {"name":"BMW M4 CSL (G82)","subtitle":"Individual game speed cap / shared stylised body","top":307,"times":[5.3,21,70],"handling":1.16,"modelName":"Performance saloon","redline":8000,"gameplayPreset":true,"price":74000},
+    {"name":"BMW Z8","subtitle":"Individual game speed cap / shared stylised body","top":250,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":64000},
+    {"name":"Brabham BT62","subtitle":"Individual game speed cap / shared stylised body","top":300,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Endurance prototype","redline":8500,"gameplayPreset":true,"price":90000},
+    {"name":"Bugatti EB110 SS","subtitle":"Individual game speed cap / shared stylised body","top":351,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Wedge supercar","redline":8500,"gameplayPreset":true,"price":99000},
+    {"name":"Bugatti Divo","subtitle":"Individual game speed cap / shared stylised body","top":380,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":104000},
+    {"name":"Cadillac CTS-V Wagon","subtitle":"Individual game speed cap / shared stylised body","category":"Estate","price":86000,"top":308,"times":[3.3,10.9,33],"handling":1.12,"modelName":"Performance saloon","redline":7000,"electric":false,"fuelType":"Petrol","gameplayPreset":true},
+    {"name":"Chevrolet Corvette ZR1 (C6)","subtitle":"Individual game speed cap / shared stylised body","top":330,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":78000},
+    {"name":"Chevrolet Camaro SS (1969)","subtitle":"Individual game speed cap / shared stylised body","top":210,"times":[4.4,16,55],"handling":0.98,"modelName":"Classic muscle fastback","redline":7500,"gameplayPreset":true,"price":61000},
+    {"name":"Chevrolet Corvette Z06 (C5)","subtitle":"Individual game speed cap / shared stylised body","top":275,"times":[5.3,21,70],"handling":1.16,"modelName":"Mid-engine exotic","redline":8000,"gameplayPreset":true,"price":68000},
+    {"name":"De Tomaso Pantera GTS","subtitle":"Individual game speed cap / shared stylised body","top":280,"times":[5.3,21,70],"handling":1.16,"modelName":"Wedge supercar","redline":8000,"gameplayPreset":true,"price":69000},
+    {"name":"Dodge Super Bee (1970)","subtitle":"Individual game speed cap / shared stylised body","top":210,"times":[4.4,16,55],"handling":0.98,"modelName":"Classic muscle fastback","redline":7500,"gameplayPreset":true,"price":61000},
+    {"name":"Dodge Viper GTS (SR II)","subtitle":"Individual game speed cap / shared stylised body","top":298,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":73000},
+    {"name":"Ferrari 288 GTO","subtitle":"Individual game speed cap / shared stylised body","top":305,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":91000},
+    {"name":"Ferrari 812 Competizione","subtitle":"Individual game speed cap / shared stylised body","top":340,"times":[5.3,21,70],"handling":1.16,"modelName":"Mid-engine exotic","redline":8000,"gameplayPreset":true,"price":80000},
+    {"name":"Ferrari F50","subtitle":"Individual game speed cap / shared stylised body","top":325,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":94000},
+    {"name":"Ferrari Enzo","subtitle":"Individual game speed cap / shared stylised body","top":350,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":99000},
+    {"name":"Ferrari Daytona SP3","subtitle":"Individual game speed cap / shared stylised body","top":340,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":97000},
+    {"name":"Ford GT70","subtitle":"Individual game speed cap / shared stylised body","top":270,"times":[5.3,21,70],"handling":1.16,"modelName":"Endurance prototype","redline":8000,"gameplayPreset":true,"price":67000},
+    {"name":"Ford Escort RS Cosworth","subtitle":"Individual game speed cap / shared stylised body","top":232,"times":[5.4,20,65],"handling":1.24,"modelName":"Compact rally special","redline":7000,"gameplayPreset":true,"price":60000},
+    {"name":"Ford Mustang Boss 429","subtitle":"Individual game speed cap / shared stylised body","top":200,"times":[4.4,16,55],"handling":0.98,"modelName":"Classic muscle fastback","redline":7500,"gameplayPreset":true,"price":59000},
+    {"name":"Ford Focus RS (MK3)","subtitle":"Individual game speed cap / shared stylised body","top":266,"times":[5.4,20,65],"handling":1.24,"modelName":"Hatchback","redline":7000,"gameplayPreset":true,"price":66000},
+    {"name":"Gordon Murray T.50","subtitle":"Individual game speed cap / shared stylised body","top":364,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Supercar","redline":8500,"gameplayPreset":true,"price":101000},
+    {"name":"Hennessey Venom GT","subtitle":"Individual game speed cap / shared stylised body","top":435,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":114000},
+    {"name":"Honda NSX-R (NA2)","subtitle":"Individual game speed cap / shared stylised body","top":280,"times":[5.3,21,70],"handling":1.16,"modelName":"Mid-engine exotic","redline":8000,"gameplayPreset":true,"price":69000},
+    {"name":"Honda CR-X Si","subtitle":"Individual game speed cap / shared stylised body","top":200,"times":[5.4,20,65],"handling":1.24,"modelName":"Compact rally special","redline":7000,"gameplayPreset":true,"price":55000},
+    {"name":"Hyundai N Vision 74","subtitle":"Individual game speed cap / shared stylised body","top":250,"times":[5.3,21,70],"handling":1.16,"modelName":"Electric performance GT","redline":8000,"gameplayPreset":true,"price":64000},
+    {"name":"Jaguar XJR-15","subtitle":"Individual game speed cap / shared stylised body","top":307,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Endurance prototype","redline":8500,"gameplayPreset":true,"price":91000},
+    {"name":"Jaguar C-X75","subtitle":"Individual game speed cap / shared stylised body","top":330,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":95000},
+    {"name":"Jaguar D-Type","subtitle":"Individual game speed cap / shared stylised body","top":260,"times":[5.3,21,70],"handling":1.16,"modelName":"Vintage race roadster","redline":8000,"gameplayPreset":true,"price":66000},
+    {"name":"Koenigsegg CCXR Trevita","subtitle":"Individual game speed cap / shared stylised body","top":410,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":110000},
+    {"name":"Koenigsegg Regera","subtitle":"Individual game speed cap / shared stylised body","top":410,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":110000},
+    {"name":"Koenigsegg CC850","subtitle":"Individual game speed cap / shared stylised body","top":400,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":108000},
+    {"name":"KTM X-Bow GTX","subtitle":"Individual game speed cap / shared stylised body","top":280,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Open-wheel roadster","redline":8500,"gameplayPreset":true,"price":86000},
+    {"name":"Lamborghini Reventón","subtitle":"Individual game speed cap / shared stylised body","top":340,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":97000},
+    {"name":"Lamborghini Murciélago LP670-4 SV","subtitle":"Individual game speed cap / shared stylised body","top":342,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":97000},
+    {"name":"Lamborghini Sian FKP 37","subtitle":"Individual game speed cap / shared stylised body","top":350,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":99000},
+    {"name":"Lamborghini Miura P400 SV","subtitle":"Individual game speed cap / shared stylised body","top":285,"times":[5.3,21,70],"handling":1.16,"modelName":"Mid-engine exotic","redline":8000,"gameplayPreset":true,"price":70000},
+    {"name":"Lamborghini Sesto Elemento","subtitle":"Individual game speed cap / shared stylised body","top":320,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":93000},
+    {"name":"Lancia Fulvia Coupe HF","subtitle":"Individual game speed cap / shared stylised body","top":190,"times":[5.3,21,70],"handling":1.16,"modelName":"Compact rally special","redline":8000,"gameplayPreset":true,"price":53000},
+    {"name":"Lancia 037 Stradale","subtitle":"Individual game speed cap / shared stylised body","top":220,"times":[5.3,21,70],"handling":1.16,"modelName":"Compact rally special","redline":8000,"gameplayPreset":true,"price":58000},
+    {"name":"Lexus RC F Track Edition","subtitle":"Individual game speed cap / shared stylised body","top":270,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":67000},
+    {"name":"Lotus Carlton","subtitle":"Individual game speed cap / shared stylised body","top":283,"times":[5.3,21,70],"handling":1.16,"modelName":"Performance saloon","redline":8000,"gameplayPreset":true,"price":70000},
+    {"name":"Lotus Exige Sport 410","subtitle":"Individual game speed cap / shared stylised body","top":290,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":71000},
+    {"name":"Maserati MC12","subtitle":"Individual game speed cap / shared stylised body","top":330,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Supercar","redline":8500,"gameplayPreset":true,"price":95000},
+    {"name":"Maserati GranTurismo Folgore","subtitle":"Individual game speed cap / shared stylised body","top":325,"times":[5.3,21,70],"handling":1.16,"modelName":"Electric performance GT","redline":8000,"gameplayPreset":true,"price":77000},
+    {"name":"Mazda Cosmo Sport 110S","subtitle":"Individual game speed cap / shared stylised body","top":185,"times":[5.3,21,70],"handling":1.16,"modelName":"Retro box coupe","redline":8000,"gameplayPreset":true,"price":52000},
+    {"name":"Mazda RX-3","subtitle":"Individual game speed cap / shared stylised body","top":180,"times":[5.3,21,70],"handling":1.16,"modelName":"Retro box coupe","redline":8000,"gameplayPreset":true,"price":51000},
+    {"name":"Mazda Speed3 (BL)","subtitle":"Individual game speed cap / shared stylised body","top":250,"times":[5.4,20,65],"handling":1.24,"modelName":"Hatchback","redline":7000,"gameplayPreset":true,"price":64000},
+    {"name":"McLaren 600LT","subtitle":"Individual game speed cap / shared stylised body","top":328,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":95000},
+    {"name":"McLaren Elva","subtitle":"Individual game speed cap / shared stylised body","top":326,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Mid-engine exotic","redline":8500,"gameplayPreset":true,"price":94000},
+    {"name":"McLaren Speedtail","subtitle":"Individual game speed cap / shared stylised body","top":403,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":108000},
+    {"name":"Mercedes-AMG SL 63 S E Performance","subtitle":"Individual game speed cap / shared stylised body","top":317,"times":[5.3,21,70],"handling":1.16,"modelName":"Modern GT coupe","redline":8000,"gameplayPreset":true,"price":131000},
+    {"name":"Mercedes-Benz CLK GTR","subtitle":"Individual game speed cap / shared stylised body","top":320,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Endurance prototype","redline":8500,"gameplayPreset":true,"price":93000},
+    {"name":"Mercedes-Benz 300 SL Gullwing","subtitle":"Individual game speed cap / shared stylised body","top":250,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic long-bonnet GT","redline":8000,"gameplayPreset":true,"price":64000},
+    {"name":"Mercedes-Benz C 63 AMG Black Series (W204)","subtitle":"Individual game speed cap / shared stylised body","top":300,"times":[5.3,21,70],"handling":1.16,"modelName":"Performance saloon","redline":8000,"gameplayPreset":true,"price":73000},
+    {"name":"Mitsubishi Lancer Evolution IX MR","subtitle":"Individual game speed cap / shared stylised body","top":250,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":64000},
+    {"name":"Mitsubishi Eclipse GSX (2nd Gen)","subtitle":"Individual game speed cap / shared stylised body","top":230,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":60000},
+    {"name":"Nissan Skyline GT-R (KPGC10 \"Hakosuka\")","subtitle":"Individual game speed cap / shared stylised body","top":200,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":55000},
+    {"name":"Nissan 300ZX Twin Turbo (Z32)","subtitle":"Individual game speed cap / shared stylised body","top":250,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":64000},
+    {"name":"Nissan Pulsar GTI-R","subtitle":"Individual game speed cap / shared stylised body","top":230,"times":[5.4,20,65],"handling":1.24,"modelName":"Compact rally special","redline":7000,"gameplayPreset":true,"price":60000},
+    {"name":"Nissan Stagea Autech 260RS","subtitle":"Individual game speed cap / shared stylised body","category":"Estate","price":75000,"top":250,"times":[3.3,10.9,33],"handling":1.12,"modelName":"Estate","redline":7000,"electric":false,"fuelType":"Petrol","gameplayPreset":true},
+    {"name":"Noble M600","subtitle":"Individual game speed cap / shared stylised body","top":362,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Supercar","redline":8500,"gameplayPreset":true,"price":101000},
+    {"name":"Pagani Zonda R","subtitle":"Individual game speed cap / shared stylised body","top":350,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":99000},
+    {"name":"Pagani Huayra BC","subtitle":"Individual game speed cap / shared stylised body","top":370,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":102000},
+    {"name":"Plymouth Road Runner Superbird","subtitle":"Individual game speed cap / shared stylised body","top":240,"times":[4.4,16,55],"handling":0.98,"modelName":"Classic muscle fastback","redline":7500,"gameplayPreset":true,"price":66000},
+    {"name":"Pontiac Trans Am SD-455","subtitle":"Individual game speed cap / shared stylised body","top":210,"times":[4.4,16,55],"handling":0.98,"modelName":"Classic muscle fastback","redline":7500,"gameplayPreset":true,"price":61000},
+    {"name":"Porsche 959 Dakar","subtitle":"Individual game speed cap / shared stylised body","top":210,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":57000},
+    {"name":"Porsche 911 GT1 Strassenversion","subtitle":"Individual game speed cap / shared stylised body","top":308,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Classic sports coupe","redline":8500,"gameplayPreset":true,"price":91000},
+    {"name":"Porsche 911 Singer DLS","subtitle":"Individual game speed cap / shared stylised body","top":300,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":73000},
+    {"name":"Porsche 718 Cayman GT4 RS","subtitle":"Individual game speed cap / shared stylised body","top":315,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":76000},
+    {"name":"Porsche 911 Turbo S (992)","subtitle":"Individual game speed cap / shared stylised body","top":330,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":78000},
+    {"name":"Radical SR10","subtitle":"Individual game speed cap / shared stylised body","top":290,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Open-wheel roadster","redline":8500,"gameplayPreset":true,"price":88000},
+    {"name":"Ruf CTR Yellowbird","subtitle":"Individual game speed cap / shared stylised body","top":342,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":80000},
+    {"name":"Saleen S7 Twin Turbo","subtitle":"Individual game speed cap / shared stylised body","top":399,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Supercar","redline":8500,"gameplayPreset":true,"price":108000},
+    {"name":"Shelby Mustang GT350R (1965)","subtitle":"Individual game speed cap / shared stylised body","top":240,"times":[4.4,16,55],"handling":0.98,"modelName":"Classic muscle fastback","redline":7500,"gameplayPreset":true,"price":66000},
+    {"name":"Shelby Series 1","subtitle":"Individual game speed cap / shared stylised body","top":274,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic long-bonnet GT","redline":8000,"gameplayPreset":true,"price":68000},
+    {"name":"TVR Sagaris","subtitle":"Individual game speed cap / shared stylised body","top":298,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":73000},
+    {"name":"TVR Cerbera Speed 12","subtitle":"Individual game speed cap / shared stylised body","top":380,"times":[5.3,21,70],"handling":1.16,"modelName":"Wide track hypercar","redline":8000,"gameplayPreset":true,"price":87000},
+    {"name":"Toyota Chaser JZX100 Tourer V","subtitle":"Individual game speed cap / shared stylised body","top":180,"times":[5.3,21,70],"handling":1.16,"modelName":"Performance saloon","redline":8000,"gameplayPreset":true,"price":51000},
+    {"name":"Toyota MR2 GT-S (SW20)","subtitle":"Individual game speed cap / shared stylised body","top":245,"times":[5.3,21,70],"handling":1.16,"modelName":"Classic sports coupe","redline":8000,"gameplayPreset":true,"price":63000},
+    {"name":"Toyota Celica GT-Four (ST205)","subtitle":"Individual game speed cap / shared stylised body","top":245,"times":[5.3,21,70],"handling":1.16,"modelName":"Sports coupe","redline":8000,"gameplayPreset":true,"price":63000},
+    {"name":"Ultima RS","subtitle":"Individual game speed cap / shared stylised body","top":400,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":108000},
+    {"name":"Vector W8 Twin Turbo","subtitle":"Individual game speed cap / shared stylised body","top":350,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":99000},
+    {"name":"Volkswagen Golf GTI Clubsport S (MK7)","subtitle":"Individual game speed cap / shared stylised body","top":265,"times":[5.4,20,65],"handling":1.24,"modelName":"Hatchback","redline":7000,"gameplayPreset":true,"price":66000},
+    {"name":"Zenvo TSR-S","subtitle":"Individual game speed cap / shared stylised body","top":325,"times":[2.8,6.8,17],"handling":1.23,"modelName":"Long-tail hypercar","redline":8500,"gameplayPreset":true,"price":94000},
+    {"name":"MH Trail 250","subtitle":"250 cc single-cylinder dirt bike / fictional game tuning","top":135,"times":[7.2,55,130],"handling":1.34,"modelName":"Motorcycles","redline":11000,"motorcycle":true,"bikeType":"dirt","cylinders":1,"price":38000},
+    {"name":"Honda CBR650R","subtitle":"649 cc inline-four / faired road sport motorcycle","top":230,"times":[3.8,14,80],"handling":1.25,"modelName":"Motorcycles","redline":12000,"motorcycle":true,"bikeType":"honda","cylinders":4,"price":68000},
+    {"name":"Yamaha MT-07","subtitle":"690 cc parallel twin / naked road motorcycle","top":210,"times":[3.9,20,90],"handling":1.38,"modelName":"Motorcycles","redline":10000,"motorcycle":true,"bikeType":"naked","cylinders":2,"price":63000},
+    {"name":"Kawasaki Ninja ZX-6R","subtitle":"636 cc inline-four / supersport motorcycle","top":255,"times":[3.5,11,60],"handling":1.3,"modelName":"Motorcycles","redline":15000,"motorcycle":true,"bikeType":"ninja","cylinders":4,"price":74000},
+    {"name":"McLaren 720S","subtitle":"Super","category":"Super","price":92000,"top":330,"times":[3.1,8.8,26],"handling":1.2,"modelName":"Mid-engine exotic","redline":8500},
+    {"name":"Lexus LC","subtitle":"Coupe","category":"Coupe","price":126000,"top":275,"times":[4.7,15,50],"handling":1.08,"modelName":"Modern GT coupe","redline":7600},
+    {"name":"Kia Sportage","subtitle":"SUV","category":"SUV","price":52000,"top":205,"times":[6.8,23,82],"handling":0.87,"modelName":"SUV","redline":6500},
+    {"name":"GMC Sierra 1500","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Ram 2500","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Honda Pilot","subtitle":"SUV","category":"SUV","price":52000,"top":205,"times":[6.8,23,82],"handling":0.87,"modelName":"SUV","redline":6500},
+    {"name":"Yamaha YZF-R1","subtitle":"Motorcycle","category":"Motorcycle","price":84000,"top":285,"times":[3.1,10.8,34],"handling":1.12,"modelName":"Motorcycles","redline":13500,"motorcycle":true,"bikeType":"sport","cylinders":4},
+    {"name":"Jaguar XE","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Mazda 6","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Dodge Challenger","subtitle":"Muscle","category":"Muscle","price":126000,"top":275,"times":[4.7,15,50],"handling":1.08,"modelName":"Modern GT coupe","redline":7600},
+    {"name":"Honda Accord","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Ford Ranger","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Subaru Outback","subtitle":"SUV","category":"SUV","price":52000,"top":205,"times":[6.8,23,82],"handling":0.87,"modelName":"SUV","redline":6500},
+    {"name":"Hyundai Santa Cruz","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Volkswagen Golf","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Volkswagen Jetta","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Porsche Panamera","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Tesla Model S","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Electric performance GT","redline":6800},
+    {"name":"Harley-Davidson Street Glide","subtitle":"Motorcycle","category":"Motorcycle","price":84000,"top":285,"times":[3.1,10.8,34],"handling":1.12,"modelName":"Motorcycles","redline":13500,"motorcycle":true,"bikeType":"cruiser","cylinders":2},
+    {"name":"Hyundai Elantra","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Chevrolet Malibu","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Toyota Corolla","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Subaru Legacy","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Tesla Model 3","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Electric performance GT","redline":6800},
+    {"name":"Ford F-150","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Toyota Tundra","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"GMC Canyon","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Toyota Camry","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Toyota RAV4","subtitle":"SUV","category":"SUV","price":52000,"top":205,"times":[6.8,23,82],"handling":0.87,"modelName":"SUV","redline":6500},
+    {"name":"Chevrolet Silverado 2500HD","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Lincoln MKZ","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Buick Regal","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Chrysler 300","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Ford Maverick","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Ford Fusion","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Infiniti Q50","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Nissan Titan","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Hyundai Sonata","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Jaguar XF","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Honda CBR600RR","subtitle":"Motorcycle","category":"Motorcycle","price":84000,"top":285,"times":[3.1,10.8,34],"handling":1.12,"modelName":"Motorcycles","redline":13500,"motorcycle":true,"bikeType":"sport","cylinders":4},
+    {"name":"Volvo S90","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Toyota Highlander","subtitle":"SUV","category":"SUV","price":52000,"top":205,"times":[6.8,23,82],"handling":0.87,"modelName":"SUV","redline":6500},
+    {"name":"BMW 5 Series","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Volvo S60","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Jeep Gladiator","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Kia Optima","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"BMW 3 Series","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Genesis G90","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Acura TLX","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Audi A4","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Mazda 3","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Audi A6","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Honda Ridgeline","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"GMC Sierra 2500HD","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Rivian R1T","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Chevrolet Silverado 1500","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Ram 1500","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Chevrolet Colorado","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Volkswagen Tiguan","subtitle":"SUV","category":"SUV","price":52000,"top":205,"times":[6.8,23,82],"handling":0.87,"modelName":"SUV","redline":6500},
+    {"name":"Kia Forte","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Ford Super Duty F-250","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Nissan Altima","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Chevrolet Tahoe","subtitle":"SUV","category":"SUV","price":52000,"top":205,"times":[6.8,23,82],"handling":0.87,"modelName":"SUV","redline":6500},
+    {"name":"Nissan Sentra","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Maserati Ghibli","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Nissan Frontier","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Subaru Impreza","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Toyota Tacoma","subtitle":"Truck","category":"Truck","price":46000,"top":180,"times":[7.2,25,90],"handling":0.78,"modelName":"Off-road performance truck","redline":5900},
+    {"name":"Ford Edge","subtitle":"SUV","category":"SUV","price":52000,"top":205,"times":[6.8,23,82],"handling":0.87,"modelName":"SUV","redline":6500},
+    {"name":"Lexus ES","subtitle":"Sedan","category":"Sedan","price":60000,"top":240,"times":[5.8,20,68],"handling":0.98,"modelName":"Performance saloon","redline":6800},
+    {"name":"Audi RS3","subtitle":"630 PS twin-turbo petrol V8","category":"Estate","price":27500,"top":250,"times":[3.8,12.8,25],"handling":1.05,"modelName":"Estate","redline":7000,"electric":false,"fuelType":"Petrol"},
+    {"name":"Tesla Roadster Rocket","subtitle":"Sedan","category":"Sedan","price":350000,"top":370,"times":[0.6,5.5,13],"handling":0.98,"modelName":"Electric performance GT","redline":6800},
+
+    // COPY THIS EXAMPLE, PASTE IT ABOVE THIS COMMENT, THEN RENAME/EDIT IT:
+    // {name:"New Car Name",subtitle:"Short description",category:"Coupe",price:65000,top:250,times:[5.0,18,60],handling:1.05,modelName:"Classic sports coupe",redline:7000},
   ];
 
-  // 12 additional playable silhouettes (8-19), six traffic-only bodies (20-25).
-  bodyStyles.push(
-    {name:'Open-wheel roadster',width:48,height:86,radius:2},
-    {name:'Classic long-bonnet GT',width:45,height:101,radius:8},
-    {name:'Wedge supercar',width:50,height:92,radius:2},
-    {name:'Endurance prototype',width:54,height:106,radius:3},
-    {name:'Classic muscle fastback',width:51,height:109,radius:4},
-    {name:'Compact rally special',width:43,height:78,radius:3},
-    {name:'Modern four-door GT',width:49,height:108,radius:6},
-    {name:'Targa sports car',width:46,height:89,radius:7},
-    {name:'Vintage race roadster',width:44,height:95,radius:9},
-    {name:'Wide track hypercar',width:55,height:100,radius:3},
-    {name:'Retro box coupe',width:44,height:94,radius:2},
-    {name:'Off-road performance truck',width:57,height:120,radius:3},
-    {name:'Traffic city microcar',width:37,height:64,radius:7,trafficOnly:true},
-    {name:'Traffic taxi saloon',width:47,height:102,radius:5,trafficOnly:true},
-    {name:'Traffic people carrier',width:51,height:112,radius:7,trafficOnly:true},
-    {name:'Traffic delivery box truck',width:59,height:146,radius:2,trafficOnly:true,heavy:true},
-    {name:'Traffic city bus',width:61,height:177,radius:3,trafficOnly:true,heavy:true},
-    {name:'Traffic flatbed truck',width:58,height:143,radius:2,trafficOnly:true,heavy:true}
-  );
-  for(const c of cars){
-    const n=c.name;
-    if(/Atom|BAC Mono|Caterham|X-Bow|Radical/.test(n))c.model=8;
-    else if(/DB5|250 GTO|E-Type|300 SL|Z8|One-77|8C|SLS AMG|Shelby Series/.test(n))c.model=9;
-    else if(/Countach|Diablo|F40|EB110|Vector W8|Pantera|Esprit/.test(n))c.model=10;
-    else if(/Valkyrie|Bolide|Huayra R|Zonda R|CLK GTR|911 GT1|Brabham|XJR-15|GT70/.test(n))c.model=11;
-    else if(/Chevelle|Hemi Cuda|GTO Judge|Super Bee|Superbird|Trans Am|Boss 429|Camaro SS|GT350R/.test(n))c.model=12;
-    else if(/Quattro|Stratos|Delta|205 T16|Pulsar|GR Yaris|Fulvia|037 |Escort RS|CR-X/.test(n))c.model=13;
-    else if(/Taycan|RS7|M5 CS|Giulia|IS 500|CT5|Gemera|Chaser|Lotus Carlton|190E|C 63/.test(n))c.model=14;
-    else if(/720S Spider|Cinque Roadster|Corvette Stingray|S2000|MX-5|Elise|Elva/.test(n))c.model=15;
-    else if(/D-Type|Cobra|33 Stradale|Blower|GT40/.test(n))c.model=16;
-    else if(/Jesko|Agera|CCXR|CC850|Venom|Senna|Sesto|TSR-S|Ultima|Speed 12|GT Black|GT2 RS|Viper ACR/.test(n))c.model=17;
-    else if(/AE86|Hakosuka|Skyline|Silvia|RX-3|Cosmo|Sierra|M3 GTR|22B|Evolution VI|Integra|Quattro/.test(n))c.model=18;
-    else if(/Raptor|TRX|Wrangler/.test(n))c.model=19;
-  }
-  // Append-only vehicle ID: old saves keep their original vehicle indices.
-  const DIRT_BIKE_ID=cars.length,BIKE_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Motorcycles',width:27,height:78,radius:2,motorcycle:true});
-  cars.push({name:'MH Trail 250',subtitle:'250 cc single-cylinder dirt bike / fictional game tuning',top:135,times:[7.2,55,130],handling:1.34,model:BIKE_MODEL,redline:11000,motorcycle:true});
+  const cars = VEHICLES.map((definition,index)=>{
+    const car={...definition,times:[...definition.times]};
+    const model=MODEL_INDEX[car.modelName];
+    if(model===undefined)throw new Error(`Unknown modelName "${car.modelName}" for ${car.name}`);
+    car.model=model;delete car.modelName;return car;
+  });
+  const DIRT_BIKE_ID=cars.findIndex(c=>c.name==='MH Trail 250');
+  const BIKE_MODEL=MODEL_INDEX['Motorcycles'];
+  const MOTORCYCLE_MODEL=BIKE_MODEL;
+  const PERFORMANCE_SALOON_MODEL=MODEL_INDEX['Performance saloon'];
+  const MODERN_GT_COUPE_MODEL=MODEL_INDEX['Modern GT coupe'];
+  const MID_ENGINE_EXOTIC_MODEL=MODEL_INDEX['Mid-engine exotic'];
+  const LONGTAIL_HYPERCAR_MODEL=MODEL_INDEX['Long-tail hypercar'];
+  const CLASSIC_SPORTS_COUPE_MODEL=MODEL_INDEX['Classic sports coupe'];
+  const ELECTRIC_PERFORMANCE_MODEL=MODEL_INDEX['Electric performance GT'];
+  const TRAFFIC_CROSSOVER_MODEL=MODEL_INDEX['Traffic compact crossover'];
+  const TRAFFIC_EXECUTIVE_MODEL=MODEL_INDEX['Traffic executive saloon'];
+  const TRAFFIC_SPORT_MODEL=MODEL_INDEX['Traffic sports coupe'];
+  const TRAFFIC_MINIVAN_MODEL=MODEL_INDEX['Traffic minivan'];
+  const TRAFFIC_TANKER_MODEL=MODEL_INDEX['Traffic tanker truck'];
+  const TRAFFIC_COACH_MODEL=MODEL_INDEX['Traffic motorway coach'];
   const isBike=(i=selected)=>!!cars[i]?.motorcycle;
-  // Append-only IDs preserve all existing careers and garage builds.
-  cars[DIRT_BIKE_ID].bikeType='dirt';cars[DIRT_BIKE_ID].cylinders=1;
-  cars.push(
-    {name:'Honda CBR650R',subtitle:'649 cc inline-four / faired road sport motorcycle',top:230,times:[3.8,14,80],handling:1.25,model:BIKE_MODEL,redline:12000,motorcycle:true,bikeType:'honda',cylinders:4},
-    {name:'Yamaha MT-07',subtitle:'690 cc parallel twin / naked road motorcycle',top:210,times:[3.9,20,90],handling:1.38,model:BIKE_MODEL,redline:10000,motorcycle:true,bikeType:'naked',cylinders:2},
-    {name:'Kawasaki Ninja ZX-6R',subtitle:'636 cc inline-four / supersport motorcycle',top:255,times:[3.5,11,60],handling:1.3,model:BIKE_MODEL,redline:15000,motorcycle:true,bikeType:'ninja',cylinders:4}
-  );
-
-  // MODEL PACK V2 / append-only visual and collision models. Existing IDs remain unchanged.
-  const PERFORMANCE_SALOON_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Performance saloon',width:49,height:108,radius:5});
-  const MODERN_GT_COUPE_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Modern GT coupe',width:48,height:101,radius:6});
-  const MID_ENGINE_EXOTIC_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Mid-engine exotic',width:53,height:94,radius:3});
-  const LONGTAIL_HYPERCAR_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Long-tail hypercar',width:55,height:107,radius:2});
-  const CLASSIC_SPORTS_COUPE_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Classic sports coupe',width:46,height:96,radius:7});
-  const ELECTRIC_PERFORMANCE_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Electric performance GT',width:51,height:111,radius:7});
-  const TRAFFIC_CROSSOVER_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Traffic compact crossover',width:50,height:105,radius:8,trafficOnly:true});
-  const TRAFFIC_EXECUTIVE_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Traffic executive saloon',width:48,height:108,radius:5,trafficOnly:true});
-  const TRAFFIC_SPORT_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Traffic sports coupe',width:47,height:96,radius:6,trafficOnly:true});
-  const TRAFFIC_MINIVAN_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Traffic minivan',width:54,height:124,radius:7,trafficOnly:true});
-  const TRAFFIC_TANKER_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Traffic tanker truck',width:61,height:158,radius:3,trafficOnly:true,heavy:true});
-  const TRAFFIC_COACH_MODEL=bodyStyles.length;
-  bodyStyles.push({name:'Traffic motorway coach',width:62,height:180,radius:5,trafficOnly:true,heavy:true});
-  // Apply the six playable silhouettes to visually similar families. These are render models only.
-  for(const c of cars){
-    if(c.motorcycle)continue;const n=c.name;
-    if(/Taycan|Ioniq 5 N|Nevera|Evija|Folgore|N Vision 74/.test(n))c.model=ELECTRIC_PERFORMANCE_MODEL;
-    else if(/BMW M[2345]|M3 GTR|CT5-V|CTS-V|Giulia|IS 500|C 63|190E|Chaser|Lotus Carlton/.test(n))c.model=PERFORMANCE_SALOON_MODEL;
-    else if(/AMG GT|Vantage|F-Type|LFA|SLS AMG|SL 63|Continental GT|GranTurismo|One-77|Victor/.test(n))c.model=MODERN_GT_COUPE_MODEL;
-    else if(/Chiron|Divo|Bolide|Jesko|Agera|CCXR|CC850|Regera|Venom|Utopia|Huayra|Zonda|Speedtail|TSR-S|Valkyrie|Ultima|Vector W8/.test(n))c.model=LONGTAIL_HYPERCAR_MODEL;
-    else if(/Ferrari|Lamborghini|McLaren|Corvette Z06|Corvette Stingray|Ford GT \(2017\)|NSX|MC20|918 Spyder|Carrera GT|XJ220|C-X75/.test(n))c.model=MID_ENGINE_EXOTIC_MODEL;
-    else if(/911|Cayman|RX-7|RX-8|Supra|Skyline|Silvia|300ZX|S2000|MX-5|Elise|Exige|Emira|Z Nismo|AE86|MR2|Z8/.test(n))c.model=CLASSIC_SPORTS_COUPE_MODEL;
-  }
-
-  // MODEL & HITBOX V3 / fixed physical envelopes for every visual family.
-  const modelHitboxes=bodyStyles.map((shape,index)=>{const bike=!!shape.motorcycle,heavy=!!shape.heavy;let width=(shape.width||44)*(bike?.58:heavy?.88:.82),height=(shape.height||92)*(bike?.84:heavy?.93:.88);if(index===8)width*=.78;if(index===19)width*=.92;return {width:Math.max(bike?15:28,width),height:Math.max(bike?58:52,height)};});
-  function hitboxForModel(model){return modelHitboxes[model]||{width:36,height:76};}
-  function vehicleHitbox(v){const model=v.model===undefined?stats.model:v.model,box=hitboxForModel(model);return {width:box.width,height:box.height};}
-  function lateralBodyGap(a,b){const A=vehicleHitbox(a),B=vehicleHitbox(b);return Math.abs(a.x-b.x)-(A.width+B.width)/2;}
-
-  // USER VEHICLE PACK / append-only so existing save indices remain stable.
-  const MOTORCYCLE_MODEL=bodyStyles.findIndex(b=>b.motorcycle);
-  const userVehiclePack=[
-    {name:"McLaren 720S",subtitle:"Super",top:330,times:[3.1, 8.8, 26],handling:1.2,model:MID_ENGINE_EXOTIC_MODEL,redline:8500,category:"Super"},
-    {name:"Lexus LC",subtitle:"Coupe",top:275,times:[4.7, 15, 50],handling:1.08,model:MODERN_GT_COUPE_MODEL,redline:7600,category:"Coupe"},
-    {name:"Kia Sportage",subtitle:"SUV",top:205,times:[6.8, 23, 82],handling:0.87,model:5,redline:6500,category:"SUV"},
-    {name:"GMC Sierra 1500",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Ram 2500",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Honda Pilot",subtitle:"SUV",top:205,times:[6.8, 23, 82],handling:0.87,model:5,redline:6500,category:"SUV"},
-    {name:"Yamaha YZF-R1",subtitle:"Motorcycle",top:285,times:[3.1, 10.8, 34],handling:1.12,model:MOTORCYCLE_MODEL,redline:13500,category:"Motorcycle"},
-    {name:"Jaguar XE",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Mazda 6",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Dodge Challenger",subtitle:"Muscle",top:275,times:[4.7, 15, 50],handling:1.08,model:MODERN_GT_COUPE_MODEL,redline:7600,category:"Muscle"},
-    {name:"Honda Accord",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Ford Ranger",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Subaru Outback",subtitle:"SUV",top:205,times:[6.8, 23, 82],handling:0.87,model:5,redline:6500,category:"SUV"},
-    {name:"Hyundai Santa Cruz",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Volkswagen Golf",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Volkswagen Jetta",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Porsche Panamera",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Tesla Model S",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:ELECTRIC_PERFORMANCE_MODEL,redline:6800,category:"Sedan"},
-    {name:"Harley-Davidson Street Glide",subtitle:"Motorcycle",top:285,times:[3.1, 10.8, 34],handling:1.12,model:MOTORCYCLE_MODEL,redline:13500,category:"Motorcycle"},
-    {name:"Hyundai Elantra",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Chevrolet Malibu",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Toyota Corolla",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Subaru Legacy",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Tesla Model 3",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:ELECTRIC_PERFORMANCE_MODEL,redline:6800,category:"Sedan"},
-    {name:"Ford F-150",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Toyota Tundra",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"GMC Canyon",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Toyota Camry",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Toyota RAV4",subtitle:"SUV",top:205,times:[6.8, 23, 82],handling:0.87,model:5,redline:6500,category:"SUV"},
-    {name:"Chevrolet Silverado 2500HD",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Lincoln MKZ",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Buick Regal",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Chrysler 300",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Ford Maverick",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Ford Fusion",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Infiniti Q50",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Nissan Titan",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Hyundai Sonata",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Jaguar XF",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Honda CBR600RR",subtitle:"Motorcycle",top:285,times:[3.1, 10.8, 34],handling:1.12,model:MOTORCYCLE_MODEL,redline:13500,category:"Motorcycle"},
-    {name:"Volvo S90",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Toyota Highlander",subtitle:"SUV",top:205,times:[6.8, 23, 82],handling:0.87,model:5,redline:6500,category:"SUV"},
-    {name:"BMW 5 Series",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Volvo S60",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Jeep Gladiator",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Kia Optima",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"BMW 3 Series",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Genesis G90",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Acura TLX",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Audi A4",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Mazda 3",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Audi A6",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Honda Ridgeline",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"GMC Sierra 2500HD",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Rivian R1T",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Chevrolet Silverado 1500",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Ram 1500",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Chevrolet Colorado",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Volkswagen Tiguan",subtitle:"SUV",top:205,times:[6.8, 23, 82],handling:0.87,model:5,redline:6500,category:"SUV"},
-    {name:"Kia Forte",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Ford Super Duty F-250",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Nissan Altima",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Chevrolet Tahoe",subtitle:"SUV",top:205,times:[6.8, 23, 82],handling:0.87,model:5,redline:6500,category:"SUV"},
-    {name:"Nissan Sentra",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Maserati Ghibli",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Nissan Frontier",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Subaru Impreza",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"},
-    {name:"Toyota Tacoma",subtitle:"Truck",top:180,times:[7.2, 25, 90],handling:0.78,model:19,redline:5900,category:"Truck"},
-    {name:"Ford Edge",subtitle:"SUV",top:205,times:[6.8, 23, 82],handling:0.87,model:5,redline:6500,category:"SUV"},
-    {name:"Lexus ES",subtitle:"Sedan",top:240,times:[5.8, 20, 68],handling:0.98,model:PERFORMANCE_SALOON_MODEL,redline:6800,category:"Sedan"}
-  ];
-  cars.push(...userVehiclePack);
+  const isElectricVehicle=(i=selected)=>{
+    const c=cars[i];
+    return !!c&&(c.electric===true||c.model===ELECTRIC_PERFORMANCE_MODEL||c.category==='Electric'||/Tesla|Taycan|Ioniq 5 N|Nevera|Evija|Folgore|N Vision 74|Rimac|Rivian/i.test(c.name));
+  };
   // Categories describe vehicle type only. Visual model selection remains independent.
   const simpleCategories=['Sedan','Coupe','Estate','Muscle','SUV','Truck','Super','Hyper','Electric','Motorcycle'];
   function simpleVehicleCategory(c){
@@ -1670,8 +1871,25 @@ window.MH_SUPABASE = {
     }
     return !(Math.abs(player.x-x)<65&&Math.abs(player.y-car.y)<(bodyStyles[stats.model].height+car.height)/2+100);
   }
+  // Collision dimensions are resolved independently from rendering.
+  // This restores the helpers used by traffic, police and near-miss checks.
+  function hitboxForModel(model){
+    const style=bodyStyles[Number.isInteger(model)?model:stats.model]||bodyStyles[stats.model]||{width:44,height:86};
+    return {
+      width:Math.max(18,Number(style.hitboxWidth||style.width)||44),
+      height:Math.max(34,Number(style.hitboxHeight||style.height)||86)
+    };
+  }
+  function vehicleHitbox(v){
+    const model=(v&&Number.isInteger(v.model))?v.model:stats.model;
+    const box=hitboxForModel(model);
+    return {
+      width:Math.max(18,Number(v?.width)||box.width),
+      height:Math.max(34,Number(v?.height)||box.height)
+    };
+  }
   function bodyBox(v){
-    const model=v.model===undefined?stats.model:v.model,box=hitboxForModel(model);
+    const box=vehicleHitbox(v);
     const angle=v.tilt||0,c=Math.cos(angle),sn=Math.sin(angle);
     return {axes:[{x:c,y:sn},{x:-sn,y:c}],hw:box.width/2,hh:box.height/2};
   }
@@ -1856,7 +2074,7 @@ window.MH_SUPABASE = {
     // No instant speed clamp when nitrous ends: aerodynamic drag slows the car.
     if(player.speed>topMS)player.speed=Math.max(topMS,player.speed-Math.max(2,(player.speed-topMS)*5)*dt);
     player.speed=Math.max(0,player.speed);
-    const steeringSpeed=(105+Math.min(player.speed,65)*.65)*stats.handling*dynamics.steerScale*(wheelieActive?.55:1);
+    const steeringSpeed=(119+Math.min(player.speed,65)*.72)*stats.handling*dynamics.steerScale*(wheelieActive?.55:1);
     // Lateral demand accumulates during a hard turn. Reversing the wheel
     // suddenly adds load; sport tyres raise the available grip.
     const speedLoad=Math.pow(clamp((kph-55)/Math.max(110,stats.top*.65),0,2),1.3)*dynamics.load;
@@ -1879,7 +2097,7 @@ window.MH_SUPABASE = {
     const targetSlip=handbrake?clamp(steerLoad*.7,0,1):clamp((sharpDemand-dynamics.grip)*.8,0,.7);
     slip=lerp(slip,targetSlip,1-Math.exp(-dt*(targetSlip>slip?4:dynamics.recovery)));
     const targetVX=steering*steeringSpeed*clamp(Math.max(player.speed,reverseSpeed)/9,0,1)*(1-slip*.38)*(reverseSpeed>.01?-1.28:1);
-    const response=dynamics.response*(reverseSpeed>.01?1.32:1)*(tyres?1.25:1)*(1-rainAmount*.18-snowAmount*(equipped().rubber==='offroad'?.1:.32))*(1-slip*.85);
+    const response=dynamics.response*1.10*(reverseSpeed>.01?1.32:1)*(tyres?1.25:1)*(1-rainAmount*.18-snowAmount*(equipped().rubber==='offroad'?.1:.32))*(1-slip*.85);
     player.vx = lerp(player.vx, targetVX, 1 - Math.exp(-dt * response));
     player.x += player.vx * dt;
     if(slip>.12)player.speed=Math.max(0,player.speed-slip*(brake?7:3)*dt);
@@ -2021,11 +2239,15 @@ window.MH_SUPABASE = {
     if(weatherMode==='auto'){
       weatherTimer-=dt;
       if(weatherTimer<=0){
-        if(weatherKind==='clear'){
-          const roll=Math.random();
-          weatherKind=roll<.34?'rain':roll<.55?'snow':roll<.78?'fog':'storm';
-        }else weatherKind='clear';
-        weatherTimer=weatherKind==='clear'?random(55,105):weatherKind==='storm'?random(32,58):random(38,72);
+        const choices=['clear','rain','snow','fog','storm'];
+        const weights={clear:18,rain:24,snow:18,fog:22,storm:18};
+        const pool=[];
+        for(const kind of choices){
+          if(kind===weatherKind)continue;
+          for(let i=0;i<weights[kind];i++)pool.push(kind);
+        }
+        weatherKind=pool[Math.floor(Math.random()*pool.length)]||'rain';
+        weatherTimer=weatherKind==='clear'?random(28,46):weatherKind==='storm'?random(25,42):weatherKind==='fog'?random(30,50):random(28,48);
       }
     }
     const stormTarget=weatherKind==='storm'?1:0;
@@ -2040,10 +2262,7 @@ window.MH_SUPABASE = {
     weatherFlash=Math.max(0,weatherFlash-dt*3.2);
     if(stormAmount>.45){
       thunderTimer-=dt;
-      if(thunderTimer<=0){
-        weatherFlash=1;lightningX=random(.12,.88);lightningFork=random(-1,1);shake=Math.max(shake,1.2);
-        soundEffect('thunder');thunderTimer=random(7,18);
-      }
+      if(thunderTimer<=0){weatherFlash=1;lightningX=random(.12,.88);lightningFork=random(-1,1);shake=Math.max(shake,1.2);soundEffect('thunder');thunderTimer=random(7,18);}
     }else thunderTimer=Math.min(thunderTimer,random(6,12));
   }
   function finishSprint(){
@@ -2674,7 +2893,7 @@ window.MH_SUPABASE = {
       }
       if(boostActive&&state==='playing'){
         ctx.save();ctx.translate(player.x,player.y);ctx.rotate(player.tilt);
-        for(const x of (isBike()?[10]:[-13,13])){const length=35+10*Math.sin(ambient*65);const flame=ctx.createLinearGradient(0,40,0,40+length);flame.addColorStop(0,'#f3ffff');flame.addColorStop(.25,'#48e6ff');flame.addColorStop(1,'#655aff00');ctx.fillStyle=flame;ctx.shadowColor='#48dfff';ctx.shadowBlur=22;ctx.beginPath();ctx.moveTo(x-6,38);ctx.quadraticCurveTo(x-12,60,x,40+length);ctx.quadraticCurveTo(x+12,60,x+6,38);ctx.fill();}ctx.restore();
+        for(const x of (isBike()?[0]:[-13,13])){const length=35+10*Math.sin(ambient*65);const flame=ctx.createLinearGradient(0,40,0,40+length);flame.addColorStop(0,'#f3ffff');flame.addColorStop(.25,'#48e6ff');flame.addColorStop(1,'#655aff00');ctx.fillStyle=flame;ctx.shadowColor='#48dfff';ctx.shadowBlur=22;ctx.beginPath();const flameHalf=isBike()?4:6,flameCurve=isBike()?8:12;ctx.moveTo(x-flameHalf,38);ctx.quadraticCurveTo(x-flameCurve,60,x,40+length);ctx.quadraticCurveTo(x+flameCurve,60,x+flameHalf,38);ctx.fill();}ctx.restore();
       }
       drawCar(player.x, player.y, paint, stats.model, player.tilt, true);
       for(const p of smoke){ctx.save();ctx.globalAlpha=p.life/p.max*.32;ctx.fillStyle='#c6d2d9';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.restore();}
@@ -2819,7 +3038,9 @@ window.MH_SUPABASE = {
     if(windGain)windGain.gain.setTargetAtTime(state==='playing'&&soundEnabled?Math.pow(speedFeel(),2)*.07:0,t,.15);
     if(sirenGain){sirenGain.gain.setTargetAtTime((soundEnabled&&!workshopOpen&&((state==='playing'&&pursuit)||(state==='cinematic'&&cinematic?.busted)))?.028:0,t,.1);sirenOsc.frequency.setTargetAtTime(750+Math.sin(ambient*5)*300,t,.03);}
   }
+  let frameRuntimeErrorShown=false;
   function frame(timestamp) {
+    try {
     const dt = lastTime ? Math.min((timestamp - lastTime) / 1000, .1) : 0;
     lastTime = timestamp;
     if (state !== "paused") ambient += dt;
@@ -2839,6 +3060,13 @@ window.MH_SUPABASE = {
 
     if(state!=='menu'||pageMode==='play')render(dt);drawCluster();renderWorkshop(dt);renderShowcase(dt);renderHomeDrive(dt);
     updateEngineAudio();
+
+    } catch(error) {
+      console.error('Midnight Highway recovered from a frame error:',error);
+      accumulator=0;
+      traffic=traffic.filter(car=>car&&Number.isFinite(car.x)&&Number.isFinite(car.y)&&bodyStyles[car.model]);
+      frameRuntimeErrorShown=true;
+    }
     requestAnimationFrame(frame);
   }
 
@@ -2861,7 +3089,7 @@ window.MH_SUPABASE = {
   const ownsVehicle=i=>Number.isInteger(i)&&economy.owned.includes(i);
   let pageMode='home',shopTab='owned',runPaid=0,runActive=false;
   const money=n=>'$'+Math.floor(n).toLocaleString('en-GB');
-  const prices=cars.map((c,i)=>i===0?0:(Number.isFinite(c.fixedPrice)?c.fixedPrice:Math.round((c.top*180+100000/c.times[0]+(c.model===2?55000:0))/1000)*1000));
+  const prices=cars.map((c,i)=>Math.max(0,Math.round(Number(c.price)||0)));
   const catalogue={
     motor:[['stock','Original engine',0],['v12','V12 swap / +22% power, +8% top speed',18000]],
     boost:[['none','Naturally aspirated / no kit',0],['single','Single turbo / +18% power, +5% speed',7500],['twin','Twin turbo / +30% power, +9% speed',14000]],
@@ -2962,8 +3190,8 @@ window.MH_SUPABASE = {
   $('devClose').addEventListener('click',closeDev);
   function devMoney(set){
     const raw=$('devAmount').value,n=Number(raw);
-    if(raw.trim()===''||!Number.isSafeInteger(n)||n<0||n>999999999){$('devStatus').textContent='Enter a whole amount from 0 to 999,999,999.';return;}
-    economy.cash=set?n:Math.min(999999999,economy.cash+n);persistEconomy();refreshDev();
+    if(raw.trim()===''||!Number.isSafeInteger(n)||n<0){$('devStatus').textContent='Enter a non-negative whole amount.';return;}
+    const next=set?n:economy.cash+n;if(!Number.isSafeInteger(next)){$('devStatus').textContent='That amount is beyond JavaScript exact-number range.';return;}economy.cash=next;persistEconomy();refreshDev();
     if(pageMode==='shop')updateQuote();$('devStatus').textContent=(set?'Balance set to ':'Added ')+money(n)+'. Saved.';
   }
   $('devAdd').addEventListener('click',()=>devMoney(false));$('devSet').addEventListener('click',()=>devMoney(true));
@@ -3016,12 +3244,43 @@ window.MH_SUPABASE = {
     }
     st.accel=100/cars[i].times[0]*st.power;return st;
   };
-  function partLabel(key){return ({motor:'ENGINE',boost:'FORCED INDUCTION',rubber:'TYRES',spoiler:'SPOILER',bumper:'BUMPERS',tune:'ENGINE TUNE',nitrous:'NITROUS',...modLabels})[key]||key.toUpperCase();}
-  function partSelect(key,p){return '<label class="part-row"><span>'+partLabel(key)+'</span><select data-part="'+key+'">'+catalogue[key].map(([v,label,cost])=>'<option value="'+v+'" '+((p[key]||'stock')===v?'selected':'')+'>'+label+' / '+(cost===0||p.unlocks.includes(key+':'+v)?'OWNED':money(cost))+'</option>').join('')+'</select></label>';}
+  const evPartLabels={motor:'DRIVE MOTORS',boost:'POWER INVERTER',tune:'MOTOR CONTROL SOFTWARE',intake:'BATTERY AIRFLOW',exhaust:'THERMAL MANAGEMENT',intercooler:'POWER ELECTRONICS COOLING',fuel:'BATTERY PACK',cams:'STATOR WINDINGS',pistons:'ROTOR ASSEMBLY',flywheel:'LAUNCH CONTROL',clutch:'TORQUE VECTORING',gearbox:'REDUCTION GEAR',nitrous:'ELECTRIC OVERBOOST',nitrotank:'OVERBOOST CAPACITOR',fuelTank:'BATTERY CAPACITY'};
+  function partLabel(key){
+    if(isElectricVehicle()&&evPartLabels[key])return evPartLabels[key];
+    return ({motor:'ENGINE',boost:'FORCED INDUCTION',rubber:'TYRES',spoiler:'SPOILER',bumper:'BUMPERS',tune:'ENGINE TUNE',nitrous:'NITROUS',...modLabels})[key]||key.toUpperCase();
+  }
+  function electricOptionLabel(key,index,original){
+    if(!isElectricVehicle())return original;
+    const names={
+      motor:['Factory drive motors','Performance motor windings / upgraded output','Tri-motor performance conversion / maximum output'],
+      boost:['Factory inverter','Sport inverter / faster current delivery','Track inverter / maximum current delivery'],
+      tune:['Factory motor software','Sport motor calibration','Track motor calibration','Maximum-output calibration'],
+      intake:['Factory battery airflow','High-flow battery ducting','Active battery ventilation'],
+      exhaust:['Factory thermal system','Performance coolant loop','Track thermal management'],
+      intercooler:['Factory electronics cooling','Larger power-electronics cooler','Track power-electronics cooling'],
+      fuel:['Factory battery pack','High-discharge battery modules','Race high-discharge battery pack'],
+      cams:['Factory stator windings','Performance stator windings','Competition stator windings'],
+      pistons:['Factory rotor assembly','Lightweight rotor assembly','Competition rotor assembly'],
+      flywheel:['Factory launch control','Sport launch control','Maximum-traction launch control'],
+      clutch:['Factory torque distribution','Sport torque vectoring','Track torque vectoring'],
+      gearbox:['Factory reduction gear','Acceleration reduction gear','Top-speed reduction gear'],
+      nitrous:['No electric overboost','Electric overboost fitted'],
+      nitrotank:['Standard overboost capacitor','Extended overboost capacitor','Competition overboost capacitor'],
+      fuelTank:['Factory battery capacity','Lightweight battery / shorter range','Extended battery / longer range']
+    };
+    return names[key]?.[index]||original.replace(/engine/ig,'motor').replace(/fuel/ig,'battery').replace(/turbo/ig,'inverter').replace(/nitrous/ig,'overboost');
+  }
+  function partSelect(key,p){return '<label class="part-row"><span>'+partLabel(key)+'</span><select data-part="'+key+'">'+catalogue[key].map(([v,label,cost],index)=>'<option value="'+v+'" '+((p[key]||'stock')===v?'selected':'')+'>'+electricOptionLabel(key,index,label)+' / '+(cost===0||p.unlocks.includes(key+':'+v)?'OWNED':money(cost))+'</option>').join('')+'</select></label>';}
   const priorRenderShop=renderShop;
   renderShop=function(){
     shopTab='owned';priorRenderShop();const p=equipped();visualDraft=null;
-    const groups=[['ENGINE / POWERTRAIN',['motor','boost','tune','intake','exhaust','intercooler','fuel','cams','pistons','flywheel','clutch','gearbox']],['HANDLING / BRAKING',['rubber','differential','brakes','pads','suspension','antiroll','weight','aero']],['BODY / VISUAL',['spoiler','bumper','wheels','widebody','skirts','hood','roof','livery','lights']],['NITROUS',['nitrous','nitrotank']]];
+    const groups=isElectricVehicle()?[
+      ['ELECTRIC DRIVE SYSTEM',['motor','boost','tune','flywheel','clutch','gearbox']],
+      ['BATTERY / COOLING',['fuel','intake','exhaust','intercooler','cams','pistons']],
+      ['HANDLING / BRAKING',['rubber','differential','brakes','pads','suspension','antiroll','weight','aero']],
+      ['BODY / VISUAL',['spoiler','bumper','wheels','widebody','skirts','hood','roof','livery','lights']],
+      ['ELECTRIC OVERBOOST',['nitrous','nitrotank']]
+    ]:[['ENGINE / POWERTRAIN',['motor','boost','tune','intake','exhaust','intercooler','fuel','cams','pistons','flywheel','clutch','gearbox']],['HANDLING / BRAKING',['rubber','differential','brakes','pads','suspension','antiroll','weight','aero']],['BODY / VISUAL',['spoiler','bumper','wheels','widebody','skirts','hood','roof','livery','lights']],['NITROUS',['nitrous','nitrotank']]];
     $('shopParts').innerHTML='<p class="preview-note">Live body preview. Changes are not fitted until you buy & install.</p>'+groups.map(([title,keys],i)=>'<details class="parts-group" '+(i===0?'open':'')+'><summary>'+title+'</summary>'+keys.map(key=>partSelect(key,p)).join('')+'</details>').join('')+'<label class="part-row"><span>BODY COLOUR / $300 PER CHANGE</span><input id="shopColour" type="color" value="'+p.colour+'"></label><div class="shop-summary">24 new individual upgrade options. Mechanical parts affect the indicated driving stat; body parts visibly change the car. Parts stay unlocked per vehicle. Values are fictional gameplay tuning.</div>';
     updateQuote();
   };
@@ -3362,7 +3621,12 @@ window.MH_SUPABASE = {
     {id:'wheel',name:'Forged Wheel Sculpture',cost:6000,type:'wheel',colour:'#aeb9c2'},
     {id:'helmet',name:'Racing Helmet Display',cost:5000,type:'helmet',colour:'#eee'},
     {id:'engine',name:'Engine Sculpture',cost:12000,type:'engine',colour:'#929da8'},
-    {id:'crystal',name:'Crystal Speed Award',cost:20000,type:'crystal',colour:'#9ac7da'}
+    {id:'crystal',name:'Crystal Speed Award',cost:20000,type:'crystal',colour:'#9ac7da'},
+    {id:'points100k',name:'100,000 Point Trophy',cost:100000,type:'number',number:'100K',colour:'#b87333'},
+    {id:'points1m',name:'1,000,000 Point Trophy',cost:1000000,type:'number',number:'1M',colour:'#c7d0d9'},
+    {id:'points10m',name:'10,000,000 Point Trophy',cost:10000000,type:'number',number:'10M',colour:'#e5bd45'},
+    {id:'points100m',name:'100,000,000 Diamond Trophy',cost:100000000,type:'number',number:'100M',colour:'#75eaff'},
+    {id:'legend1b',name:'LEGEND Trophy',cost:1000000000,type:'number',number:'LEGEND',colour:'#d88cff'}
   ];
   const pointsText=n=>Math.floor(n||0).toLocaleString('en-GB')+' PTS';
   const collectionWallet=updateWallet;
@@ -3373,9 +3637,9 @@ window.MH_SUPABASE = {
   refreshDev=function(){collectionDev();$('devPointsBalance').textContent='AVAILABLE '+pointsText(economy.points)+' / LIFETIME '+pointsText(economy.lifetimePoints);};
   function devPoints(set){
     const raw=$('devPointAmount').value,n=Number(raw);
-    if(!raw.trim()||!Number.isSafeInteger(n)||n<0||n>999999999){$('devStatus').textContent='Enter whole points from 0 to 999,999,999.';return;}
+    if(!raw.trim()||!Number.isSafeInteger(n)||n<0){$('devStatus').textContent='Enter a non-negative whole points amount.';return;}
     if(set){economy.points=n;economy.lifetimePoints=n;}
-    else{economy.points=Math.min(999999999,economy.points+n);economy.lifetimePoints=Math.min(999999999,economy.lifetimePoints+n);}
+    else{const nextPoints=economy.points+n,nextLifetime=economy.lifetimePoints+n;if(!Number.isSafeInteger(nextPoints)||!Number.isSafeInteger(nextLifetime)){$('devStatus').textContent='That amount is beyond JavaScript exact-number range.';return;}economy.points=nextPoints;economy.lifetimePoints=nextLifetime;}
     persistEconomy();refreshDev();if(pageMode==='showcase')renderCollection();
     $('devStatus').textContent=set?'Available and lifetime points set. Saved.':'Points added to available and lifetime totals. Saved.';
   }
@@ -3383,7 +3647,7 @@ window.MH_SUPABASE = {
   function renderCollection(){
     updateWallet();$('showcaseCar').innerHTML=economy.owned.map(i=>'<option value="'+i+'" '+(economy.showcase.car===i?'selected':'')+'>'+cars[i].name+'</option>').join('');
     $('trophySlots').innerHTML=economy.showcase.slots.map((id,i)=>{const item=collectibles.find(c=>c.id===id);return '<button class="trophy-slot '+(showcaseSlot===i?'active':'')+'" data-slot="'+i+'">SPACE '+(i+1)+'<small>'+(item?item.name:'Empty pedestal')+'</small></button>';}).join('');
-    $('trophyShop').innerHTML=collectibles.map(item=>{const owned=economy.showcase.items.includes(item.id);return '<div class="trophy-item"><strong>'+item.name+'</strong><p>'+(owned?'OWNED / FREE TO DISPLAY':pointsText(item.cost))+'</p><button data-collectible="'+item.id+'" '+(!owned&&economy.points<item.cost?'disabled':'')+'>'+(owned?'DISPLAY IN SPACE '+(showcaseSlot+1):'BUY WITH POINTS')+'</button></div>';}).join('')+'<button id="clearTrophySlot">CLEAR SELECTED SPACE</button>';
+    $('trophyShop').innerHTML=collectibles.map(item=>{const owned=economy.showcase.items.includes(item.id);return '<div class="trophy-item"><strong>'+item.name+'</strong><p>'+(owned?'OWNED / FREE TO DISPLAY':pointsText(item.cost))+'</p><button data-collectible="'+item.id+'" '+(!owned&&economy.points<item.cost?'disabled':'')+'>'+(owned?'DISPLAY IN SPACE '+(showcaseSlot+1):'BUY WITH POINTS')+'</button></div>';}).join('');
     $('showcaseName').textContent=cars[economy.showcase.car].name;
   }
   function openShowcase(){pageMode='showcase';setState('menu');resetPursuit();silenceSirens();showcaseTime=0;initAudio();soundEffect('garage');renderCollection();}
@@ -3428,6 +3692,13 @@ window.MH_SUPABASE = {
         if(item.type==='helmet'){ellipse(x,y-64,25,25,colour);rect(x-23,y-68,42,12,'#16232d');rect(x-18,y-44,38,7,colour);}
         if(item.type==='engine'){rect(x-23,y-75,46,30,colour);for(let j=0;j<4;j++){rect(x-20+j*12,y-86,8,12,'#c1cbd3');rect(x-20+j*12,y-48,6,10,'#414e59');}}
         if(item.type==='crystal')poly([[x,y-102],[x+23,y-69],[x+12,y-39],[x-12,y-39],[x-23,y-69]],colour);
+        if(item.type==='number'){
+          g.save();g.textAlign='center';g.textBaseline='middle';g.lineJoin='round';
+          g.font='900 '+(item.number==='LEGEND'?18:30)+'px Impact, Arial Black, sans-serif';
+          g.lineWidth=7;g.strokeStyle='#000';g.strokeText(item.number,x,y-68);
+          g.lineWidth=3;g.strokeStyle='#fff';g.strokeText(item.number,x,y-68);
+          g.fillStyle=colour;g.fillText(item.number,x,y-68);g.restore();
+        }
       }
       g.fillStyle='#b6c1cb';g.font='9px system-ui';g.textAlign='center';g.fillText(item?item.name.toUpperCase():'DISPLAY SPACE '+(i+1),x,y+30);
     }
@@ -3537,7 +3808,7 @@ window.MH_SUPABASE = {
   function rawRead(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch(_){return fallback;}}
   let guestSnapshot={economy:rawRead('midnight-career-v1',freshEconomy()),career:rawRead('midnight-apex-career',{runs:0,bestDistance:0,nearMisses:0}),best:Number(localStorage.getItem('midnight-highway-best'))||0,selected:0,volumes:rawRead('midnight-audio-v1',volumeDefaults)};
   function snapshot(){return copy({schema:1,economy,career,best,selected:sessionType==='freestyle'?careerSelected:selected,volumes,soundEnabled,preferences:{units:displayUnits,difficulty:preferredDifficulty}});}
-  function cleanNumber(x,max=1e12){return Number.isFinite(Number(x))?Math.max(0,Math.min(max,Math.floor(Number(x)))):0;}
+  function cleanNumber(x,max=Number.MAX_SAFE_INTEGER){return Number.isFinite(Number(x))?Math.max(0,Math.min(max,Math.floor(Number(x)))):0;}
   function normalise(raw){
     const e=raw?.economy||freshEconomy(),out=freshEconomy();
     for(const k of ['cash','earned','points','lifetimePoints'])out[k]=cleanNumber(e[k]);
@@ -3953,7 +4224,7 @@ window.MH_SUPABASE = {
     };
   }
   function vehiclePartLabel(key,i=selected){
-    return isBike(i)?({motor:i===DIRT_BIKE_ID?'SINGLE-CYLINDER ENGINE':'MOTORCYCLE ENGINE',boost:'INDUCTION',tune:'ECU MAP',rubber:'MOTORCYCLE TYRES',brakes:'DISC BRAKES',suspension:'FORKS / REAR SHOCK',bikeExhaust:'EXHAUST',bikeGearing:'CHAIN / SPROCKETS',bikeGuards:'HANDGUARDS / BASH PLATE',bikeSeat:'SEAT',bikeGraphics:'GRAPHICS',nitrous:'GAME NITROUS KIT'})[key]||partLabel(key):(key==='fuelTank'?'FUEL TANK':partLabel(key));
+    return isBike(i)?({motor:i===DIRT_BIKE_ID?'SINGLE-CYLINDER ENGINE':'MOTORCYCLE ENGINE',boost:'INDUCTION',tune:'ECU MAP',rubber:'MOTORCYCLE TYRES',brakes:'DISC BRAKES',suspension:'FORKS / REAR SHOCK',bikeExhaust:'EXHAUST',bikeGearing:'CHAIN / SPROCKETS',bikeGuards:'HANDGUARDS / BASH PLATE',bikeSeat:'SEAT',bikeGraphics:'GRAPHICS',nitrous:'GAME NITROUS KIT'})[key]||partLabel(key):(isElectricVehicle(i)&&evPartLabels[key]?evPartLabels[key]:(key==='fuelTank'?'FUEL TANK':partLabel(key)));
   }
   const freeFieldIds={motor:'freeMotor',boost:'freeBoost',rubber:'freeTyres',nitrous:'freeNitro',tune:'freeTune',brakes:'freeBrakes',suspension:'freeSuspension',spoiler:'freeSpoiler',bumper:'freeBumper',fuelTank:'freeFuelTank',bikeExhaust:'freeBikeExhaust',bikeGearing:'freeBikeGearing',bikeGuards:'freeBikeGuards',bikeSeat:'freeBikeSeat',bikeGraphics:'freeBikeGraphics'};
   let freeBuildKind='',freeBuildCache={car:{},bike:{}};
@@ -3972,7 +4243,7 @@ window.MH_SUPABASE = {
     ]:[['01 / ENGINE & POWER',['motor','boost','tune','nitrous']],['02 / GRIP & CONTROL',['rubber','brakes','suspension']],['03 / BODY & STYLE',['spoiler','bumper']],['04 / FUEL SYSTEM',['fuelTank']]];
     const field=key=>{
       const id=freeFieldIds[key],value=cache[key]||'saved';
-      return '<label for="'+id+'">'+vehiclePartLabel(key)+'<select id="'+id+'" data-free-part="'+key+'"><option value="saved" '+(value==='saved'?'selected':'')+'>Saved / factory build</option>'+cat[key].map(([v,label])=>'<option value="'+v+'" '+(v===value?'selected':'')+'>'+label+'</option>').join('')+'</select></label>';
+      return '<label for="'+id+'">'+vehiclePartLabel(key)+'<select id="'+id+'" data-free-part="'+key+'"><option value="saved" '+(value==='saved'?'selected':'')+'>Saved / factory build</option>'+cat[key].map(([v,label],index)=>'<option value="'+v+'" '+(v===value?'selected':'')+'>'+electricOptionLabel(key,index,label)+'</option>').join('')+'</select></label>';
     };
     $('freeBuild').innerHTML='<div class="section-label">FREESTYLE WORKSHOP / '+(isBike()?'MOTORCYCLE':'CAR')+'</div><p class="free-build-note">Free temporary upgrades. No purchases, no career changes. Open a category to configure your test build.</p>'+groups.map(([title,keys],i)=>'<details class="parts-group" '+(i===0?'open':'')+'><summary>'+title+'</summary><div class="free-build-grid">'+keys.map(field).join('')+'</div></details>').join('')+
       // Preserve the original freestyle adapter's required select IDs.
@@ -4180,7 +4451,7 @@ window.MH_SUPABASE = {
   document.querySelector('#menu .garage-layout>section>.section-label').textContent=`01 / VEHICLES / ${initialCounts.cars} CARS + ${initialCounts.bikes} BIKES`;
   document.querySelector('#dealerView>.section-label').textContent=`SHOWROOM / ${initialCounts.cars} CARS + ${initialCounts.bikes} BIKES`;
   const mobileHelp=$('audioPane').querySelector('.cloud-note');
-  if(mobileHelp)mobileHelp.textContent='MOBILE / Drag up to accelerate, down to brake, sideways to steer. Hold the offset; lift to coast. Second finger: wheelie on the dirt bike, nitro on cars. Braking lowers the front wheel. Use landscape for a wider road.';
+  if(mobileHelp)mobileHelp.textContent='MOBILE / Drag up to accelerate, down to brake, sideways to steer. Hold the offset; lift to coast. Second finger: wheelie on every motorcycle and use fitted bike nitro at the same time; nitro on cars. Braking lowers the front wheel. Use landscape for a wider road.';
 
 
   // REWARDS & ROAD EVENTS / fixed cash awards are not multiplied.
@@ -4309,7 +4580,7 @@ window.MH_SUPABASE = {
     const speedSteer=1-(.43-p.stability*.16)*Math.pow(high,1.15);
     const wetBenefit=c.handlingClass==='rally'?.12:0;
     return {
-      steerScale:clamp(speedSteer,.48,1.05),
+      steerScale:clamp(speedSteer*1.04,.57,1.10),
       response:p.response*(1-high*(.20-p.stability*.1)),
       grip:p.grip+aero+wetBenefit*rainAmount,
       oversteer:p.oversteer,load:p.load*(1+high*(1-p.stability)*.25),
@@ -4400,19 +4671,19 @@ window.MH_SUPABASE = {
     refuelling=false;
     for(const st of fuelStations){
       const ahead=st.at-roadPosition;
-      if(!st.announced&&ahead<=approachNotice&&ahead>=0){st.announced=true;toastTimer=4;$('toast').textContent='FUEL STATION / '+formatDistance(Math.max(0,ahead))+' / SLOW DOWN / STATIONS BOTH SIDES';}
+      if(!st.announced&&ahead<=approachNotice&&ahead>=0){st.announced=true;toastTimer=4;$('toast').textContent=(isElectricVehicle()?'CHARGING STATION / ':'FUEL STATION / ')+formatDistance(Math.max(0,ahead))+' / SLOW DOWN / STATIONS BOTH SIDES';}
       const atPump=Math.abs(ahead)<=18&&inFuelBay();
       const pressingThrottle=keys.has('KeyW')||keys.has('ArrowUp')||touchDrive.throttle>0;
       if(atPump&&vehicleSpeed()*3.6<8&&!pressingThrottle&&!reverseInputRequested()){
         player.speed=0;reverseSpeed=0;reverseHold=0;player.vx=0;wheelieActive=false;boostActive=false;
         if(fuelPercent<100){
           refuelling=true;fuelPercent=Math.min(100,fuelPercent+dt*20);
-          if(fuelPercent>=100&&!st.filled){st.filled=true;toastTimer=3;$('toast').textContent='TANK FULL / 100% / STEER TOWARDS THE ROAD AND ACCELERATE TO REJOIN';}
+          if(fuelPercent>=100&&!st.filled){st.filled=true;toastTimer=3;$('toast').textContent=(isElectricVehicle()?'BATTERY FULL / 100% / ':'TANK FULL / 100% / ')+'STEER TOWARDS THE ROAD AND ACCELERATE TO REJOIN';}
         }
         fuelEmptyClock=0;
       }
     }
-    if(fuelPercent<=20&&!fuelLowWarned){fuelLowWarned=true;toastTimer=3;$('toast').textContent='LOW FUEL / '+Math.ceil(fuelPercent)+'% / NEXT STATION '+formatDistance(Math.max(0,nextFuelStop-roadPosition));}
+    if(fuelPercent<=20&&!fuelLowWarned){fuelLowWarned=true;toastTimer=3;$('toast').textContent=(isElectricVehicle()?'LOW BATTERY / ':'LOW FUEL / ')+Math.ceil(fuelPercent)+'% / NEXT '+(isElectricVehicle()?'CHARGING STATION ':'STATION ')+formatDistance(Math.max(0,nextFuelStop-roadPosition));}
     if(fuelPercent>30)fuelLowWarned=false;
     if(fuelPercent<=0&&!refuelling){
       wheelieActive=false;boostActive=false;player.speed=Math.max(0,player.speed-1.8*dt);
@@ -4442,14 +4713,14 @@ window.MH_SUPABASE = {
       ctx.fillStyle='#d7e8dd';for(const yy of [y-146,y+146]){ctx.beginPath();ctx.moveTo(10,yy);ctx.lineTo(20,yy-9);ctx.lineTo(20,yy-3);ctx.lineTo(width-7,yy-3);ctx.lineTo(width-7,yy+3);ctx.lineTo(20,yy+3);ctx.lineTo(20,yy+9);ctx.closePath();ctx.fill();}
       // Building is outermost, leaving a broad, unobstructed pull-in lane.
       ctx.fillStyle='#11191b';ctx.fillRect(width-buildingW,y-126,buildingW,252);ctx.fillStyle='#2d5b47';ctx.fillRect(width-buildingW-2,y-132,buildingW+3,15);
-      ctx.fillStyle='#a6edb5';ctx.shadowColor='#73dfa0';ctx.shadowBlur=8;ctx.fillRect(width-buildingW+4,y-112,buildingW-8,25);ctx.shadowBlur=0;ctx.fillStyle='#10231a';ctx.textAlign='center';ctx.font='bold 8px sans-serif';text('FUEL',width-buildingW/2,y-96);
+      ctx.fillStyle='#a6edb5';ctx.shadowColor='#73dfa0';ctx.shadowBlur=8;ctx.fillRect(width-buildingW+4,y-112,buildingW-8,25);ctx.shadowBlur=0;ctx.fillStyle='#10231a';ctx.textAlign='center';ctx.font='bold 8px sans-serif';text(isElectricVehicle()?'CHARGE':'FUEL',width-buildingW/2,y-96);
       ctx.fillStyle='#bfdacf';for(const yy of [y-72,y-42,y+56,y+86])ctx.fillRect(width-buildingW+6,yy,buildingW-12,16);ctx.fillStyle='#17282a';ctx.fillRect(width-buildingW+8,y-70,buildingW-16,12);ctx.fillRect(width-buildingW+8,y+58,buildingW-16,12);
       // Wider canopy and two vertically arranged pumps.
       const canopyW=Math.max(29,width*.47),pumpX=12+canopyW*.46;ctx.fillStyle='#183f34';ctx.fillRect(8,y-38,canopyW,76);ctx.fillStyle='#dceddf';ctx.fillRect(5,y-43,canopyW+6,9);
       for(const py of [y-20,y+20]){ctx.fillStyle='#e1ebe6';ctx.fillRect(pumpX-6,py-11,12,23);ctx.fillStyle='#17372d';ctx.fillRect(pumpX-4,py-8,8,8);ctx.strokeStyle='#0d1718';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(pumpX+6,py-8);ctx.bezierCurveTo(pumpX+15,py-4,pumpX+12,py+9,pumpX+6,py+6);ctx.stroke();}
       // Wide stop lane with clear target markings.
-      const laneW=Math.max(25,width-buildingW-13);ctx.strokeStyle='#dcece2';ctx.lineWidth=1.2;ctx.setLineDash([8,6]);ctx.strokeRect(7,y-110,laneW,220);ctx.setLineDash([]);ctx.fillStyle='#e1f0e6';ctx.font='bold 7px sans-serif';text('STOP',7+laneW/2,y+51);text('FREE',7+laneW/2,y+62);
-      ctx.fillStyle='#293936';ctx.fillRect(8,y-221,15,45);ctx.fillStyle='#a6edb5';ctx.fillRect(9,y-219,13,13);ctx.fillStyle='#10231a';ctx.font='bold 6px sans-serif';text('MH',15.5,y-210);
+      const laneW=Math.max(25,width-buildingW-13);ctx.strokeStyle='#dcece2';ctx.lineWidth=1.2;ctx.setLineDash([8,6]);ctx.strokeRect(7,y-110,laneW,220);ctx.setLineDash([]);ctx.fillStyle='#e1f0e6';ctx.font='bold 7px sans-serif';text('STOP',7+laneW/2,y+51);text(isElectricVehicle()?'CHARGE':'FREE',7+laneW/2,y+62);
+      ctx.fillStyle='#293936';ctx.fillRect(8,y-221,15,45);ctx.fillStyle='#a6edb5';ctx.fillRect(9,y-219,13,13);ctx.fillStyle='#10231a';ctx.font='bold 6px sans-serif';text(isElectricVehicle()?'EV':'MH',15.5,y-210);
       ctx.restore();
     };
     for(const st of fuelStations){
@@ -4538,9 +4809,9 @@ window.MH_SUPABASE = {
       $('fuelPanel').dataset.low=String(fuelPercent<=20);
       const nearest=fuelStations.find(st=>st.at>=roadPosition-18);
       const toStation=Math.max(0,(nearest?.at??nextFuelStop)-roadPosition);
-      $('fuelStationHint').textContent=refuelling?'REFUELLING / FREE':nearest&&Math.abs(nearest.at-roadPosition)<=18?'STOP LEFT OR RIGHT / RELEASE THROTTLE':'NEXT '+formatDistance(toStation);
-      if(refuelling){$('driveFeedback').textContent='REFUELLING / '+Math.ceil(fuelPercent)+'%';$('driveFeedback').style.color='#bce5c8';}
-      else if(fuelPercent<=0){$('driveFeedback').textContent='EMPTY / HOLD S TO REVERSE TO FUEL';$('driveFeedback').style.color='#ffac83';}
+      $('fuelStationHint').textContent=refuelling?(isElectricVehicle()?'CHARGING / FREE':'REFUELLING / FREE'):nearest&&Math.abs(nearest.at-roadPosition)<=18?'STOP LEFT OR RIGHT / RELEASE THROTTLE':'NEXT '+(isElectricVehicle()?'CHARGER ':'')+formatDistance(toStation);
+      if(refuelling){$('driveFeedback').textContent=(isElectricVehicle()?'CHARGING / ':'REFUELLING / ')+Math.ceil(fuelPercent)+'%';$('driveFeedback').style.color='#bce5c8';}
+      else if(fuelPercent<=0){$('driveFeedback').textContent=isElectricVehicle()?'BATTERY EMPTY / HOLD S TO REVERSE TO CHARGER':'EMPTY / HOLD S TO REVERSE TO FUEL';$('driveFeedback').style.color='#ffac83';}
     }
   };
   const difficultySelection=setSelectionMode;
@@ -4761,11 +5032,72 @@ window.MH_SUPABASE = {
   updateHUD=function(){
     tankFuelHUD();
     if(fuelRequired()&&!isBike()&&!refuelling){
-      const tank=fuelTankSetting();
-      $('fuelLabel').textContent='FUEL / '+(tank==='large'?'LARGE +35%':tank==='small'?'SMALL -25%':'FACTORY');
-    }else if($('fuelLabel'))$('fuelLabel').textContent='FUEL';
+      if(isElectricVehicle())$('fuelLabel').textContent='BATTERY';
+      else{
+        const tank=fuelTankSetting();
+        $('fuelLabel').textContent='FUEL / '+(tank==='large'?'LARGE +35%':tank==='small'?'SMALL -25%':'FACTORY');
+      }
+    }else if($('fuelLabel'))$('fuelLabel').textContent=isElectricVehicle()?'BATTERY':'FUEL';
   };
   refreshBuild();
+
+
+  // Restore the Showcase layout with a dedicated Trophy Shop button.
+  const shopAside=$('trophyShop').closest('aside');
+  shopAside.querySelector('.section-label').textContent='POINTS COLLECTION';
+  shopAside.querySelector('p').textContent='Browse milestone trophies and showroom collectibles in the dedicated shop.';
+  const openShop=document.createElement('button');openShop.id='openTrophyShop';openShop.className='primary trophy-shop-open';openShop.textContent='TROPHY SHOP →';
+  shopAside.insertBefore(openShop,$('trophyShop'));
+  const shopScreen=document.createElement('section');shopScreen.id='trophyShopScreen';shopScreen.className='trophy-shop-screen hidden';
+  shopScreen.innerHTML='<div class="trophy-shop-shell"><header class="garage-header"><div><div class="eyebrow">MH / SHOWCASE</div><h1>TROPHY SHOP.</h1><p id="trophyShopWallet"></p></div><button id="closeTrophyShop">← CAR SHOWCASE</button></header><div class="trophy-shop-browser"><div id="trophyShopMount"></div><aside class="launch-panel trophy-selected-panel"><div class="section-label">SELECTED TROPHY</div><canvas id="selectedTrophyCanvas" width="520" height="300"></canvas><h2 id="selectedTrophyName">SELECT A TROPHY</h2><p id="selectedTrophyInfo">Choose a trophy to preview it.</p><strong id="selectedTrophyPrice"></strong><button id="selectedTrophyAction" disabled>SELECT A TROPHY</button><button id="clearSelectedTrophySpot" class="clear-spot-button">CLEAR SELECTED SPACE</button></aside></div></div>';
+  document.body.appendChild(shopScreen);
+  const originalShop=$('trophyShop'),originalNotice=$('trophyNotice'),shopMount=$('trophyShopMount');
+  shopMount.appendChild(originalShop);shopMount.appendChild(originalNotice);
+
+  let selectedTrophyId=collectibles[0].id;
+  function rgba(hex,a){let h=String(hex).replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const n=parseInt(h,16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'}
+  function drawTrophyPreview(canvas,item){
+    const g=canvas.getContext('2d'),w=canvas.width,h=canvas.height,x=w/2,y=h*.73,c=item.colour;
+    g.clearRect(0,0,w,h);const bg=g.createRadialGradient(x,h*.38,8,x,h*.42,Math.max(w,h)*.5);bg.addColorStop(0,rgba(c,.28));bg.addColorStop(.52,'#111820');bg.addColorStop(1,'#05070a');g.fillStyle=bg;g.fillRect(0,0,w,h);
+    const rect=(a,b,d,e,f)=>{g.fillStyle=f;g.fillRect(a,b,d,e)},oval=(a,b,d,e,f)=>{g.fillStyle=f;g.beginPath();g.ellipse(a,b,d,e,0,0,Math.PI*2);g.fill()},poly=(p,f)=>{g.fillStyle=f;g.beginPath();p.forEach(([a,b],i)=>i?g.lineTo(a,b):g.moveTo(a,b));g.closePath();g.fill()};
+    g.save();g.shadowColor=c;g.shadowBlur=Math.max(8,Math.min(w,h)*.045);oval(x,y+8,w*.13,10,'#0008');rect(x-w*.11,y-8,w*.22,14,'#252e37');oval(x,y-8,w*.11,8,'#5d6b78');
+    if(item.type==='cup'){poly([[x-28,y-105],[x+28,y-105],[x+18,y-55],[x-18,y-55]],c);rect(x-5,y-56,10,31,c);rect(x-28,y-27,56,10,c);g.strokeStyle=c;g.lineWidth=6;for(const q of[-1,1]){g.beginPath();g.arc(x+q*29,y-84,17,-Math.PI/2,Math.PI/2,q<0);g.stroke()}}
+    if(item.type==='wheel'){oval(x,y-68,42,42,'#090b0d');oval(x,y-68,29,29,c);oval(x,y-68,10,10,'#111820');for(let j=0;j<6;j++){g.strokeStyle='#26333d';g.lineWidth=5;g.beginPath();g.moveTo(x,y-68);g.lineTo(x+Math.cos(j*Math.PI/3)*30,y-68+Math.sin(j*Math.PI/3)*30);g.stroke()}}
+    if(item.type==='helmet'){oval(x,y-67,42,40,c);rect(x-38,y-73,70,18,'#16232d');rect(x-30,y-34,63,9,c)}
+    if(item.type==='engine'){rect(x-39,y-91,78,53,c);for(let j=0;j<4;j++){rect(x-34+j*22,y-109,12,19,'#c1cbd3');rect(x-34+j*22,y-42,9,15,'#414e59')}}
+    if(item.type==='crystal')poly([[x,y-124],[x+39,y-69],[x+20,y-20],[x-20,y-20],[x-39,y-69]],c);
+    if(item.type==='number'){g.shadowBlur=0;g.textAlign='center';g.textBaseline='middle';g.lineJoin='round';const size=item.number==='LEGEND'?Math.min(66,w*.20):Math.min(92,w*.25);g.font='900 '+size+'px Impact,Arial Black,sans-serif';g.lineWidth=12;g.strokeStyle='#000';g.strokeText(item.number,x,h*.45);g.lineWidth=5;g.strokeStyle='#fff';g.strokeText(item.number,x,h*.45);g.fillStyle=c;g.fillText(item.number,x,h*.45)}g.restore();
+  }
+  function updateSelectedTrophy(){
+    const item=collectibles.find(v=>v.id===selectedTrophyId)||collectibles[0],owned=economy.showcase.items.includes(item.id),equipped=economy.showcase.slots[showcaseSlot]===item.id;
+    $('selectedTrophyName').textContent=item.name;$('selectedTrophyInfo').textContent=item.type==='number'?'Number trophy with a strong white outline for the '+item.number+' milestone.':'Showroom collectible for display space '+(showcaseSlot+1)+'.';$('selectedTrophyPrice').textContent=owned?('OWNED / SELECTED SPOT '+(showcaseSlot+1)):pointsText(item.cost);$('selectedTrophyAction').textContent=owned?(equipped?('EQUIPPED TO SPOT '+(showcaseSlot+1)):('EQUIP TO SPOT '+(showcaseSlot+1))):(pointsText(item.cost)+' / BUY');$('selectedTrophyAction').disabled=equipped||(!owned&&economy.points<item.cost);$('clearSelectedTrophySpot').disabled=!economy.showcase.slots[showcaseSlot];drawTrophyPreview($('selectedTrophyCanvas'),item);document.querySelectorAll('#trophyShop [data-collectible]').forEach(b=>b.classList.toggle('selected',b.dataset.collectible===item.id));
+  }
+  function decorateTrophyCards(){document.querySelectorAll('#trophyShop [data-collectible]').forEach(button=>{const item=collectibles.find(v=>v.id===button.dataset.collectible);if(!item)return;let canvas=button.querySelector('.trophy-card-preview');if(!canvas){canvas=document.createElement('canvas');canvas.className='trophy-card-preview';canvas.width=360;canvas.height=190;button.prepend(canvas)}drawTrophyPreview(canvas,item)});updateSelectedTrophy()}
+  const previewRenderCollection=renderCollection;renderCollection=function(){previewRenderCollection();decorateTrophyCards()};
+  // Trophy cards only select. Buying/equipping happens exclusively from the right panel.
+  originalShop.addEventListener('click',e=>{const button=e.target.closest('[data-collectible]');if(!button)return;e.preventDefault();e.stopImmediatePropagation();selectedTrophyId=button.dataset.collectible;updateSelectedTrophy()},true);
+  $('selectedTrophyAction').addEventListener('click',()=>{
+    const item=collectibles.find(v=>v.id===selectedTrophyId);if(!item)return;
+    const owned=economy.showcase.items.includes(item.id);
+    if(!owned){
+      if(economy.points<item.cost)return;
+      economy.points-=item.cost;economy.showcase.items.push(item.id);
+    }
+    economy.showcase.slots=economy.showcase.slots.map(id=>id===item.id?null:id);
+    economy.showcase.slots[showcaseSlot]=item.id;
+    persistEconomy();soundEffect('tool');
+    $('trophyNotice').textContent=item.name+(owned?' equipped':' purchased and equipped')+' in display space '+(showcaseSlot+1)+'.';
+    $('trophyShopWallet').textContent=pointsText(economy.points)+' AVAILABLE';renderCollection();
+  });
+  $('clearSelectedTrophySpot').addEventListener('click',()=>{
+    const removed=economy.showcase.slots[showcaseSlot];
+    economy.showcase.slots[showcaseSlot]=null;persistEconomy();soundEffect('tool');
+    $('trophyNotice').textContent=removed?'Display space '+(showcaseSlot+1)+' cleared.':'Display space '+(showcaseSlot+1)+' is already clear.';
+    renderCollection();
+  });
+
+  openShop.addEventListener('click',()=>{shopScreen.classList.remove('hidden');$('trophyShopWallet').textContent=pointsText(economy.points)+' AVAILABLE';renderCollection();});
+  $('closeTrophyShop').addEventListener('click',()=>{shopScreen.classList.add('hidden');renderCollection();});
 
   accountUI();bootCloud();
 
