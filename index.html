@@ -5068,6 +5068,9 @@ window.MH_SUPABASE = {
         if(sessionType==='career'){
           await saveCloud();cloud.run=await rpc('mh_begin_run_v2',{p_writer:cloud.writer,p_difficulty:$('careerDifficulty').value||'normal'});
         }
+        // Leave the original click first. Pursuit has no await above, and a
+        // nested .click() during an active click on #start is ignored.
+        await new Promise(r=>setTimeout(r,0));
         startDispatch=true;try{$(id).click();}finally{startDispatch=false;}
       }).finally(()=>{startBusy=false;});
     }
